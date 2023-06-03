@@ -1,3 +1,11 @@
+/blackout/[Ll]ibrary/
+/blackout/[Tt]emp/
+/blackout/[Oo]bj/
+/blackout/[Bb]uild/
+/blackout/[Bb]uilds/
+/blackout/[Ll]ogs/
+/blackout/[Uu]ser[Ss]ettings/
+
 # This .gitignore file should be placed at the root of your Unity project directory
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
