@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EmptyWeaponSlot : Weapon
 {
+    public override GameObject sender { get; set; }
+
     public override string weaponName { get; set; } = "- EMPTY -";
     public override int? remainAmmo { get; set; } = 0;
     public override string remainAmmoType { get; set; } = "";

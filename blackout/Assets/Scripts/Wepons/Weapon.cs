@@ -4,6 +4,13 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+
+    
+    public abstract GameObject sender { get; set; } 
+    public void setSender(GameObject sender) {
+        this.sender = sender;
+    }
+
     // Start is called before the first frame update
     /// <summary>
     /// •Ší‚Ì•\¦–¼

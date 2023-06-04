@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-
+    //•ŠíŠÖ˜A
     public void OnFire(InputAction.CallbackContext context)
     {
         if (context.performed) {
@@ -112,6 +112,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnFocus(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            selectWep.SubAction();
+        }
+    }
+
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            selectWep.Reload();
+        }
+    }
     public void WeaponsListUp(InputAction.CallbackContext context) {
         if(context.started && selWepIdx > 0) {
             selWepIdx--;
@@ -151,6 +166,7 @@ public class PlayerController : MonoBehaviour
             if (weapons[i] == null) {
                 weapons[i] = new EmptyWeaponSlot();
             }
+            weapons[i].setSender(this.gameObject);
         }
         selectWep = weapons[0];
         selWepIdx = 0;

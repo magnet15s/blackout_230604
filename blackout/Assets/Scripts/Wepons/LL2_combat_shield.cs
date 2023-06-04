@@ -5,6 +5,8 @@ using UnityEngine;
 public class LL2_combat_shield : Weapon
 {
     // Start is called before the first frame update
+    public override GameObject sender { get; set; }
+    
     public override string weaponName { get; set; } = "LL2 conbat shield";
     public override int? remainAmmo { get; set; } = null;
     public override string remainAmmoType { get; set; } = "";

@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Focus",
+                    "type": "Button",
+                    "id": "15be3bae-255f-4759-93f9-cbb11ce964f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "bd6ccbe4-bec2-4cf0-9e9b-8a8a911c55d3",
@@ -371,6 +380,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "WeaponListDoun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bc265c2-1d2f-4b41-ae1e-fddaff457316",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Focus",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

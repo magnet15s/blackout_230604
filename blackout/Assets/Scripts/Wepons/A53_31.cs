@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class A53_31 : Weapon
 {
+    public override GameObject sender { get; set; }
+
     public override string weaponName { get; set; } = "A53-31 arm machine gun";
     public override int? remainAmmo { get; set; } = 60;
     public override string remainAmmoType { get; set; } = "AMMO";
