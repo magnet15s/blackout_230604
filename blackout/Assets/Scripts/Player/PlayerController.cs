@@ -7,7 +7,7 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, WeaponUser
 {
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
@@ -60,11 +60,18 @@ public class PlayerController : MonoBehaviour
     public GameObject testcam;
     public GameObject sightOrigin;
 
+    //------------åpè≥-------------
+    public Animator getAnim() {
+        return anim;
+    }
+    public string getWepUseAnimLayer() {
+        return "right_arm";
+    }
+    public GameObject getWeaponObject() {
+        return sightOrigin;
+    }
 
-
-    
-
-    // Start is called before the first frame update
+    //------------ì¸óÕéÛÇØéÊÇË-----------
     public void OnMove(InputAction.CallbackContext context)
     {
         moveAngleContext = context.ReadValue<Vector2>();
@@ -129,17 +136,21 @@ public class PlayerController : MonoBehaviour
     }
     public void WeaponsListUp(InputAction.CallbackContext context) {
         if(context.started && selWepIdx > 0) {
+            selectWep.PutAway();
             selWepIdx--;
             selectWep = weapons[selWepIdx];
+            selectWep.Ready();
         }
     }
     public void WeaponsListDown(InputAction.CallbackContext context) {
         if (context.started && selWepIdx+1 < weapons.Count) {
+            selectWep.PutAway();
             selWepIdx++;
             selectWep = weapons[selWepIdx];
+            selectWep.Ready();
         }
     }
-
+    //----------------UpdateÇ»Ç«----------------
     void Start()
     {
         if (anim == null) anim = GetComponent<Animator>();
@@ -166,7 +177,7 @@ public class PlayerController : MonoBehaviour
             if (weapons[i] == null) {
                 weapons[i] = new EmptyWeaponSlot();
             }
-            weapons[i].setSender(this.gameObject);
+            weapons[i].setSender(this);
         }
         selectWep = weapons[0];
         selWepIdx = 0;
@@ -182,9 +193,11 @@ public class PlayerController : MonoBehaviour
         //Debug.Log($"{lastMovement}  {lastActualMovement}");
         
         //éãì_à⁄ìÆåvéZ
+
         float laRotVol = Mathf.Abs(viewPoint.x - levelAiming) < 0.01 ? 0f : ((viewPoint.x - levelAiming)*10) * Time.deltaTime;
         if (Mathf.Abs(laRotVol) > turningSpeed * Time.deltaTime) laRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(laRotVol);
         levelAiming += laRotVol;
+
         float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.01 ? 0f : ((viewPoint.y - verticalAiming) * 10) * Time.deltaTime;
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
@@ -192,6 +205,7 @@ public class PlayerController : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
         sightOrigin.transform.localEulerAngles = new Vector3(verticalAiming, 0, 0);
+
         //testcamóp
         testcam.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, testcam.transform.eulerAngles.z);
 
@@ -403,6 +417,8 @@ public class PlayerController : MonoBehaviour
         if (moveMagnContext > 0) return "move";
         return "idle";
     }
+
+    
 
     
 }

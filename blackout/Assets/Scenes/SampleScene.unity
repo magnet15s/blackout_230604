@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5300,6 +5300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7445b24e860c77f48b8515db374ecc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wepChangeDelay: 0.2
 --- !u!1 &1947453244
 GameObject:
   m_ObjectHideFlags: 0
@@ -5949,7 +5950,7 @@ SkinnedMeshRenderer:
   m_RootBone: {fileID: 7628953138430412493}
   m_AABB:
     m_Center: {x: -0.015817365, y: 0.011378735, z: -0.014644122}
-    m_Extent: {x: 0.0025203996, y: 0.0014508199, z: 0.0041668434}
+    m_Extent: {x: 0.01, y: 0.01, z: 0.01}
   m_DirtyAABB: 0
 --- !u!4 &543450651621419850
 Transform:

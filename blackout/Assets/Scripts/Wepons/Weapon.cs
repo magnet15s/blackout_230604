@@ -6,8 +6,8 @@ public abstract class Weapon : MonoBehaviour
 {
 
     
-    public abstract GameObject sender { get; set; } 
-    public void setSender(GameObject sender) {
+    public abstract WeaponUser sender { get; set; } 
+    public void setSender(WeaponUser sender) {
         this.sender = sender;
     }
 
