@@ -32,6 +32,9 @@ public class A53_31 : Weapon
     [SerializeField] private float autoReloadInterval = 0.3f;
     private float aRIntCnt = 0;
 
+    [SerializeField] private GameObject firePoint = null;
+    [SerializeField] private float bulletInitialVelocity;
+    [SerializeField] private float bulletDamage;
     // Start is called before the first frame update
     void Start() {
 
@@ -90,6 +93,7 @@ public class A53_31 : Weapon
             }
             //------ªËŒ‚---------
             //------«©“®‘•“U-----
+            
             if(aRIntCnt <= 0)
             {
                 if (remainAmmo < remainMaxAmmo)
@@ -102,7 +106,12 @@ public class A53_31 : Weapon
             {
                 aRIntCnt -= Time.deltaTime;
                 if (aRIntCnt < 0) aRIntCnt = 0;
+                if (remainAmmo <= 0)
+                {
+                    cooldownProgress = aRIntCnt / autoReloadInterval;
+                }
             }
+            
 
         }
     }
@@ -111,6 +120,8 @@ public class A53_31 : Weapon
     {
         remainAmmo--;
         Debug.Log($"BANG!! {remainAmmo}");
+        LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
+        Debug.Log(LB);
     }
 
     public override void Ready() {

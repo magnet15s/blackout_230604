@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour, WeaponUser
     public GameObject getAimingObj() {
         return sightOrigin;
     }
+    
 
     //------------“ü—ÍŽó‚¯Žæ‚è-----------
     public void OnMove(InputAction.CallbackContext context)
