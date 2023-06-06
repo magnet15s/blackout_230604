@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour, WeaponUser
     private float moveMagnContext;
     private bool dashContext = false;
     private bool dashItrContext = false;
+    private bool fireContext = false;
     private Vector2 viewPoint;
 
     private float levelAiming;
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour, WeaponUser
     public string getWepUseAnimLayer() {
         return "right_arm";
     }
-    public GameObject getWeaponObject() {
+    public GameObject getAimingObj() {
         return sightOrigin;
     }
 
@@ -114,9 +115,8 @@ public class PlayerController : MonoBehaviour, WeaponUser
     //•ŠíŠÖ˜A
     public void OnFire(InputAction.CallbackContext context)
     {
-        if (context.performed) {
-            selectWep.MainAction();
-        }
+        if (context.started) fireContext = true; 
+        else if(context.canceled)fireContext = false;
     }
 
     public void OnFocus(InputAction.CallbackContext context)
@@ -347,6 +347,7 @@ public class PlayerController : MonoBehaviour, WeaponUser
         //  ªˆÚ“®@«ËŒ‚
         //--------------------
 
+        if (fireContext) selectWep.MainAction();
     }
 
     //‚»‚Ì‘¼ŠÖ”
