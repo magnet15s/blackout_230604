@@ -121,7 +121,7 @@ public class A53_31 : Weapon
         remainAmmo--;
         Debug.Log($"BANG!! {remainAmmo}");
         LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
-        Debug.Log(LB);
+        Debug.Log(AimingObj.transform.forward);
     }
 
     public override void Ready() {
