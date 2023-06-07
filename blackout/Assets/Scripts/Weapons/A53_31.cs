@@ -21,7 +21,7 @@ public class A53_31 : Weapon
     private int RAAnimLayerIdx;
     [SerializeField] private float wepChangeDelay = 0.4f;
     private float wcdCnt = 0;
-    private GameObject AimingObj;
+    public GameObject AimingObj;
 
     private float verticalAiming = 0.5f;
 
