@@ -6,33 +6,33 @@ using UnityEngine;
 public class LiveBullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Vector3 initialVelocity = Vector3.zero;
-    public Vector3 velocity = Vector3.zero ;
-    public Weapon shooter = null;
-    public float damage = 0;
-    public float generatedTime = 0;
-    public int age = 0;
+    public Vector3 initialVelocity;
+    public Vector3 velocity;
+    public Weapon shooter;
+    public float damage;
+    public float generatedTime;
+    public int age;
 
     public static LiveBullet BulletInstantiate(
-        Weapon shooter,
-        Vector3 initialPosition,
-        Vector3 initialVelocity, 
-        float damage 
+        Weapon _shooter,
+        Vector3 _initialPosition,
+        Vector3 _initialVelocity, 
+        float _damage 
     ){
         GameObject bullet = new GameObject()
         {
-            name = "bullet" + shooter.sender.ToString() + " " + Time.frameCount.ToString()
+            name = "bullet" + _shooter.sender.ToString() + " " + Time.frameCount.ToString()
         };
         
-        bullet.transform.position = initialPosition;
+        bullet.transform.position = _initialPosition;
 
         bullet.AddComponent<LiveBullet>();
         LiveBullet bulletLB = bullet.GetComponent<LiveBullet>();
 
-        bulletLB.initialVelocity = initialVelocity;
-        bulletLB.velocity = initialVelocity;
-        bulletLB.shooter = shooter;
-        bulletLB.damage = damage;
+        bulletLB.initialVelocity = _initialVelocity;
+        bulletLB.velocity = _initialVelocity;
+        bulletLB.shooter = _shooter;
+        bulletLB.damage = _damage;
         bulletLB.generatedTime = Time.frameCount;
 
         return bulletLB;
@@ -45,13 +45,13 @@ public class LiveBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        float vv = velocity.y;
-        vv -= 9.8f * Time.deltaTime;
-        velocity.y = vv;
+        velocity.y -= 9.8f * Time.deltaTime;
+        velocity.x -= velocity.x * 0.9f * Time.deltaTime;
+        velocity.z -= velocity.z * 0.9f * Time.deltaTime;
         Vector3 np = transform.position;
-        transform.position = new Vector3(np.x + velocity.x, np.y + vv, np.z + velocity.z);
+        transform.position = new Vector3(np.x + velocity.x, np.y + velocity.y, np.z + velocity.z);
         Debug.DrawRay(np, velocity, Color.yellow, 0.1f);
         if(transform.position.y < -10) {
             Destroy(this.gameObject);
