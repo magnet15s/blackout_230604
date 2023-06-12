@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -25,13 +26,13 @@ public class LiveBullet : MonoBehaviour
         float _damage 
     ){
         if (!GET_PREFAB) {
-            PR_LIVEBULLET = ((GameObject)Resources.Load("/Assets/BO_WeaponSystem/Prefabs/PrLiveBullet")) ?? new GameObject { name = "Bullet Load Error" };
+            PR_LIVEBULLET = ((GameObject)Resources.Load("BO_WeaponSystem/Prefabs/PrLiveBullet")) ?? new GameObject { name = "Bullet Load Error" };
             GET_PREFAB = true;
         }
 
         GameObject bullet = Instantiate(PR_LIVEBULLET);
 
-        bullet.name = "bullet" + _shooter.sender.ToString() + " " + Time.frameCount.ToString();
+        bullet.name += _shooter.sender.ToString() + " " + Time.frameCount.ToString();
         bullet.transform.position = _initialPosition;
 
         LiveBullet bulletLB = bullet.GetComponent<LiveBullet>();
@@ -52,7 +53,8 @@ public class LiveBullet : MonoBehaviour
     void Start()
     {
         line = GetComponent<LineRenderer>();
-        line.GetPositions(linePosArray);
+        //line.GetPositions(linePosArray);
+        linePosArray = new Vector3[1] { transform.position };
     }
 
     // Update is called once per frame
@@ -65,9 +67,39 @@ public class LiveBullet : MonoBehaviour
 
         Vector3 np = p + velocity;
         transform.position = np;
-        if (new Vector3(Mathf.Abs(linePosArray[0].x - np.x), Mathf.Abs(linePosArray[0].y - np.y), Mathf.Abs(linePosArray[0].z - np.z)).magnitude > 5) {
-            
+
+        float totalDistMag = 0;
+        Vector3 arrayLast = np;
+        int i;
+        for (i = 0; i < linePosArray.Length - 1; i++)
+        {
+            Vector3 swap = linePosArray[i + 1];
+            linePosArray[i + 1] = linePosArray[i];
+            linePosArray[i] = arrayLast;
+            arrayLast = swap;
+
+            if ((totalDistMag += new Vector3(
+                Mathf.Abs(linePosArray[i].x - linePosArray[i + 1].x),
+                Mathf.Abs(linePosArray[i].y - linePosArray[i + 1].y),
+                Mathf.Abs(linePosArray[i].z - linePosArray[i + 1].z)
+                ).magnitude) > 10) break;
+
         }
+
+        if(i == linePosArray.Length-1)
+        {
+            Array.Resize(ref linePosArray, linePosArray.Length + 1);
+            linePosArray[^1] = arrayLast;
+        }
+        else
+        {
+            Array.Resize(ref linePosArray, i + 1);
+            linePosArray[^1] += arrayLast;
+        }
+
+        line.SetPositions(linePosArray);
+        line.positionCount= linePosArray.Length;
+        
 
 
         if(transform.position.y < -10) {
