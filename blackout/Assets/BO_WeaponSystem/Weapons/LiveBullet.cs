@@ -13,11 +13,13 @@ public class LiveBullet : MonoBehaviour
     public float damage;
     public float generatedTime;
     public int age;
-    public LineRenderer line;
-    public Vector3[] linePosArray;
+    //public LineRenderer line;
+    //public Vector3[] linePosArray;
     
     public static bool GET_PREFAB = false;
     public static GameObject PR_LIVEBULLET;
+
+    public bool started = false;
 
     public static LiveBullet BulletInstantiate(
         Weapon _shooter,
@@ -43,67 +45,65 @@ public class LiveBullet : MonoBehaviour
         bulletLB.damage = _damage;
         bulletLB.generatedTime = Time.frameCount;
 
-        LineRenderer bulletLR = bullet.GetComponent<LineRenderer>();
-        bulletLR.positionCount = 1;
-        bulletLR.SetPosition(0, _initialPosition);
+        //LineRenderer bulletLR = bullet.GetComponent<LineRenderer>();
+        //bulletLR.positionCount = 1;
+        //bulletLR.SetPosition(0, _initialPosition);
+
+        bulletLB.started = true;
         return bulletLB;
     }
 
 
     void Start()
     {
-        line = GetComponent<LineRenderer>();
+        //line = GetComponent<LineRenderer>();
         //line.GetPositions(linePosArray);
-        linePosArray = new Vector3[1] { transform.position };
+        //linePosArray = null;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        velocity.y -= 9.8f * Time.deltaTime;
-        velocity.x -= velocity.x * 0.9f * Time.deltaTime;
-        velocity.z -= velocity.z * 0.9f * Time.deltaTime;
-        Vector3 p = transform.position;
-
-        Vector3 np = p + velocity;
-        transform.position = np;
-
-        float totalDistMag = 0;
-        Vector3 arrayLast = np;
-        int i;
-        for (i = 0; i < linePosArray.Length - 1; i++)
-        {
-            Vector3 swap = linePosArray[i + 1];
-            linePosArray[i + 1] = linePosArray[i];
-            linePosArray[i] = arrayLast;
-            arrayLast = swap;
-
-            if ((totalDistMag += new Vector3(
-                Mathf.Abs(linePosArray[i].x - linePosArray[i + 1].x),
-                Mathf.Abs(linePosArray[i].y - linePosArray[i + 1].y),
-                Mathf.Abs(linePosArray[i].z - linePosArray[i + 1].z)
-                ).magnitude) > 10) break;
-
+        if(false/*started && linePosArray == null*/) {
+            //linePosArray = new Vector3[1] {Vector3.zero};
         }
+        if (true/*linePosArray != null*/) {
 
-        if(i == linePosArray.Length-1)
-        {
-            Array.Resize(ref linePosArray, linePosArray.Length + 1);
-            linePosArray[^1] = arrayLast;
-        }
-        else
-        {
-            Array.Resize(ref linePosArray, i + 1);
-            linePosArray[^1] += arrayLast;
-        }
+            velocity.y -= 9.8f * Time.deltaTime;
+            velocity.y -= velocity.y * 0.4f * Time.deltaTime;
+            velocity.x -= velocity.x * 0.4f * Time.deltaTime;
+            velocity.z -= velocity.z * 0.4f * Time.deltaTime;
+            Vector3 Movement = velocity * Time.deltaTime;
+            Vector3 op = transform.position;
+            Debug.Log($" {velocity}  {Movement}");
+            Vector3 np = op + Movement;
+            transform.position = np;
+            /*
+            int i;
+            linePosArray[0] = Vector3.zero;
+            for (i = 1; i < linePosArray.Length; i++) {
+                linePosArray[i] = linePosArray[i - 1] - Movement;
 
-        line.SetPositions(linePosArray);
-        line.positionCount= linePosArray.Length;
-        
+                if (linePosArray[i].magnitude > 100) {
+                    break;
+                }
+
+            }
+
+            if (i == linePosArray.Length) {
+                Array.Resize(ref linePosArray, linePosArray.Length + 1);
+                linePosArray[^1] = linePosArray[^2] - Movement;
+            } else {
+                Array.Resize(ref linePosArray, i + 1);
+            }
+            Debug.Log(Movement);
+            line.SetPositions(linePosArray);
+            line.positionCount = linePosArray.Length;*/
 
 
-        if(transform.position.y < -10) {
-            Destroy(this.gameObject);
+            if (transform.position.y < -10) {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
