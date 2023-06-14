@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class LiveBullet : MonoBehaviour
@@ -12,14 +13,19 @@ public class LiveBullet : MonoBehaviour
     public Weapon shooter;
     public float damage;
     public float generatedTime;
-    public int age;
+    public float age;
     //public LineRenderer line;
     //public Vector3[] linePosArray;
-    
+
+    public TrailRenderer tr;
+
+    public ParticleSystem ps1;
+    public ParticleSystem ps2;
+
     public static bool GET_PREFAB = false;
     public static GameObject PR_LIVEBULLET;
 
-    public bool started = false;
+    public static bool psDestroyed = false;
 
     public static LiveBullet BulletInstantiate(
         Weapon _shooter,
@@ -36,6 +42,7 @@ public class LiveBullet : MonoBehaviour
 
         bullet.name += _shooter.sender.ToString() + " " + Time.frameCount.ToString();
         bullet.transform.position = _initialPosition;
+        bullet.transform.LookAt(_initialPosition + _initialVelocity);
 
         LiveBullet bulletLB = bullet.GetComponent<LiveBullet>();
 
@@ -48,62 +55,55 @@ public class LiveBullet : MonoBehaviour
         //LineRenderer bulletLR = bullet.GetComponent<LineRenderer>();
         //bulletLR.positionCount = 1;
         //bulletLR.SetPosition(0, _initialPosition);
+        bulletLB.tr = bullet.GetComponent<TrailRenderer>();
 
-        bulletLB.started = true;
         return bulletLB;
     }
 
 
     void Start()
     {
-        //line = GetComponent<LineRenderer>();
-        //line.GetPositions(linePosArray);
-        //linePosArray = null;
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(false/*started && linePosArray == null*/) {
-            //linePosArray = new Vector3[1] {Vector3.zero};
+        age += Time.deltaTime;
+
+        velocity.y -= 9.8f * Time.deltaTime;
+        velocity.y -= velocity.y * 0.4f * Time.deltaTime;
+        velocity.x -= velocity.x * 0.4f * Time.deltaTime;
+        velocity.z -= velocity.z * 0.4f * Time.deltaTime;
+        Vector3 Movement = velocity * Time.deltaTime;
+        Vector3 op = transform.position;
+        Debug.Log($" {velocity}  {Movement}");
+        Vector3 np = op + Movement;
+        transform.position = np;
+        Vector3 fp = tr.GetPosition(0);
+        Debug.Log("fp"+fp);
+        if(age < 1)
+        {
+            ps1.gameObject.transform.position = fp;
+            ps2.gameObject.transform.position = fp;
+
         }
-        if (true/*linePosArray != null*/) {
-
-            velocity.y -= 9.8f * Time.deltaTime;
-            velocity.y -= velocity.y * 0.4f * Time.deltaTime;
-            velocity.x -= velocity.x * 0.4f * Time.deltaTime;
-            velocity.z -= velocity.z * 0.4f * Time.deltaTime;
-            Vector3 Movement = velocity * Time.deltaTime;
-            Vector3 op = transform.position;
-            Debug.Log($" {velocity}  {Movement}");
-            Vector3 np = op + Movement;
-            transform.position = np;
-            /*
-            int i;
-            linePosArray[0] = Vector3.zero;
-            for (i = 1; i < linePosArray.Length; i++) {
-                linePosArray[i] = linePosArray[i - 1] - Movement;
-
-                if (linePosArray[i].magnitude > 100) {
-                    break;
-                }
-
-            }
-
-            if (i == linePosArray.Length) {
-                Array.Resize(ref linePosArray, linePosArray.Length + 1);
-                linePosArray[^1] = linePosArray[^2] - Movement;
-            } else {
-                Array.Resize(ref linePosArray, i + 1);
-            }
-            Debug.Log(Movement);
-            line.SetPositions(linePosArray);
-            line.positionCount = linePosArray.Length;*/
 
 
-            if (transform.position.y < -10) {
-                Destroy(this.gameObject);
-            }
+
+        if (transform.position.y < -10)
+        {
+            Destroy(this.gameObject);
+        }
+        if(age > 1 && !psDestroyed)
+        {
+            Destroy(transform.GetChild(1).gameObject);
+            Destroy(transform.GetChild(0).gameObject);
+            psDestroyed= true;
+        }
+        if(age > 5)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

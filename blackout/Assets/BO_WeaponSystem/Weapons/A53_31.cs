@@ -7,7 +7,7 @@ public class A53_31 : Weapon
     public override WeaponUser sender { get; set; }
 
     public override string weaponName { get; set; } = "A53-31 arm machine gun";
-    public override int? remainAmmo { get; set; } = 60;
+    public override int? remainAmmo { get; set; } = 600;
     public override string remainAmmoType { get; set; } = "AMMO";
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "EMPTY AMMO";
@@ -35,9 +35,33 @@ public class A53_31 : Weapon
     [SerializeField] private GameObject firePoint = null;
     [SerializeField] private float bulletInitialVelocity;
     [SerializeField] private float bulletDamage;
+
+    /*[SerializeField] private ParticleSystem ps1;
+    [SerializeField] private ParticleSystem ps2;*/
     // Start is called before the first frame update
     void Start() {
-
+        /*if(ps1 == null)
+        {
+            try
+            {
+                ps1 = Instantiate(((GameObject)Resources.Load("BO_WeaponSystem/Particles/ElectricalSparksEffect"))).GetComponent<ParticleSystem>();
+            }
+            catch
+            {
+                Debug.LogError("particle system catch fail : BO_WeaponSystem/Particles/ElectricalSparkEffects");
+            }
+        }
+        if (ps1 == null)
+        {
+            try
+            {
+                ps2 = Instantiate(((GameObject)Resources.Load("BO_WeaponSystem/Particles/MuzzleFlash"))).GetComponent<ParticleSystem>();
+            }
+            catch
+            {
+                Debug.LogError("particle system catch fail : BO_WeaponSystem/Particles/MuzzleFlash");
+            }
+        }*/
     }
 
     // Update is called once per frame
@@ -121,7 +145,8 @@ public class A53_31 : Weapon
         remainAmmo--;
         Debug.Log($"BANG!! {remainAmmo}");
         LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
-        Debug.Log(AimingObj.transform.forward);
+        /*ps1.Play();
+        ps2.Play();*/
     }
 
     public override void Ready() {
