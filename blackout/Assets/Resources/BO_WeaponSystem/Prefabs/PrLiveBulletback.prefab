@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 1950922615870979800}
   - component: {fileID: 5542730408891910611}
   - component: {fileID: 4833261063614731687}
-  - component: {fileID: 7245590597144662255}
   m_Layer: 0
-  m_Name: PrLiveBullet
+  m_Name: PrLiveBulletback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,9 +54,9 @@ MonoBehaviour:
   generatedTime: 0
   age: 0
   tr: {fileID: 4833261063614731687}
-  cc: {fileID: 7245590597144662255}
   ps1: {fileID: 7529408714353337805}
   ps2: {fileID: 4570883289834502608}
+  psPlayed: 0
 --- !u!96 &4833261063614731687
 TrailRenderer:
   serializedVersion: 2
@@ -166,20 +165,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!136 &7245590597144662255
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6618401040682188846}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 1
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!1001 &2214639044371442208
 PrefabInstance:
   m_ObjectHideFlags: 0

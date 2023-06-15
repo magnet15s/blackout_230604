@@ -18,6 +18,7 @@ public class LiveBullet : MonoBehaviour
     //public Vector3[] linePosArray;
 
     public TrailRenderer tr;
+    public CapsuleCollider cc;
 
     public ParticleSystem ps1;
     public ParticleSystem ps2;
@@ -26,6 +27,8 @@ public class LiveBullet : MonoBehaviour
     public static GameObject PR_LIVEBULLET;
 
     public static bool psDestroyed = false;
+
+    private Vector3 np = Vector3.zero;
 
     public static LiveBullet BulletInstantiate(
         Weapon _shooter,
@@ -67,8 +70,14 @@ public class LiveBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
+        transform.position = np == Vector3.zero ? transform.position : np;
+        Vector3 fp = tr.GetPosition(0);
+        if (age < 1) {
+            ps1.gameObject.transform.position = fp;
+            ps2.gameObject.transform.position = fp;
+
+        }
         age += Time.deltaTime;
 
         velocity.y -= 9.8f * Time.deltaTime;
@@ -78,17 +87,9 @@ public class LiveBullet : MonoBehaviour
         Vector3 Movement = velocity * Time.deltaTime;
         Vector3 op = transform.position;
         Debug.Log($" {velocity}  {Movement}");
-        Vector3 np = op + Movement;
-        transform.position = np;
-        Vector3 fp = tr.GetPosition(0);
-        Debug.Log("fp"+fp);
-        if(age < 1)
-        {
-            ps1.gameObject.transform.position = fp;
-            ps2.gameObject.transform.position = fp;
-
-        }
-
+        np = op + Movement;
+        cc.height = Movement.magnitude;
+        cc.center = new Vector3(0, 0, Movement.magnitude / 2f);
 
 
         if (transform.position.y < -10)
