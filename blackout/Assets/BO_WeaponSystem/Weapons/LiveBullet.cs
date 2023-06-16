@@ -30,6 +30,8 @@ public class LiveBullet : MonoBehaviour
 
     private Vector3 np = Vector3.zero;
 
+    private bool hit = false;
+
     public static LiveBullet BulletInstantiate(
         Weapon _shooter,
         Vector3 _initialPosition,
@@ -63,6 +65,12 @@ public class LiveBullet : MonoBehaviour
         return bulletLB;
     }
 
+    public void OnTriggerEnter(Collider other) {
+        Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
+        np = hitPos;
+        
+
+    }
 
     void Start()
     {
@@ -71,6 +79,7 @@ public class LiveBullet : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate() {
+
         transform.position = np == Vector3.zero ? transform.position : np;
         Vector3 fp = tr.GetPosition(0);
         if (age < 1) {
@@ -78,6 +87,9 @@ public class LiveBullet : MonoBehaviour
             ps2.gameObject.transform.position = fp;
 
         }
+
+
+
         age += Time.deltaTime;
 
         velocity.y -= 9.8f * Time.deltaTime;
