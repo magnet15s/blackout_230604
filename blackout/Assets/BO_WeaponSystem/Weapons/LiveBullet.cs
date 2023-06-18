@@ -68,7 +68,8 @@ public class LiveBullet : MonoBehaviour
     public void OnTriggerEnter(Collider other) {
         Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
         np = hitPos;
-        
+        hit = true;
+
 
     }
 

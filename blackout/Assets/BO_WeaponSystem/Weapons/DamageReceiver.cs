@@ -5,10 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DamageReceiver:MonoBehaviour
+public interface DamageReceiver
 {
-     
-    public void Damage(int damage, Vector3 hitPosition, GameObject Sender, string damageType) {
-        
-    }
+    public abstract void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType);
 }
