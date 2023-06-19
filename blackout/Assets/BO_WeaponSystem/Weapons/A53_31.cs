@@ -34,7 +34,7 @@ public class A53_31 : Weapon
 
     [SerializeField] private GameObject firePoint = null;
     [SerializeField] private float bulletInitialVelocity;
-    [SerializeField] private float bulletDamage;
+    [SerializeField] private int bulletDamage;
 
     /*[SerializeField] private ParticleSystem ps1;
     [SerializeField] private ParticleSystem ps2;*/
@@ -143,10 +143,9 @@ public class A53_31 : Weapon
     private void fire()
     {
         remainAmmo--;
-        Debug.Log($"BANG!! {remainAmmo}");
+        //Debug.Log($"BANG!! {remainAmmo}");
         LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
-        /*ps1.Play();
-        ps2.Play();*/
+        
     }
 
     public override void Ready() {

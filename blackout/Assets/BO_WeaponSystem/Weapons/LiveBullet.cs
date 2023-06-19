@@ -11,7 +11,7 @@ public class LiveBullet : MonoBehaviour
     public Vector3 initialVelocity;
     public Vector3 velocity;
     public Weapon shooter;
-    public float damage;
+    public int damage;
     public float generatedTime;
     public float age;
     //public LineRenderer line;
@@ -31,12 +31,13 @@ public class LiveBullet : MonoBehaviour
     private Vector3 np = Vector3.zero;
 
     private bool hit = false;
+    private bool destroyReady = false;
 
     public static LiveBullet BulletInstantiate(
         Weapon _shooter,
         Vector3 _initialPosition,
         Vector3 _initialVelocity, 
-        float _damage 
+        int _damage 
     ){
         if (!GET_PREFAB) {
             PR_LIVEBULLET = ((GameObject)Resources.Load("BO_WeaponSystem/Prefabs/PrLiveBullet")) ?? new GameObject { name = "Bullet Load Error" };
@@ -69,7 +70,10 @@ public class LiveBullet : MonoBehaviour
         Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
         np = hitPos;
         hit = true;
-
+        DamageReceiver dr;
+        if( (dr =  other.GetComponent<DamageReceiver>()) != null) {
+            dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
+        }
 
     }
 
@@ -89,7 +93,12 @@ public class LiveBullet : MonoBehaviour
 
         }
 
-
+        if (hit) {
+            destroyReady = true;
+        }
+        if (destroyReady) {
+            Destroy(this);
+        }
 
         age += Time.deltaTime;
 
@@ -99,7 +108,7 @@ public class LiveBullet : MonoBehaviour
         velocity.z -= velocity.z * 0.4f * Time.deltaTime;
         Vector3 Movement = velocity * Time.deltaTime;
         Vector3 op = transform.position;
-        Debug.Log($" {velocity}  {Movement}");
+        //Debug.Log($" {velocity}  {Movement}");
         np = op + Movement;
         cc.height = Movement.magnitude;
         cc.center = new Vector3(0, 0, Movement.magnitude / 2f);
