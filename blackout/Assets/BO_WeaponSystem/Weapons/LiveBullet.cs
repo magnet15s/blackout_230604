@@ -8,6 +8,7 @@ using UnityEngine;
 public class LiveBullet : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Vector3 initialPosition;
     public Vector3 initialVelocity;
     public Vector3 velocity;
     public Weapon shooter;
@@ -22,6 +23,7 @@ public class LiveBullet : MonoBehaviour
 
     public ParticleSystem ps1;
     public ParticleSystem ps2;
+    public ParticleSystem ps3;
 
     public static bool GET_PREFAB = false;
     public static GameObject PR_LIVEBULLET;
@@ -52,6 +54,7 @@ public class LiveBullet : MonoBehaviour
 
         LiveBullet bulletLB = bullet.GetComponent<LiveBullet>();
 
+        bulletLB.initialPosition = _initialPosition;
         bulletLB.initialVelocity = _initialVelocity;
         bulletLB.velocity = _initialVelocity;
         bulletLB.shooter = _shooter;
@@ -68,7 +71,7 @@ public class LiveBullet : MonoBehaviour
 
     public void OnTriggerEnter(Collider other) {
         Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
-        np = hitPos;
+        //np = ((np - transform.position).normalized * (hitPos - transform.position).magnitude) + transform.position;
         hit = true;
         DamageReceiver dr;
         if( (dr =  other.GetComponent<DamageReceiver>()) != null) {
@@ -88,9 +91,11 @@ public class LiveBullet : MonoBehaviour
         transform.position = np == Vector3.zero ? transform.position : np;
         Vector3 fp = tr.GetPosition(0);
         if (age < 1) {
-            ps1.gameObject.transform.position = fp;
-            ps2.gameObject.transform.position = fp;
-
+            ps1.gameObject.transform.position = initialPosition;
+            ps2.gameObject.transform.position = initialPosition;
+        }
+        if(age < 2) {
+            ps3.gameObject.transform.position = initialPosition;
         }
 
         if (hit) {
@@ -120,9 +125,13 @@ public class LiveBullet : MonoBehaviour
         }
         if(age > 1 && !psDestroyed)
         {
-            Destroy(transform.GetChild(1).gameObject);
-            Destroy(transform.GetChild(0).gameObject);
+            Destroy(ps1.gameObject);
+            Destroy(ps2.gameObject);
             psDestroyed= true;
+        }
+        if (age > 2 && ps3 != null) {
+            Destroy(ps3.gameObject);
+            ps3 = null;
         }
         if(age > 5)
         {
