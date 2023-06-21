@@ -61,9 +61,7 @@ public class LiveBullet : MonoBehaviour
         bulletLB.damage = _damage;
         bulletLB.generatedTime = Time.frameCount;
 
-        //LineRenderer bulletLR = bullet.GetComponent<LineRenderer>();
-        //bulletLR.positionCount = 1;
-        //bulletLR.SetPosition(0, _initialPosition);
+        
         bulletLB.tr = bullet.GetComponent<TrailRenderer>();
 
         return bulletLB;
@@ -89,7 +87,7 @@ public class LiveBullet : MonoBehaviour
     void FixedUpdate() {
 
         transform.position = np == Vector3.zero ? transform.position : np;
-        Vector3 fp = tr.GetPosition(0);
+        
         if (age < 1) {
             ps1.gameObject.transform.position = initialPosition;
             ps2.gameObject.transform.position = initialPosition;
@@ -102,7 +100,7 @@ public class LiveBullet : MonoBehaviour
             destroyReady = true;
         }
         if (destroyReady) {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
 
         age += Time.deltaTime;
