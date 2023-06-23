@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MiniTank : Enemy {
     public Animator anim;
+    public GroundedSensor gg;
+    public NavMeshAgent navAgent;
+    public GameObject Target;
 
 
     // Start is called before the first frame update
@@ -22,6 +26,26 @@ public class MiniTank : Enemy {
     // Update is called once per frame
     void Update()
     {
+
+        if(armorPoint > 0)
+        {
+            if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid)
+            {
+
+                navAgent.destination = Target.transform.position;
+            }
+        }
+        else
+        {
+            if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid)
+            {
+
+                navAgent.destination = transform.position;
+            }
+        }
         
+        ///ˆÚ“®
+        
+        //navMeshAgent‚Ì‘€ì
     }
 }

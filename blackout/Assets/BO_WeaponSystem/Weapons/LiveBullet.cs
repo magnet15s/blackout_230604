@@ -96,11 +96,12 @@ public class LiveBullet : MonoBehaviour
             ps3.gameObject.transform.position = initialPosition;
         }
 
-        if (hit) {
-            destroyReady = true;
-        }
         if (destroyReady) {
             Destroy(this.gameObject);
+        }
+
+        if (hit) {
+            destroyReady = true;
         }
 
         age += Time.deltaTime;
