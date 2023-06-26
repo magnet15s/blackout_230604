@@ -210,13 +210,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920841712a061be4f943963a9b091fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelName: 
+  modelName: miniTank
   maxArmorPoint: 0
   armorPoint: 0
   anim: {fileID: 3576672954151673529}
   gg: {fileID: 3576672954151673477}
   navAgent: {fileID: 5228340101659750198}
   Target: {fileID: 0}
+  gunTurretBone: {fileID: 3860920102345260796}
+  gunBone: {fileID: 4523963603243727698}
+  sensorRange: 300
 --- !u!95 &3576672954151673529
 Animator:
   serializedVersion: 5
@@ -438,7 +441,7 @@ NavMeshAgent:
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 100
-  m_StoppingDistance: 20
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

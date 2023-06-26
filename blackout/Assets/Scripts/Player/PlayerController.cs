@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour, WeaponUser
     private Vector3 wallBoundVector;
     private bool wallBound = false;
 
-    [SerializeField]private Weapon selectWep;
-    [SerializeField]private int selWepIdx;
+    [SerializeField] private Weapon selectWep;
+    [SerializeField] private int selWepIdx;
 
     //入力コンテキスト
     private Vector3 moveAngleContext;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour, WeaponUser
 
     private Vector3 moveDirForAnim;
     [Space]
-    [SerializeField] private float speed = 10; 
+    [SerializeField] private float speed = 10;
     [SerializeField] private float dashSpeed = 22;
     [SerializeField] private float dashCoolTime = 1;
     [SerializeField] private float touchDownTime = 0.8f;
@@ -60,6 +60,8 @@ public class PlayerController : MonoBehaviour, WeaponUser
     [Space]
     public GameObject testcam;
     public GameObject sightOrigin;
+    [Space]
+    [SerializeField] private bool setEnemiesShareTarget = true;
 
     //------------継承-------------
     public Animator getAnim() {
@@ -152,15 +154,12 @@ public class PlayerController : MonoBehaviour, WeaponUser
         }
     }
     //----------------Updateなど----------------
-    void Start()
-    {
-        if (anim == null) anim = GetComponent<Animator>();
-        if (cc == null) cc = GetComponent<CharacterController>();
-        if (gs == null) gs = GetComponent<GroundedSensor>();
-    }
 
     void Awake()
     {
+        //敵設定
+        if(setEnemiesShareTarget)Enemy.sharedTarget = this.gameObject;
+
         //視点基点決定
         levelAiming = transform.eulerAngles.y;
         verticalAiming = transform.eulerAngles.x;
@@ -183,6 +182,12 @@ public class PlayerController : MonoBehaviour, WeaponUser
         selectWep = weapons[0];
         selWepIdx = 0;
         
+    }
+    void Start()
+    {
+        if (anim == null) anim = GetComponent<Animator>();
+        if (cc == null) cc = GetComponent<CharacterController>();
+        if (gs == null) gs = GetComponent<GroundedSensor>();
     }
 
     // Update is called once per frame

@@ -4,13 +4,17 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, DamageReceiver
 {
+
+    public static GameObject sharedTarget = null;
+    public static Vector3? sharedTargetPosition = null;
+
     [SerializeField] public string modelName;
     [SerializeField] public int maxArmorPoint;
     [SerializeField] public int armorPoint;
     //[SerializeField] public abstract bool 
 
 
-    public void MainFire() {
+    public virtual void MainFire() {
         Debug.LogWarning($"ƒƒCƒ“•º‘•–¢À‘• : {this}");
     }
 
