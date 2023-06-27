@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -30,6 +31,7 @@ public class MiniTank : Enemy {
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         armorPoint -=  damage;
         if(armorPoint <= 0) {
+            if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);
         }
     }
@@ -48,10 +50,20 @@ public class MiniTank : Enemy {
 
             if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && result.transform.Equals(Target.transform)))
             {
-                if(discoveredTargetShare) Enemy.sharedTargetPosition = result.transform.position;
+                if (discoveredTargetShare) {
+                    Enemy.sharedTargetPosition = result.transform.position;
+                    Enemy.targetReporter = this;
+                }
+                MainFire();
+
+
                 navAgent.destination = Target.transform.position;
             }else if(Enemy.sharedTargetPosition != null){
+                if(Enemy.targetReporter == this) {
+                    Enemy.targetReporter = null;
+                }
                 navAgent.destination = (Vector3)Enemy.sharedTargetPosition;
+                
             }
         }
         else
@@ -64,6 +76,8 @@ public class MiniTank : Enemy {
         
         ///ˆÚ“®
         
-        //navMeshAgent‚Ì‘€ì
     }
+
+    
+
 }

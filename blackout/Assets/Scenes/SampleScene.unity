@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.11408472, g: 0.11552532, b: 0.09631095, a: 1}
+  m_IndirectSpecularColor: {r: 0.114383556, g: 0.11593296, b: 0.0968248, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4191,7 +4191,7 @@ PrefabInstance:
       objectReference: {fileID: 919132147886404080}
     - target: {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: sensorRange
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_RootOrder
@@ -4199,7 +4199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -133.5
+      value: -81.3
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6026,7 +6026,7 @@ PrefabInstance:
       objectReference: {fileID: 919132147886404080}
     - target: {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: sensorRange
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_RootOrder
@@ -6095,7 +6095,7 @@ PrefabInstance:
       objectReference: {fileID: 919132147886404080}
     - target: {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: sensorRange
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_RootOrder
@@ -6261,7 +6261,7 @@ PrefabInstance:
       objectReference: {fileID: 919132147886404080}
     - target: {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: sensorRange
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_RootOrder
@@ -7716,7 +7716,7 @@ PrefabInstance:
       objectReference: {fileID: 919132147886404080}
     - target: {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: sensorRange
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5228340101659750185, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_RootOrder

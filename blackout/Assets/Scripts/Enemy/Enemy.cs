@@ -7,6 +7,7 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
 
     public static GameObject sharedTarget = null;
     public static Vector3? sharedTargetPosition = null;
+    public static Enemy targetReporter = null;
 
     [SerializeField] public string modelName;
     [SerializeField] public int maxArmorPoint;
