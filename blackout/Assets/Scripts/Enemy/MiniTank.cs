@@ -16,12 +16,13 @@ public class MiniTank : Enemy {
 
     public float sensorRange = 300;
     public bool discoveredTargetShare = true;
-
+    private GameObject damageFX;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        damageFX = (GameObject)Resources.Load("BO_WeaponSystem/Particles/vulletHit");
         modelName = "MiniTank";
         if(maxArmorPoint == 0)maxArmorPoint = 200;
         if(armorPoint == 0)armorPoint = 200;
@@ -30,6 +31,7 @@ public class MiniTank : Enemy {
     }
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         armorPoint -=  damage;
+        Instantiate(damageFX, hitPosition, Quaternion.identity).transform.LookAt(hitPosition + (hitPosition - transform.position));
         if(armorPoint <= 0) {
             if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);

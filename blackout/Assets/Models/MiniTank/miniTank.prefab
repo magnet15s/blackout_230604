@@ -577,6 +577,12 @@ MonoBehaviour:
   armorPoint: 0
   anim: {fileID: 5749138160653448171}
   gg: {fileID: 0}
+  navAgent: {fileID: 0}
+  Target: {fileID: 0}
+  gunTurretBone: {fileID: 0}
+  gunBone: {fileID: 0}
+  sensorRange: 300
+  discoveredTargetShare: 1
 --- !u!95 &5749138160653448171
 Animator:
   serializedVersion: 5
