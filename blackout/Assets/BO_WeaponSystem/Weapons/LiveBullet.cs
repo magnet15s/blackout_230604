@@ -68,13 +68,15 @@ public class LiveBullet : MonoBehaviour
     }
 
     public void OnTriggerEnter(Collider other) {
-        Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
-        //np = ((np - transform.position).normalized * (hitPos - transform.position).magnitude) + transform.position;
-        hit = true;
-        DamageReceiver dr;
-        if( (dr =  other.GetComponent<DamageReceiver>()) != null) {
-            dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
+        if (!hit) {
+            Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
+            hit = true;
+            DamageReceiver dr;
+            if ((dr = other.GetComponent<DamageReceiver>()) != null) {
+                dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
+            }
         }
+       
 
     }
 

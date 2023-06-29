@@ -17,7 +17,22 @@ public class MiniTank : Enemy {
     public float sensorRange = 300;
     public bool discoveredTargetShare = true;
     private GameObject damageFX;
+    private float lastRotate = 1;
+    private float oldYAngle = 0;
 
+    [Space]
+
+    [Tooltip("接近時、ターゲットの側面に回り込む際の角度を指定")]
+    [SerializeField] private float flankAttackAngle;    
+
+    [Tooltip("ターゲットとの距離がこの値以上の場合、ターゲットに直進し続けます。")]
+    [SerializeField] private float ApproachDist;
+
+    [Tooltip("ターゲットとの距離がこの値以下になると、retreatBoundaryまでターゲットから直線的に距離を取ります。")]
+    [SerializeField] private float overApproachDist;
+
+    [Tooltip("ターゲットから距離をとる際、ターゲットとの距離がいくつになるまで下がるか")]
+    [SerializeField] private float retreatBoundary;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +43,8 @@ public class MiniTank : Enemy {
         if(armorPoint == 0)armorPoint = 200;
 
         if (Target == null && Enemy.sharedTarget != null) Target = Enemy.sharedTarget;
+
+        oldYAngle = navAgent.gameObject.transform.eulerAngles.y;
     }
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         armorPoint -=  damage;
@@ -35,11 +52,14 @@ public class MiniTank : Enemy {
         if(armorPoint <= 0) {
             if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);
+            
         }
     }
     // Update is called once per frame
     void Update()
     {
+
+
 
         if(armorPoint > 0)
         {
@@ -47,19 +67,23 @@ public class MiniTank : Enemy {
             RaycastHit result;
             Physics.Raycast(ray, out result, sensorRange);
             if (result.transform != null) 
-            Debug.Log(result.transform.gameObject.Equals(Target) + " " + result.transform.gameObject);
+            //Debug.Log(result.transform.gameObject.Equals(Target) + " " + result.transform.gameObject);
 
-
+            //敵を視認している場合
             if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && result.transform.Equals(Target.transform)))
             {
                 if (discoveredTargetShare) {
                     Enemy.sharedTargetPosition = result.transform.position;
                     Enemy.targetReporter = this;
                 }
+                    gunBone.transform.LookAt(Target.transform);
                 MainFire();
+                //移動パターン↓
+                float targetdist = (Target.transform.position - transform.position).magnitude;
+                if (targetdist > ApproachDist) {
+                    navAgent.destination = Target.transform.position;
 
-
-                navAgent.destination = Target.transform.position;
+                }
             }else if(Enemy.sharedTargetPosition != null){
                 if(Enemy.targetReporter == this) {
                     Enemy.targetReporter = null;
@@ -75,9 +99,17 @@ public class MiniTank : Enemy {
                 navAgent.destination = transform.position;
             }
         }
-        
+
         ///移動
-        
+
+
+
+        //最後どちらに曲がったか(lastRotate)
+        if(Mathf.Abs(navAgent.gameObject.transform.eulerAngles.y - oldYAngle) / Time.deltaTime > 1) {
+            lastRotate = navAgent.gameObject.transform.eulerAngles.y - oldYAngle;
+            oldYAngle = navAgent.gameObject.transform.eulerAngles.y;
+        }
+        Debug.Log(lastRotate / lastRotate * Mathf.Sign(lastRotate));
     }
 
     
