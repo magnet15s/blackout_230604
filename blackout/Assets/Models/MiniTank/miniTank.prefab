@@ -583,6 +583,10 @@ MonoBehaviour:
   gunBone: {fileID: 0}
   sensorRange: 300
   discoveredTargetShare: 1
+  flankAttackAngle: 0
+  ApproachDist: 0
+  overApproachDist: 0
+  retreatBoundary: 0
 --- !u!95 &5749138160653448171
 Animator:
   serializedVersion: 5
