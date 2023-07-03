@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -14,14 +15,20 @@ public class MiniTank : Enemy {
     public GameObject gunTurretBone;
     public GameObject gunBone;
 
-    public float sensorRange = 300;
-    public bool discoveredTargetShare = true;
     private GameObject damageFX;
     private float lastRotate = 1;
     private float oldYAngle = 0;
     private Vector3 turretForward;
 
     [Space]
+    [Tooltip("タレットの旋回速度上限(degree/sec)")]
+    public float turretRotationLimit = 0;
+
+    [Tooltip("ターゲットの視認距離")]
+    public float sensorRange = 300;
+
+    [Tooltip("ターゲット視認時、他のEnemyにターゲットの位置を共有するか")]
+    public bool discoveredTargetShare = true;
 
     [Tooltip("接近時、ターゲットの側面に回り込む際の角度を指定")]
     [SerializeField] private float flankAttackAngle;    
@@ -75,7 +82,7 @@ public class MiniTank : Enemy {
                         Enemy.sharedTargetPosition = result.transform.position;
                         Enemy.targetReporter = this;
                     }
-                    gunBone.transform.LookAt(Target.transform);
+                    //gunBone.transform.LookAt(Target.transform);
                     MainFire();
                     //移動パターン↓
                     float targetdist = (Target.transform.position - transform.position).magnitude;
@@ -105,9 +112,15 @@ public class MiniTank : Enemy {
             lastRotate = navAgent.gameObject.transform.eulerAngles.y - oldYAngle;
             oldYAngle = navAgent.gameObject.transform.eulerAngles.y;
         }
-        //Vector3 turretLookVec = 
-        //gunTurretBone.transform.rotation = Quaternion.LookRotation()
-        
+
+        float oldTurretAngY = gunTurretBone.transform.eulerAngles.y;
+        gunTurretBone.transform.LookAt(new Vector3(Target.transform.position.x, gunTurretBone.transform.position.y, Target.transform.position.z));
+        gunTurretBone.transform.eulerAngles = new Vector3(gunTurretBone.transform.eulerAngles.x, gunTurretBone.transform.eulerAngles.y, 0);//rotation = Quaternion.LookRotation(new Vector3(Target.transform.position.x, gunTurretBone.transform.position.y, Target.transform.position.z), gunTurretBone.transform.up);
+        if (Mathf.Abs(oldTurretAngY - gunTurretBone.transform.eulerAngles.y) > turretRotationLimit * Time.deltaTime) {
+            gunTurretBone.transform.eulerAngles = new Vector3(gunTurretBone.transform.eulerAngles.x,
+                oldTurretAngY + Mathf.Sign(gunTurretBone.transform.eulerAngles.y - oldTurretAngY) * turretRotationLimit * Time.deltaTime * Mathf.Sign( 180 - Mathf.Abs(gunTurretBone.transform.eulerAngles.y - oldTurretAngY) ),
+                gunTurretBone.transform.eulerAngles.z);
+        }
     }
 
 }
