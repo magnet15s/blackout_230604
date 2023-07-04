@@ -67,6 +67,14 @@ public class LiveBullet : MonoBehaviour
         return bulletLB;
     }
 
+    public static Vector3 BullisticCalc(Vector3 velocity, float time) {
+        return new Vector3(
+            time * (velocity.x - (0.4f * time)),
+            time * (velocity.y - (0.4f * time) - (time * 9.8f)),
+            time * (velocity.z - (0.4f * time))
+            );
+    }
+
     public void OnTriggerEnter(Collider other) {
         if (!hit) {
             Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
