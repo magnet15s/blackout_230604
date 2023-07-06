@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,21 +67,28 @@ public class LiveBullet : MonoBehaviour
 
         return bulletLB;
     }
+    
 
-    public static Vector3 BullisticCalc(Vector3 velocity, float time) {
-        return new Vector3(
-            time * (velocity.x - (0.4f * time)),
-            time * (velocity.y - (0.4f * time) - (time * 9.8f)),
-            time * (velocity.z - (0.4f * time))
-            );
+    public static Vector3 BullisticCalc(Vector3 velocity, float time) { //後回し
+        Vector3 aveVelocity = Vector3.zero;
+        for(int i = 0; i < 10; i++) {
+            //Xの平均velocityを求める
+        }
+        for(int i = 0; i < 10; i++) {
+            //Zの平均velocityを求める
+        }
+        //Yをシミュレートする
+
+        //平均*time
+        return new Vector3();
     }
 
     public void OnTriggerEnter(Collider other) {
         if (!hit) {
-            Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
             hit = true;
             DamageReceiver dr;
             if ((dr = other.GetComponent<DamageReceiver>()) != null) {
+                Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
                 dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
             }
         }

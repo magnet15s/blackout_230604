@@ -21,7 +21,7 @@ public class NavTest : MonoBehaviour
         if (_nma.pathStatus != NavMeshPathStatus.PathInvalid)
             _nma.destination = _target.transform.position;
         else Debug.Log("ijijij");
-        Debug.Log($"{_nma.hasPath}  {++age}");
+        //Debug.Log($"{_nma.hasPath}  {++age}");
         //_nma.hasPath;
     }
 }

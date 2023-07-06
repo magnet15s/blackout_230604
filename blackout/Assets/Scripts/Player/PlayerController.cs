@@ -7,7 +7,7 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, WeaponUser
+public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 {
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
@@ -425,7 +425,7 @@ public class PlayerController : MonoBehaviour, WeaponUser
         return "idle";
     }
 
-    
-
-    
+    public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
+        Debug.Log("Damage!! " + Time.frameCount);
+    }
 }
