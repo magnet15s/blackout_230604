@@ -139,9 +139,9 @@ public class MiniTank : Enemy , WeaponUser{
 
                     }else if(targetdist > overApproachDist) {
                         if (lastRotate < 0) {
-                            navAgent.destination = gunBone.transform.right * 0.1f;
-                        } else {
                             navAgent.destination = -gunBone.transform.right * 0.1f;
+                        } else {
+                            navAgent.destination = gunBone.transform.right * 0.1f;
                         }
                     }else {
                         navAgent.destination = -gunTurretBone.transform.forward * 0.1f;
