@@ -23,6 +23,8 @@ public class MiniTank : Enemy , WeaponUser{
     private Vector3 turretForward;
     private Vector3 targetFireAngle;
     private float fireIntervalCnt;
+    private int curve = 0;
+    private bool overApproach = false;
 
 
     [Space]
@@ -35,8 +37,8 @@ public class MiniTank : Enemy , WeaponUser{
     [Tooltip("ターゲット視認時、他のEnemyにターゲットの位置を共有するか")]
     public bool discoveredTargetShare = true;
 
-    [Tooltip("接近時、ターゲットの側面に回り込む際の角度を指定")]
-    [SerializeField] private float flankAttackAngle;    
+    [Tooltip("接近時、ターゲットの側面に回り込む際の角度を指定(迂回方向 / 直進方向)")]
+    [SerializeField] private float flankAttackAngleTangent;    
 
     [Tooltip("ターゲットとの距離がこの値以上の場合、ターゲットに直進し続けます。")]
     [SerializeField] private float ApproachDist;
@@ -134,17 +136,32 @@ public class MiniTank : Enemy , WeaponUser{
 
                     //移動パターン↓
                     float targetdist = (Target.transform.position - transform.position).magnitude;
-                    if (targetdist > ApproachDist) {
+                    
+                        //敵が遠い場合
+                    if (targetdist > ApproachDist)
+                    {
                         navAgent.destination = Target.transform.position;
-
+                        curve = 0;
+                        //敵に接近しすぎた後、後退中の場合
+                    }else if (overApproach) {//
+                        navAgent.destination = transform.position-((Target.transform.position - transform.position).normalized);
+                        if(targetdist > retreatBoundary)overApproach = false;
+                        //交戦距離となり、回避機動中の場合
                     }else if(targetdist > overApproachDist) {
-                        if (lastRotate < 0) {
-                            navAgent.destination = -gunBone.transform.right * 0.1f;
-                        } else {
-                            navAgent.destination = gunBone.transform.right * 0.1f;
+                        if(curve == 0)
+                        {
+                            curve = (int)(lastRotate/lastRotate);
                         }
+                        if (curve < 0) {
+                            navAgent.destination = transform.position + -Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized;
+                        } else {
+                            navAgent.destination = transform.position + Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized;
+                        }
+                        //敵に接近しすぎた場合
                     }else {
-                        navAgent.destination = -gunTurretBone.transform.forward * 0.1f;
+                        curve = 0;
+                        overApproach = true;
+                        navAgent.destination = transform.position - ((Target.transform.position - transform.position).normalized);
                     }
 
 
