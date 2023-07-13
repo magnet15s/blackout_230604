@@ -153,9 +153,9 @@ public class MiniTank : Enemy , WeaponUser{
                             curve = (int)(lastRotate/lastRotate);
                         }
                         if (curve < 0) {
-                            navAgent.destination = transform.position + -Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized;
+                            navAgent.destination = transform.position + -Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized * flankAttackAngleTangent;
                         } else {
-                            navAgent.destination = transform.position + Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized;
+                            navAgent.destination = transform.position + Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized * flankAttackAngleTangent;
                         }
                         //“G‚ÉÚ‹ß‚µ‚·‚¬‚½ê‡
                     }else {

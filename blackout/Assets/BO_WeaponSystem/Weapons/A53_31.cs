@@ -36,32 +36,9 @@ public class A53_31 : Weapon
     [SerializeField] private float bulletInitialVelocity;
     [SerializeField] private int bulletDamage;
 
-    /*[SerializeField] private ParticleSystem ps1;
-    [SerializeField] private ParticleSystem ps2;*/
-    // Start is called before the first frame update
+    
     void Start() {
-        /*if(ps1 == null)
-        {
-            try
-            {
-                ps1 = Instantiate(((GameObject)Resources.Load("BO_WeaponSystem/Particles/ElectricalSparksEffect"))).GetComponent<ParticleSystem>();
-            }
-            catch
-            {
-                Debug.LogError("particle system catch fail : BO_WeaponSystem/Particles/ElectricalSparkEffects");
-            }
-        }
-        if (ps1 == null)
-        {
-            try
-            {
-                ps2 = Instantiate(((GameObject)Resources.Load("BO_WeaponSystem/Particles/MuzzleFlash"))).GetComponent<ParticleSystem>();
-            }
-            catch
-            {
-                Debug.LogError("particle system catch fail : BO_WeaponSystem/Particles/MuzzleFlash");
-            }
-        }*/
+        
     }
 
     // Update is called once per frame
@@ -146,6 +123,7 @@ public class A53_31 : Weapon
         //Debug.Log($"BANG!! {remainAmmo}");
         LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
         
+        
     }
 
     public override void Ready() {
@@ -158,7 +136,10 @@ public class A53_31 : Weapon
     }
     public override void MainAction() {
         //Debug.Log($"MainAct{this}");
-        trigger= true;
+        if (ready) {
+
+            trigger= true;
+        }
     }
     public override void SubAction() {
         Debug.Log($"SubAct{this}");
