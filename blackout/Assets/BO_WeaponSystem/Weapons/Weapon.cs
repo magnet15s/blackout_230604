@@ -37,6 +37,10 @@ public abstract class Weapon : MonoBehaviour
     /// </summary>
     public abstract string cooldownMsg { get; set; }
 
+    /// <summary>
+    /// HUD‚É•\¦‚·‚é•Ší‰æ‘œ(”ñ•K{)
+    /// </summary>
+    public virtual Material HUDWeaponImage { get; set; }
 
 
     void Start()

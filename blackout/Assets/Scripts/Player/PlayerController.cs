@@ -6,12 +6,15 @@ using UnityEditor;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 {
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
+    [SerializeField] private Image weaponImage;
+    [SerializeField] private Material noDataWeaponImage;
     [Space]
     public List<Weapon> weapons;
     [Space]
@@ -142,7 +145,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
             selectWep.PutAway();
             selWepIdx--;
             selectWep = weapons[selWepIdx];
-            selectWep.Ready();
+            selectWep.Ready(); 
+            if (selectWep.HUDWeaponImage == null)
+                weaponImage.material = noDataWeaponImage;
+            else
+                weaponImage.material = selectWep.HUDWeaponImage;
         }
     }
     public void WeaponsListDown(InputAction.CallbackContext context) {
@@ -151,6 +158,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
             selWepIdx++;
             selectWep = weapons[selWepIdx];
             selectWep.Ready();
+            if (selectWep.HUDWeaponImage == null)
+                weaponImage.material = noDataWeaponImage;
+            else
+                weaponImage.material = selectWep.HUDWeaponImage;
         }
     }
     //----------------Updateなど----------------
@@ -169,25 +180,44 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
         //アニメーター
         moveDirForAnim = Vector2.zero;
 
-        //weapons
-        if(weapons.Count == 0) {
-            weapons.Add(new EmptyWeaponSlot());
-        }
-        for(int i = 0; i < weapons.Count; i++) {
-            if (weapons[i] == null) {
-                weapons[i] = new EmptyWeaponSlot();
-            }
-            weapons[i].setSender(this);
-        }
-        selectWep = weapons[0];
-        selWepIdx = 0;
         
+
     }
     void Start()
     {
         if (anim == null) anim = GetComponent<Animator>();
         if (cc == null) cc = GetComponent<CharacterController>();
         if (gs == null) gs = GetComponent<GroundedSensor>();
+
+        //weapons
+        if (weapons.Count == 0)
+        {
+            weapons.Add(new EmptyWeaponSlot());
+        }
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i] == null)
+            {
+                weapons[i] = new EmptyWeaponSlot();
+            }
+            weapons[i].setSender(this);
+        }
+        selectWep = weapons[0];
+        selWepIdx = 0;
+        selectWep.Ready();
+
+        if (selectWep.HUDWeaponImage == null)
+        {
+            weaponImage.material = noDataWeaponImage;
+            Debug.Log(selectWep);
+        }
+        else
+        {
+            weaponImage.material = selectWep.HUDWeaponImage;
+
+        }
+
+
     }
 
     // Update is called once per frame

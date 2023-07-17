@@ -223,7 +223,7 @@ MonoBehaviour:
   turretRotationLimit: 60
   sensorRange: 100
   discoveredTargetShare: 1
-  flankAttackAngle: 0
+  flankAttackAngleTangent: 0
   ApproachDist: 60
   overApproachDist: 10
   retreatBoundary: 20
@@ -965,15 +965,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010212820824, guid: 1e420cdd22960f641b1b699b4ebd8fa4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.9900001
+      value: 3.91
       objectReference: {fileID: 0}
     - target: {fileID: 4000010212820824, guid: 1e420cdd22960f641b1b699b4ebd8fa4, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.9900001
+      value: 3.91
       objectReference: {fileID: 0}
     - target: {fileID: 4000010212820824, guid: 1e420cdd22960f641b1b699b4ebd8fa4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.9900001
+      value: 3.91
       objectReference: {fileID: 0}
     - target: {fileID: 4000010212820824, guid: 1e420cdd22960f641b1b699b4ebd8fa4, type: 3}
       propertyPath: m_LocalPosition.x

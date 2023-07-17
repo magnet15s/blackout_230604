@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class A53_31 : Weapon
@@ -36,9 +37,12 @@ public class A53_31 : Weapon
     [SerializeField] private float bulletInitialVelocity;
     [SerializeField] private int bulletDamage;
 
+    [Space]
+    public Material HUDImage = null;
+
     
     void Start() {
-        
+        HUDWeaponImage = HUDImage;
     }
 
     // Update is called once per frame
