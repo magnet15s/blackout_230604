@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     [SerializeField] private Material noDataWeaponImage;
     [SerializeField] private Image hitResponse;
     [Space]
+    [SerializeField] private Transform pilotEyePoint;
+    [Space]
     public List<Weapon> weapons;
     [Space]
     //計算用
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     [SerializeField] private float dashTurningFacter = 0.1f;
     [SerializeField] private Vector2 viewRotetionFactor = new Vector2(10, 10);
     [Space]
-    public GameObject testcam;
+    public GameObject pilotCamera;
     public GameObject sightOrigin;
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
@@ -111,7 +113,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        viewPoint += context.ReadValue<Vector2>()/3 * viewRotetionFactor;
+        viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor;
         if (viewPoint.y > 80) viewPoint.y = 80;
         else if (viewPoint.y < -80) viewPoint.y = -80;
 
@@ -239,14 +241,14 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
         lastActualMovement = this.transform.position - oldPosition;
         lastActualMovement /= lastTimeDelta;
         //Debug.Log($"{lastMovement}  {lastActualMovement}");
-        
-        //視点移動計算
 
-        float laRotVol = Mathf.Abs(viewPoint.x - levelAiming) < 0.01 ? 0f : ((viewPoint.x - levelAiming)*10) * Time.deltaTime;
+        //視点移動計算 
+
+        float laRotVol = Mathf.Abs(viewPoint.x - levelAiming) < 0.001 ? 0f : ((viewPoint.x - levelAiming));
         if (Mathf.Abs(laRotVol) > turningSpeed * Time.deltaTime) laRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(laRotVol);
         levelAiming += laRotVol;
 
-        float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.01 ? 0f : ((viewPoint.y - verticalAiming) * 10) * Time.deltaTime;
+        float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
 
@@ -254,9 +256,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
         sightOrigin.transform.localEulerAngles = new Vector3(verticalAiming, 0, 0);
 
-        //testcam用
-        testcam.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, testcam.transform.eulerAngles.z);
-
+        //camera
+        pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
+        pilotCamera.transform.position = pilotEyePoint.position;
 
 
         //----------------------------
@@ -385,8 +387,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
         oldPosition = transform.position;
         cc.Move(movement);
 
-        //testcam用
-        sightOrigin.transform.position = testcam.transform.position;
+        //sightOriginの位置をpilotCameraに合わせる
+        sightOrigin.transform.position = pilotCamera.transform.position;
 
         //実移動量計算用
         lastTimeDelta = Time.deltaTime;
