@@ -7,4 +7,5 @@ public interface WeaponUser
     public abstract Animator getAnim();
     public abstract string getWepUseAnimLayer();
     public abstract GameObject getAimingObj();
+    public abstract void ThrowHitResponse();
 }

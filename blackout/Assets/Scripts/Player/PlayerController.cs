@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     [SerializeField] private GroundedSensor gs;
     [SerializeField] private Image weaponImage;
     [SerializeField] private Material noDataWeaponImage;
+    [SerializeField] private Image hitResponse;
     [Space]
     public List<Weapon> weapons;
     [Space]
@@ -216,6 +217,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
             weaponImage.material = selectWep.HUDWeaponImage;
 
         }
+        hitResponse.color = new Color(1, 1, 1, 0);
 
 
     }
@@ -223,6 +225,16 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     // Update is called once per frame
     void FixedUpdate()
     {
+        //’eƒqƒbƒgŽž‚ÌƒŒƒeƒBƒNƒ‹
+        if(hitResponse.color.r >= 0) {
+            hitResponse.color = new Color(
+                hitResponse.color.r - Time.deltaTime / 0.3f,
+                hitResponse.color.g - Time.deltaTime / 0.3f,
+                hitResponse.color.b - Time.deltaTime / 0.3f,
+                1);
+            if (hitResponse.color.r < 0) hitResponse.color = new Color(0, 0, 0, 1);
+        }
+
         //ŽÀˆÚ“®—ÊŒvŽZ
         lastActualMovement = this.transform.position - oldPosition;
         lastActualMovement /= lastTimeDelta;
@@ -457,5 +469,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         Debug.Log("Damage!! " + Time.frameCount);
+    }
+
+    public void ThrowHitResponse() {
+        hitResponse.color = new Color(1, 1, 1, 1);
     }
 }

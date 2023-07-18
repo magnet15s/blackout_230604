@@ -48,4 +48,8 @@ public class TestMan : MonoBehaviour , WeaponUser
     public GameObject getAimingObj() {
         throw new NotImplementedException();
     }
+
+    public void ThrowHitResponse() {
+
+    }
 }

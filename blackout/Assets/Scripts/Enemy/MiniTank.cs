@@ -208,4 +208,7 @@ public class MiniTank : Enemy , WeaponUser{
     public GameObject getAimingObj() {
         throw new System.NotImplementedException();
     }
+
+    public void ThrowHitResponse() {
+    }
 }
