@@ -13,13 +13,15 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "WAIT";
 
+    public Material HUDImage;
+
     [SerializeField] GameObject connectShield;
     [SerializeField] GameObject leftShield;
     [SerializeField] GameObject rightShield;
 
     // Start is called before the first frame update
     void Start() {
-        
+        HUDWeaponImage = HUDImage;
     }
 
     // Update is called once per frame
