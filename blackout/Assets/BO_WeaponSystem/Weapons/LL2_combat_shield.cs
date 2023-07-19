@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LL2_combat_shield : Weapon
+public class LL2_combat_shield : Weapon, ShieldRoot
 {
     // Start is called before the first frame update
     public override WeaponUser sender { get; set; }
@@ -13,9 +13,13 @@ public class LL2_combat_shield : Weapon
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "WAIT";
 
+    [SerializeField] GameObject connectShield;
+    [SerializeField] GameObject leftShield;
+    [SerializeField] GameObject rightShield;
+
     // Start is called before the first frame update
     void Start() {
-
+        
     }
 
     // Update is called once per frame
@@ -24,10 +28,16 @@ public class LL2_combat_shield : Weapon
     }
     public override void Ready() {
         Debug.Log($"Ready{this}");
+        connectShield.SetActive(false);
+        leftShield.SetActive(true);
+        rightShield.SetActive(true);
     }
 
     public override void PutAway() {
         Debug.Log($"PutAway{this}");
+        connectShield.SetActive(true);
+        leftShield.SetActive(false);
+        rightShield.SetActive(false);
     }
 
     public override void MainAction() {
@@ -38,5 +48,9 @@ public class LL2_combat_shield : Weapon
     }
     public override void Reload() {
         Debug.Log($"Reload{this}");
+    }
+
+    public void HitReceive(ShieldParts receiver, int damage, Vector3 hitPosition, GameObject source, string damageType) {
+        
     }
 }

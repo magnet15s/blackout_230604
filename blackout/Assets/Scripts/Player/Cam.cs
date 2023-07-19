@@ -13,7 +13,7 @@ public class Cam : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         Vector3 old = transform.eulerAngles;
         transform.eulerAngles = new Vector3(old.x, old.y, nRotZ);

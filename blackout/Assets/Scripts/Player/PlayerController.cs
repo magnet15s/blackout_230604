@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //弾ヒット時のレティクル
         if(hitResponse.color.r >= 0) {
@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 
         //camera
         pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
-        pilotCamera.transform.position = pilotEyePoint.position;
+        
 
 
         //----------------------------
@@ -388,6 +388,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
         cc.Move(movement);
 
         //sightOriginの位置をpilotCameraに合わせる
+        pilotCamera.transform.position = pilotEyePoint.position;
         sightOrigin.transform.position = pilotCamera.transform.position;
 
         //実移動量計算用
