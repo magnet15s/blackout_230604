@@ -8,6 +8,7 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
     public static GameObject sharedTarget = null;
     public static Vector3? sharedTargetPosition = null;
     public static Enemy targetReporter = null;
+    public static List<Enemy> EnemiesList = new();
 
     [SerializeField] public string modelName;
     [SerializeField] public int maxArmorPoint;
@@ -21,6 +22,11 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
 
     public virtual void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         Debug.LogWarning($"ƒ_ƒ[ƒWˆ—–¢À‘• : {this} <- {source}[source] ");
+    }
+
+    public virtual void Awake()
+    {
+        Enemy.EnemiesList.Add( this );
     }
 
 }

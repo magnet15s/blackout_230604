@@ -25,6 +25,7 @@ public class MiniTank : Enemy , WeaponUser{
     private float fireIntervalCnt;
     private int curve = 0;
     private bool overApproach = false;
+    public float approachPhaseChangeLug = 0;
 
 
     [Space]
@@ -85,7 +86,7 @@ public class MiniTank : Enemy , WeaponUser{
         if(armorPoint <= 0) {
             if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);
-            
+            EnemiesList.Remove(this);
         }
     }
     // Update is called once per frame
@@ -103,75 +104,106 @@ public class MiniTank : Enemy , WeaponUser{
             RaycastHit result;
             Physics.Raycast(ray, out result, sensorRange);
             if (result.transform != null)
+            {
                 //Debug.Log(result.transform.gameObject.Equals(Target) + " " + result.transform.gameObject);
 
                 //ìGÇéãîFÇµÇƒÇ¢ÇÈèÍçá
-                if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && result.transform.Equals(Target.transform))) {
-                    if (discoveredTargetShare) {
+                if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && result.transform.Equals(Target.transform)))
+                {
+                    if (discoveredTargetShare)
+                    {
                         Enemy.sharedTargetPosition = result.transform.position;
                         Enemy.targetReporter = this;
                     }
                     //è∆èÄ
                     targetFireAngle = Target.transform.position - transform.position;
-                    targetFireAngle.y = targetFireAngle.magnitude * (targetFireAngle.magnitude / shotTangent2TargetDistRatio);
+                    targetFireAngle.y += targetFireAngle.magnitude * (targetFireAngle.magnitude / shotTangent2TargetDistRatio) - 1;
                     targetFireAngle.Normalize();
                     //ñCìÉ
                     bool aimOn = false;
                     float oldTurretAngY = gunTurretBone.transform.eulerAngles.y;
                     gunTurretBone.transform.LookAt(new Vector3(Target.transform.position.x, gunTurretBone.transform.position.y, Target.transform.position.z));
                     gunTurretBone.transform.eulerAngles = new Vector3(gunTurretBone.transform.eulerAngles.x, gunTurretBone.transform.eulerAngles.y, 0);//rotation = Quaternion.LookRotation(new Vector3(Target.transform.position.x, gunTurretBone.transform.position.y, Target.transform.position.z), gunTurretBone.transform.up);
-                    if (Mathf.Abs(oldTurretAngY - gunTurretBone.transform.eulerAngles.y) > turretRotationLimit * Time.deltaTime) {
+                    if (Mathf.Abs(oldTurretAngY - gunTurretBone.transform.eulerAngles.y) > turretRotationLimit * Time.deltaTime)
+                    {
                         gunTurretBone.transform.eulerAngles = new Vector3(gunTurretBone.transform.eulerAngles.x,
                             oldTurretAngY + Mathf.Sign(gunTurretBone.transform.eulerAngles.y - oldTurretAngY) * turretRotationLimit * Time.deltaTime * Mathf.Sign(180 - Mathf.Abs(gunTurretBone.transform.eulerAngles.y - oldTurretAngY)),
                             gunTurretBone.transform.eulerAngles.z);
-                    } else {
+                    }
+                    else
+                    {
                         aimOn = true;
                     }
                     //ñCêg
                     gunBone.transform.up = gunTurretBone.transform.forward;
                     gunBone.transform.right = gunTurretBone.transform.right;
-                    gunBone.transform.localEulerAngles = new Vector3(90-Mathf.Atan( (Target.transform.position - transform.position).magnitude / shotTangent2TargetDistRatio) * Mathf.Rad2Deg, 0, 0);
+                    gunBone.transform.localEulerAngles = new Vector3(90 - Mathf.Atan((Target.transform.position - transform.position).magnitude / shotTangent2TargetDistRatio) * Mathf.Rad2Deg, 0, 0);
                     //éÀåÇ
-                    if(aimOn && result.transform.GetComponent<Enemy>() == null)MainFire();
+                    if (aimOn && result.transform.GetComponent<Enemy>() == null) MainFire();
 
                     //à⁄ìÆÉpÉ^Å[ÉìÅ´
                     float targetdist = (Target.transform.position - transform.position).magnitude;
-                    
-                        //ìGÇ™âìÇ¢èÍçá
+
+                    //ìGÇ™âìÇ¢èÍçá
                     if (targetdist > ApproachDist)
                     {
                         navAgent.destination = Target.transform.position;
                         curve = 0;
                         //ìGÇ…ê⁄ãﬂÇµÇ∑Ç¨ÇΩå„ÅAå„ëﬁíÜÇÃèÍçá
-                    }else if (overApproach) {//
-                        navAgent.destination = transform.position-((Target.transform.position - transform.position).normalized);
-                        if(targetdist > retreatBoundary)overApproach = false;
+                    }
+                    else if (overApproach)
+                    {//
+                        navAgent.destination = transform.position - ((Target.transform.position - transform.position).normalized);
+                        if (targetdist > retreatBoundary) overApproach = false;
                         //åêÌãóó£Ç∆Ç»ÇËÅAâÒîã@ìÆíÜÇÃèÍçá
-                    }else if(targetdist > overApproachDist) {
-                        if(curve == 0)
+                    }
+                    else if (targetdist > overApproachDist)
+                    {
+                        if (approachPhaseChangeLug > 0)
                         {
-                            curve = (int)(lastRotate/lastRotate);
+                            approachPhaseChangeLug = approachPhaseChangeLug > Time.deltaTime ? approachPhaseChangeLug - Time.deltaTime : 0;
                         }
-                        if (curve < 0) {
-                            navAgent.destination = transform.position + -Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized * flankAttackAngleTangent;
-                        } else {
-                            navAgent.destination = transform.position + Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized * flankAttackAngleTangent;
+                        if (approachPhaseChangeLug <= 0)
+                        {
+                            if (curve == 0)
+                            {
+                                curve = (int)(lastRotate / lastRotate * Mathf.Sign(lastRotate));
+                            }
+                            if (curve < 0)
+                            {
+                                navAgent.destination = transform.position + -Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized * flankAttackAngleTangent;
+                            }
+                            else
+                            {
+                                navAgent.destination = transform.position + Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized + (Target.transform.position - transform.position).normalized * flankAttackAngleTangent;
+                            }
                         }
+
                         //ìGÇ…ê⁄ãﬂÇµÇ∑Ç¨ÇΩèÍçá
-                    }else {
+                    }
+                    else
+                    {
                         curve = 0;
                         overApproach = true;
                         navAgent.destination = transform.position - ((Target.transform.position - transform.position).normalized);
                     }
 
 
-                } else if (Enemy.sharedTargetPosition != null) {
-                    if (Enemy.targetReporter == this) {
-                        Enemy.targetReporter = null;
-                    }
-                    navAgent.destination = (Vector3)Enemy.sharedTargetPosition;
-
                 }
+                else
+                {
+                    approachPhaseChangeLug += approachPhaseChangeLug < 1f ? Time.deltaTime : 0;
+                    if (Enemy.sharedTargetPosition != null)
+                    {
+                        if (Enemy.targetReporter == this)
+                        {
+                            Enemy.targetReporter = null;
+                        }
+                        navAgent.destination = (Vector3)Enemy.sharedTargetPosition;
+
+                    }
+                }
+            }
         } else {
             if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid) {
                 navAgent.destination = transform.position;

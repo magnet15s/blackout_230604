@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEditor;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -13,15 +14,20 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
+    [Space]
     [SerializeField] private Image weaponImage;
     [SerializeField] private Material noDataWeaponImage;
     [SerializeField] private Image hitResponse;
+    [SerializeField] private Image statusView;
+    [Space]
+    [SerializeField] private GameObject damageFX;
+
     [Space]
     [SerializeField] private Transform pilotEyePoint;
     [Space]
     public List<Weapon> weapons;
     [Space]
-    //ŒvŽZ—p
+    //ˆÚ“®ŒvŽZ—p
     private float gravity = 9.8f;
     private bool inAir = false;
     private float inAirCnt = 0;
@@ -54,6 +60,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     private float verticalAiming;
 
     private Vector3 moveDirForAnim;
+    [Space]
+    [SerializeField] private int maxArmorPoint = 500;
+    [SerializeField] private int armorPoint = 500;
     [Space]
     [SerializeField] private float speed = 10;
     [SerializeField] private float dashSpeed = 22;
@@ -192,6 +201,14 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
         if (cc == null) cc = GetComponent<CharacterController>();
         if (gs == null) gs = GetComponent<GroundedSensor>();
 
+        //damageFX
+        damageFX = (GameObject)Resources.Load("BO_WeaponSystem/Particles/vulletHit");
+
+
+
+        //ArmorPoint
+        if (armorPoint > maxArmorPoint) armorPoint = maxArmorPoint;
+
         //weapons
         if (weapons.Count == 0)
         {
@@ -219,7 +236,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
             weaponImage.material = selectWep.HUDWeaponImage;
 
         }
+        
         hitResponse.color = new Color(1, 1, 1, 0);
+
 
 
     }
@@ -472,6 +491,16 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         Debug.Log("Damage!! " + Time.frameCount);
+        armorPoint -= damage;
+        GameObject dfx;
+        (dfx = Instantiate(damageFX, hitPosition, Quaternion.identity)).transform.LookAt(hitPosition + (hitPosition - transform.position));
+        dfx.transform.localScale = new Vector3(3, 3, 3);
+
+
+        statusView.gameObject.GetComponent<Animator>().SetFloat("Armor", (float)armorPoint / (float)maxArmorPoint);
+        statusView.gameObject.GetComponent<Animator>().SetTrigger("Damage");
+
+
     }
 
     public void ThrowHitResponse() {

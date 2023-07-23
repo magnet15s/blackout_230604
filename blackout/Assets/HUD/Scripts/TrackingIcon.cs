@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class TrackingIcon : MonoBehaviour
+{
+    public static TrackingIcon closestIconToCenter = null;
+    public Image image;
+    public GameObject trackingTarget;
+    public GameObject player;
+    private RectTransform rectTransform;
+    public float trackingUpdateInterval = 0.3f;
+    private float TUICnt = 0;
+    private Vector3 trackingPoint;
+    // Start is called before the first frame update
+    void Start()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        trackingPoint = player.transform.position - trackingTarget.transform.position;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(TrackingIcon.closestIconToCenter != null)
+        {
+            if(new Vector2(TrackingIcon.closestIconToCenter.rectTransform.position.x, TrackingIcon.closestIconToCenter.rectTransform.position.y).magnitude > 
+                new Vector2(rectTransform.position.x, rectTransform.position.y).magnitude)
+            {
+                TrackingIcon.closestIconToCenter = this;
+            }
+
+        }
+        else
+        {
+            TrackingIcon.closestIconToCenter = this;
+        }
+
+        TUICnt -= Time.deltaTime;
+        rectTransform.position = Camera.main.WorldToScreenPoint(player.transform.position + trackingPoint);
+        if (TUICnt < 0)
+        {
+            TUICnt = trackingUpdateInterval;
+            if (trackingTarget != null)
+                trackingPoint = player.transform.position - trackingTarget.transform.position;
+
+        }
+
+        if(player.transform.InverseTransformPoint(trackingPoint).z > 0)
+        {
+            image.color = Color.white;
+        }
+        else
+        {
+            image.color = Color.black;
+        }
+        
+    }
+
+    private void OnDestroy()
+    {
+        if (TrackingIcon.closestIconToCenter == this) closestIconToCenter = null;
+    }
+}
