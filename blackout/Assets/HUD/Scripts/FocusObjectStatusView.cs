@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FocusObjectStatusView : MonoBehaviour
 {
+    [SerializeField] Transform player;
     [SerializeField] TextMeshProUGUI tmp;
     public string noFocusText;
     private string enemyFocusText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +32,16 @@ public class FocusObjectStatusView : MonoBehaviour
                 else if ((float)enemy.armorPoint / (float)enemy.maxArmorPoint > 0.3) damageLevel = "major";
                 else if ((float)enemy.armorPoint / (float)enemy.maxArmorPoint > 0.1) damageLevel = "serious";
                 else damageLevel = "fatal";
-                enemyFocusText = $"Focus : {enemy.modelName}\n" +
+
+                float relativeDistance = (enemy.transform.position - player.position).magnitude;
+                int rdDec = (int)(relativeDistance * 100f % 100);
+                int rdInt = (int)relativeDistance;
+
+                enemyFocusText = 
+                    $"Focus : {enemy.modelName}\n" +
                     $"Armor : {enemy.maxArmorPoint}\n" +
-                    $"Damage level : {damageLevel}";
+                    $"Damage level : {damageLevel}\n" +
+                    $"Relative distance : {rdInt}.{rdDec}m";
                 tmp.text = enemyFocusText;
             }
         }

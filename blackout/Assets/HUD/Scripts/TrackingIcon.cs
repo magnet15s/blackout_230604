@@ -46,8 +46,7 @@ public class TrackingIcon : MonoBehaviour
                 trackingPoint = player.transform.position - trackingTarget.transform.position;
 
         }
-
-        if(player.transform.InverseTransformPoint(trackingPoint).z > 0)
+        if(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward) >= 0)
         {
             image.color = Color.white;
         }
@@ -55,7 +54,9 @@ public class TrackingIcon : MonoBehaviour
         {
             image.color = Color.black;
         }
-        
+
+        Debug.Log(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward));
+
     }
 
     private void OnDestroy()

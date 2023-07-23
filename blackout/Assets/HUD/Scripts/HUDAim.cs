@@ -54,6 +54,7 @@ public class HUDAim : MonoBehaviour
                 {
                     if (InTheTrackingArea(Camera.main.WorldToScreenPoint(enemy.transform.position))) //enemyがトラッキングエリア上に存在するか
                     {
+                        if(Vector3.Dot((enemy.transform.position - player.position).normalized, player.forward) >= 0)
                         enemiesInTrackingArea.Add(enemy);
                     }
                 }else if (!InTheTrackingArea(Camera.main.WorldToScreenPoint(enemy.transform.position)))
@@ -77,7 +78,7 @@ public class HUDAim : MonoBehaviour
                 if (!trackingEnemies.Exists(x => x.Equals(enemy)))
                 {
                     Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5,enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
-                    if (result.transform.Equals(enemy.transform))
+                    if (result.transform != null && result.transform.Equals(enemy.transform))
                     {
                         trackingEnemies.Add(enemy);
                         TrackingIcon ti = Instantiate(trackingIcon, this.transform).GetComponent<TrackingIcon>();
