@@ -25,8 +25,8 @@ public class TrackingIcon : MonoBehaviour
     {
         if(TrackingIcon.closestIconToCenter != null)
         {
-            if(new Vector2(TrackingIcon.closestIconToCenter.rectTransform.position.x, TrackingIcon.closestIconToCenter.rectTransform.position.y).magnitude > 
-                new Vector2(rectTransform.position.x, rectTransform.position.y).magnitude)
+            if((new Vector2(TrackingIcon.closestIconToCenter.rectTransform.position.x, TrackingIcon.closestIconToCenter.rectTransform.position.y) - (new Vector2(Screen.width, Screen.height) / 2)).magnitude > 
+                (new Vector2(rectTransform.position.x, rectTransform.position.y) - (new Vector2(Screen.width, Screen.height) / 2)).magnitude)
             {
                 TrackingIcon.closestIconToCenter = this;
             }

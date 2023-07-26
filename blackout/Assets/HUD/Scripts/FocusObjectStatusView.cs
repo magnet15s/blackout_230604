@@ -43,6 +43,9 @@ public class FocusObjectStatusView : MonoBehaviour
                     $"Damage level : {damageLevel}\n" +
                     $"Relative distance : {rdInt}.{rdDec}m";
                 tmp.text = enemyFocusText;
+            } else {
+                enemyFocusText =
+                    $"Focus : {TrackingIcon.closestIconToCenter.gameObject.name.ToString()}";
             }
         }
         else

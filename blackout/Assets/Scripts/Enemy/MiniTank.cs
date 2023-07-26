@@ -67,7 +67,7 @@ public class MiniTank : Enemy , WeaponUser{
     void Start()
     {
         damageFX = (GameObject)Resources.Load("BO_WeaponSystem/Particles/vulletHit");
-        modelName = "MiniTank";
+        base.modelName = this.modelName;
         if(maxArmorPoint == 0)maxArmorPoint = 200;
         if(armorPoint == 0)armorPoint = 200;
 
@@ -91,8 +91,6 @@ public class MiniTank : Enemy , WeaponUser{
     }
     // Update is called once per frame
     void Update() {
-        
-
 
         if (armorPoint > 0) {
             if(fireIntervalCnt > 0) {

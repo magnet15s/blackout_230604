@@ -211,8 +211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelName: miniTank
-  maxArmorPoint: 0
-  armorPoint: 0
+  maxArmorPoint: 200
+  armorPoint: 200
   anim: {fileID: 3576672954151673529}
   gg: {fileID: 3576672954151673477}
   navAgent: {fileID: 5228340101659750198}
@@ -220,6 +220,7 @@ MonoBehaviour:
   gunTurretBone: {fileID: 3920736066403878643}
   gunBone: {fileID: 4523963603243727698}
   gun: {fileID: 0}
+  approachPhaseChangeLug: 0
   turretRotationLimit: 60
   sensorRange: 100
   discoveredTargetShare: 1
@@ -228,7 +229,7 @@ MonoBehaviour:
   overApproachDist: 10
   retreatBoundary: 20
   bulletVelocity: 200
-  bulletDamage: 5
+  bulletDamage: 12
   fireInterval: 1.2
   shotTangent2TargetDistRatio: 4000
 --- !u!95 &3576672954151673529
