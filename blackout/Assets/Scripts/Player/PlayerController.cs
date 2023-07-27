@@ -9,8 +9,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
-{
+public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
@@ -53,6 +52,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     private float moveMagnContext;
     private bool dashContext = false;
     private bool dashItrContext = false;
+    [SerializeField] private float dashItrCnt = 0;
     private bool fireContext = false;
     private Vector2 viewPoint;
 
@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
     [Space]
     [SerializeField] private float speed = 10;
     [SerializeField] private float dashSpeed = 22;
+    [SerializeField] private float dashInteractTime = 0.5f;
     [SerializeField] private float dashCoolTime = 1;
     [SerializeField] private float touchDownTime = 0.8f;
     [Space]
@@ -111,12 +112,20 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (context.canceled && dash)
-        {
-            DashCancel();
-        }
-        dashContext = context.performed;
+        dashItrContext = context.performed;
         
+        if(dashItrCnt > dashInteractTime) {
+            dashContext = context.performed;
+        }
+        if (context.canceled) {
+            dashItrCnt = 0;
+            if (dash) DashCancel();
+        }
+        
+    }
+
+    public void OnJump(InputAction.CallbackContext context) {
+
     }
 
 
@@ -255,6 +264,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver
                 1);
             if (hitResponse.color.r < 0) hitResponse.color = new Color(0, 0, 0, 1);
         }
+
+        //ƒ`ƒƒ[ƒWŒn“ü—Í‰ÁŽZ
+        if (dashItrContext && dashItrCnt < dashInteractTime) dashItrCnt += Time.deltaTime;
 
         //ŽÀˆÚ“®—ÊŒvŽZ
         lastActualMovement = this.transform.position - oldPosition;
