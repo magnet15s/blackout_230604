@@ -28,7 +28,9 @@ public class HUDAim : MonoBehaviour
         {
             trackingIcon = (GameObject)Resources.Load("HUD/EnemyTracking");
         }
-        
+        Debug.Log(rectTransform.sizeDelta.x + " " + rectTransform.sizeDelta.y );
+
+
     }
 
     // Update is called once per frame
@@ -148,8 +150,16 @@ public class HUDAim : MonoBehaviour
 
     private bool InTheTrackingArea(Vector3 screenPoint)
     {
-        Vector3 dist = rectTransform.position - screenPoint;
-        if(Mathf.Abs(dist.x) < (rectTransform.sizeDelta.x * 0.5) / 2 && Mathf.Abs(dist.y) < (rectTransform.sizeDelta.y * 0.5) / 2)//sizeDeltaの係数は自身のサイズにおけるトラッキングエリアのサイズの割合
+        //strech設定の場合うまく動かない
+        /*Vector3 dist = rectTransform.position - screenPoint;
+        if(Mathf.Abs(dist.x) < (Mathf.Abs(rectTransform.sizeDelta.x) * 0.5) / 2 && Mathf.Abs(dist.y) < (Mathf.Abs(rectTransform.sizeDelta.y) * 0.5) / 2)//sizeDeltaの係数は自身のサイズにおけるトラッキングエリアのサイズの割合
+            return true;
+        else return false;*/
+        Vector2 areaOfsMin = rectTransform.offsetMin * 2;
+        Vector2 areaOfsMax = new Vector2(Screen.width,Screen.height) + rectTransform.offsetMax * 2;
+        
+        Debug.Log($"{screenPoint} {areaOfsMin} {areaOfsMax} {Screen.width}");
+        if (screenPoint.x < areaOfsMax.x && screenPoint.y < areaOfsMax.y && screenPoint.x > areaOfsMin.x && screenPoint.y > areaOfsMin.y)
             return true;
         else return false;
     }

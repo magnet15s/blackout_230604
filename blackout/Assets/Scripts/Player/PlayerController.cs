@@ -105,19 +105,13 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     }
 
-    public void OnDashItr(InputAction.CallbackContext context)
-    {
-        dashItrContext = context.performed;
-    }
 
     public void OnDash(InputAction.CallbackContext context)
     {
         dashItrContext = context.performed;
         
-        if(dashItrCnt > dashInteractTime) {
-            dashContext = context.performed;
-        }
         if (context.canceled) {
+            dashContext = false;
             dashItrCnt = 0;
             if (dash) DashCancel();
         }
@@ -267,6 +261,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
         //ƒ`ƒƒ[ƒWŒn“ü—Í‰ÁZ
         if (dashItrContext && dashItrCnt < dashInteractTime) dashItrCnt += Time.deltaTime;
+        if (dashItrCnt >= dashInteractTime) {
+            dashContext = true;
+        }
 
         //ÀˆÚ“®—ÊŒvZ
         lastActualMovement = this.transform.position - oldPosition;

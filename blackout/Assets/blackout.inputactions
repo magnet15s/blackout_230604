@@ -51,15 +51,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "DashInteract",
-                    "type": "Button",
-                    "id": "c7a66620-c9b9-431f-b217-7a7c4edcb66f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Lturn(test)",
                     "type": "Button",
                     "id": "c8a786fb-48b2-4693-aaa5-4caf0affff5c",
@@ -330,7 +321,7 @@
                     "name": "",
                     "id": "17c7509b-cac7-4291-8db3-7f417160840b",
                     "path": "<Keyboard>/shift",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Dash",
@@ -356,17 +347,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rturn(test)",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6f91a052-9e46-4368-acdb-034635270617",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DashInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

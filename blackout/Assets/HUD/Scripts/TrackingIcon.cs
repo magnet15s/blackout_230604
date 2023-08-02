@@ -55,7 +55,7 @@ public class TrackingIcon : MonoBehaviour
             image.color = Color.black;
         }
 
-        Debug.Log(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward));
+        //Debug.Log(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward));
 
     }
 
