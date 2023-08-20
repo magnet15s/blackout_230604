@@ -158,7 +158,7 @@ public class HUDAim : MonoBehaviour
         Vector2 areaOfsMin = rectTransform.offsetMin * 2;
         Vector2 areaOfsMax = new Vector2(Screen.width,Screen.height) + rectTransform.offsetMax * 2;
         
-        Debug.Log($"{screenPoint} {areaOfsMin} {areaOfsMax} {Screen.width}");
+        //Debug.Log($"{screenPoint} {areaOfsMin} {areaOfsMax} {Screen.width}");
         if (screenPoint.x < areaOfsMax.x && screenPoint.y < areaOfsMax.y && screenPoint.x > areaOfsMin.x && screenPoint.y > areaOfsMin.y)
             return true;
         else return false;

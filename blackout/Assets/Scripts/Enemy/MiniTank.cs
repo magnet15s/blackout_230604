@@ -70,6 +70,7 @@ public class MiniTank : Enemy , WeaponUser{
         base.modelName = this.modelName;
         if(maxArmorPoint == 0)maxArmorPoint = 200;
         if(armorPoint == 0)armorPoint = 200;
+        if (onRadarDist == 0) onRadarDist = 500;
 
         if (Target == null && Enemy.sharedTarget != null) Target = Enemy.sharedTarget;
 
@@ -87,6 +88,7 @@ public class MiniTank : Enemy , WeaponUser{
             if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);
             EnemiesList.Remove(this);
+            OnEnemyDestroy(this);//Ž©•ª‚ªŽ€‚ñ‚¾‚±‚Æ‚ð’Ê’m
         }
     }
     // Update is called once per frame
