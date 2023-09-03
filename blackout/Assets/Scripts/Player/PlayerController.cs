@@ -1,3 +1,4 @@
+using Cinemachine;
 using JetBrains.Annotations;
 using System;
 using System.Collections;
@@ -10,6 +11,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
+    
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     [Space]
     [SerializeField] private Transform pilotEyePoint;
+    [SerializeField] private PlayerCameraCood pcc;
     [Space]
     public List<Weapon> weapons;
     [Space]
@@ -55,9 +58,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private float dashItrCnt = 0;
     private bool fireContext = false;
     private Vector2 viewPoint;
+    private bool focusContext = false;
+    private float focusMagn;
 
     private float levelAiming;
     private float verticalAiming;
+
 
     private Vector3 moveDirForAnim;
     [Space]
@@ -71,8 +77,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private float touchDownTime = 0.8f;
     [Space]
     [SerializeField] private float turningSpeed = 200;
-    [SerializeField] private float dashTurningFacter = 0.1f;
+    [SerializeField] private float dashTurningFactor = 0.4f;
     [SerializeField] private Vector2 viewRotetionFactor = new Vector2(10, 10);
+    [SerializeField] private float zoomInViewRotFactor = 0.5f;
+    [SerializeField] private float maxFocusMagn = 2;
     [Space]
     public GameObject pilotCamera;
     public GameObject sightOrigin;
@@ -125,7 +133,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor;
+        viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
         if (viewPoint.y > 80) viewPoint.y = 80;
         else if (viewPoint.y < -80) viewPoint.y = -80;
 
@@ -133,19 +141,18 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         
     }
 
+
     //ïêäÌä÷òA
     public void OnFire(InputAction.CallbackContext context)
     {
         if (context.started) fireContext = true; 
-        else if(context.canceled)fireContext = false;
+        if(context.canceled)fireContext = false;
     }
 
     public void OnFocus(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            selectWep.SubAction();
-        }
+        if(context.performed) focusContext = true;
+        else if(context.canceled) focusContext = false;
     }
 
     public void OnReload(InputAction.CallbackContext context)
@@ -242,7 +249,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         
         hitResponse.color = new Color(1, 1, 1, 0);
 
-
+        
 
     }
 
@@ -298,7 +305,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (dashContext && moveMagnContext > 0 && dashCTcnt == 0 && !dash)
         {
             dash = true;
-            turningSpeed *= dashTurningFacter;
+            turningSpeed *= dashTurningFactor;
         }
 
 
@@ -427,6 +434,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
 
         if (fireContext) selectWep.MainAction();
+        pcc.zoom = focusContext;
     }
 
     //ÇªÇÃëºä÷êî
@@ -434,7 +442,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     {
         dash = false;
         dashCTcnt = dashCoolTime;
-        turningSpeed /= dashTurningFacter;
+        turningSpeed /= dashTurningFactor;
         inertiaAngle = dashAngle;
         dashAngle = Vector3.zero;
     }

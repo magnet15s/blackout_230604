@@ -78,4 +78,5 @@ public abstract class Weapon : MonoBehaviour
     /// c’e§ŒÀ‚Ì‚È‚¢•Ší‚Íreturn;‚Ì‚İ‚ÅOK
     /// </summary>
     public abstract void Reload();
+
 }

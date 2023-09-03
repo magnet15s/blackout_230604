@@ -2852,8 +2852,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537667858}
-  m_LocalRotation: {x: 0.02884784, y: 0.011061239, z: 0.004202667, w: 0.9995138}
-  m_LocalPosition: {x: -145.07643, y: 23.101768, z: 95.55116}
+  m_LocalRotation: {x: 0.028797507, y: 0.011191798, z: -0.00032244987, w: 0.99952257}
+  m_LocalPosition: {x: -145.07281, y: 23.101784, z: 95.55109}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2927,6 +2927,10 @@ PrefabInstance:
     - target: {fileID: 5228340101659750199, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_Name
       value: miniTankNav
+      objectReference: {fileID: 0}
+    - target: {fileID: 5228340101659750199, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
@@ -3290,6 +3294,7 @@ GameObject:
   - component: {fileID: 586725630}
   - component: {fileID: 586725631}
   - component: {fileID: 586725632}
+  - component: {fileID: 586725633}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -3304,7 +3309,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586725629}
-  m_LocalRotation: {x: 0.02884784, y: 0.011061239, z: 0.004202667, w: 0.9995138}
+  m_LocalRotation: {x: 0.028797507, y: 0.011191798, z: -0.00032244987, w: 0.99952257}
   m_LocalPosition: {x: -0.0025812783, y: 0.8146508, z: 0.30204135}
   m_LocalScale: {x: 0.83333296, y: 0.8333325, z: 0.8333326}
   m_ConstrainProportionsScale: 0
@@ -3354,6 +3359,21 @@ MonoBehaviour:
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1404281097}
 --- !u!114 &586725632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586725629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ef7157682b4831458a77c09ed71bfd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoom: 0
+  zoomInFOV: 29.8
+  zoomInOutTime: 0.1
+--- !u!114 &586725633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5470,7 +5490,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.02884784, y: 0.011061239, z: 0.004202667, w: 0.9995138}
+  m_LocalRotation: {x: 0.028797507, y: 0.011191798, z: -0.00032244987, w: 0.99952257}
   m_LocalPosition: {x: -147.90309, y: 20.977583, z: 103.16245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9408,7 +9428,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
-  m_Range: 100
+  m_Range: 200
   m_SpotAngle: 60
   m_InnerSpotAngle: 6
   m_CookieSize: 10
@@ -11324,6 +11344,7 @@ MonoBehaviour:
   statusView: {fileID: 778462484}
   damageFX: {fileID: 0}
   pilotEyePoint: {fileID: 1348107741}
+  pcc: {fileID: 586725632}
   weapons:
   - {fileID: 1895472667}
   - {fileID: 874129743}
@@ -11338,8 +11359,10 @@ MonoBehaviour:
   dashCoolTime: 0.6
   touchDownTime: 0.8
   turningSpeed: 100
-  dashTurningFacter: 0.4
+  dashTurningFactor: 0.4
   viewRotetionFactor: {x: 0.5, y: -0.5}
+  zoomInViewRotFactor: 0.5
+  maxFocusMagn: 2
   pilotCamera: {fileID: 586725629}
   sightOrigin: {fileID: 700344415}
   setEnemiesShareTarget: 1
@@ -11549,7 +11572,19 @@ MonoBehaviour:
     m_ActionId: 03966cd7-3487-4613-b9cb-f322a7ad8420
     m_ActionName: Player/WeaponListDoun[/Keyboard/f]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5866666019961221425}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnFocus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 15be3bae-255f-4759-93f9-cbb11ce964f1
     m_ActionName: Player/Focus[/Mouse/rightButton]
   - m_PersistentCalls:

@@ -44,9 +44,12 @@ public class Radar : MonoBehaviour
     {
         Debug.Log("");
         Transform e;
-        enemies.TryGetValue(enemy, out e);
-        this.enemies.Remove(enemy);
-        Destroy(e.gameObject);
+        if(enemies.TryGetValue(enemy, out e))
+        {
+            this.enemies.Remove(enemy);
+            Destroy(e.gameObject);
+        }
+        
     }
 
     // Start is called before the first frame update
