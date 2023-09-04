@@ -19,7 +19,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         dashcancel = 3,
         dashcharge = 4,
         falling = 5,
-        jump = 6
+        jump = 6,
+        jumpcharge = 7,
+        evasionmove = 8
     } 
 
     [SerializeField] private Animator anim;
@@ -65,9 +67,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private float moveMagnContext;
     private bool dashContext = false;
     private bool dashItrContext = false;
-    [SerializeField] private float dashItrCnt = 0;
+    private float dashItrCnt = 0;
     private bool jumpContext = false;
     private bool jumpable = false;
+    private float jumpChargeCnt = 0;
     private bool fireContext = false;
     private Vector2 viewPoint;
     private bool focusContext = false;
@@ -87,6 +90,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private float dashInteractTime = 0.5f;
     [SerializeField] private float dashCoolTime = 1;
     [SerializeField] private float touchDownTime = 0.8f;
+    [Space]
+    [SerializeField] private float jumpHeight = 3;
+    [SerializeField] private float jumpChargeTime = 0.3f;
+    
     [Space]
     [SerializeField] private float turningSpeed = 200;
     [SerializeField] private float dashTurningFactor = 0.4f;
@@ -141,7 +148,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public void OnJump(InputAction.CallbackContext context) {
         Debug.Log(context.phase.ToString());
         if (context.started) {
-            if(gs.isGrounded() && )
+            if (GetPlayerActSt() == PlayerActionState.jumpcharge) { }//koko
+            jumpContext = true;
+
         }
 
         
@@ -287,6 +296,31 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (dashItrContext && dashItrCnt < dashInteractTime) dashItrCnt += Time.deltaTime;
         if (dashItrCnt >= dashInteractTime) {
             dashContext = true;
+        }
+
+        if (jumpContext)
+        {
+            PlayerActionState pas = GetPlayerActSt();
+            switch (pas)
+            {
+                case PlayerActionState.falling:
+                case PlayerActionState.dashcancel:
+                case PlayerActionState.jump:
+                    jumpChargeCnt = 0;
+                    jumpContext = false;
+                    break;
+
+                case PlayerActionState.move:
+                case PlayerActionState.dash:
+                case PlayerActionState.dashcharge:
+                case PlayerActionState.idle:
+                    jumpChargeCnt += Time.deltaTime;
+                    break;
+
+                case PlayerActionState.jumpcharge:
+                    break;
+
+            }
         }
 
         //ŽÀˆÚ“®—ÊŒvŽZ
@@ -522,12 +556,13 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (moveMagnContext > 0) return "move";
         return "idle";
     }
-    public PlayerActionState getPlayerActSt() {
+    public PlayerActionState GetPlayerActSt() {
 
         PlayerActionState pas =
             inAir && lastMovement.y <= 0 ? PlayerActionState.jump :
             inAir ? PlayerActionState.falling :
             dashCTcnt > 0 ? PlayerActionState.dashcancel :
+            jumpChargeCnt > 0 ? PlayerActionState.jumpcharge :
             dash ? PlayerActionState.dash :
             dashItrContext ? PlayerActionState.dashcharge :
             moveMagnContext > 0 ? PlayerActionState.move :
