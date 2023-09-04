@@ -11,7 +11,17 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
-    
+
+    public enum PlayerActionState {
+        idle = 0,
+        move = 1,
+        dash = 2,
+        dashcancel = 3,
+        dashcharge = 4,
+        falling = 5,
+        jump = 6
+    } 
+
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
@@ -56,6 +66,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool dashContext = false;
     private bool dashItrContext = false;
     [SerializeField] private float dashItrCnt = 0;
+    private bool jumpContext = false;
+    private bool jumpable = false;
     private bool fireContext = false;
     private Vector2 viewPoint;
     private bool focusContext = false;
@@ -127,7 +139,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     }
 
     public void OnJump(InputAction.CallbackContext context) {
+        Debug.Log(context.phase.ToString());
+        if (context.started) {
+            if(gs.isGrounded() && )
+        }
 
+        
     }
 
 
@@ -364,7 +381,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
 
             movement.y = -30;//Ú’nŽžd—Í
-        } else {
+        } else {//‹ó’†‚É‹‚éê‡
             if (!inAir) {
                 inAir = true;
                 inAirCnt = 0;
@@ -504,6 +521,19 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (dashItrContext) return "dash interact";
         if (moveMagnContext > 0) return "move";
         return "idle";
+    }
+    public PlayerActionState getPlayerActSt() {
+
+        PlayerActionState pas =
+            inAir && lastMovement.y <= 0 ? PlayerActionState.jump :
+            inAir ? PlayerActionState.falling :
+            dashCTcnt > 0 ? PlayerActionState.dashcancel :
+            dash ? PlayerActionState.dash :
+            dashItrContext ? PlayerActionState.dashcharge :
+            moveMagnContext > 0 ? PlayerActionState.move :
+            PlayerActionState.idle;
+
+        return pas;
     }
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
