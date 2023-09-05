@@ -11350,7 +11350,7 @@ MonoBehaviour:
   - {fileID: 874129743}
   selectWep: {fileID: 0}
   selWepIdx: 0
-  dashItrCnt: 0
+  jumpChargeCnt: 0
   maxArmorPoint: 500
   armorPoint: 500
   speed: 12
@@ -11358,6 +11358,8 @@ MonoBehaviour:
   dashInteractTime: 0.5
   dashCoolTime: 0.6
   touchDownTime: 0.8
+  jumpTime: 1
+  jumpChargeTime: 0.3
   turningSpeed: 100
   dashTurningFactor: 0.4
   viewRotetionFactor: {x: 0.5, y: -0.5}

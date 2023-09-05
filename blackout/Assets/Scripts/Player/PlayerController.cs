@@ -21,7 +21,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         falling = 5,
         jump = 6,
         jumpcharge = 7,
-        evasionmove = 8
+        evasionmove = 8,
+        touchdown = 9
     } 
 
     [SerializeField] private Animator anim;
@@ -58,6 +59,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private Vector3 groundNormal;
     private Vector3 wallBoundVector;
     private bool wallBound = false;
+    private bool jump = false;
+    private bool jumped = false;
 
     [SerializeField] private Weapon selectWep;
     [SerializeField] private int selWepIdx;
@@ -70,7 +73,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private float dashItrCnt = 0;
     private bool jumpContext = false;
     private bool jumpable = false;
-    private float jumpChargeCnt = 0;
+    [SerializeField]private float jumpChargeCnt = 0;
+    private bool evasionMoveContext = false;
     private bool fireContext = false;
     private Vector2 viewPoint;
     private bool focusContext = false;
@@ -91,7 +95,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private float dashCoolTime = 1;
     [SerializeField] private float touchDownTime = 0.8f;
     [Space]
-    [SerializeField] private float jumpHeight = 3;
+    [SerializeField, Tooltip("ジャンプのおおよその上昇時間")] private float jumpTime = 2;
     [SerializeField] private float jumpChargeTime = 0.3f;
     
     [Space]
@@ -145,10 +149,14 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         
     }
 
-    public void OnJump(InputAction.CallbackContext context) {
-        Debug.Log(context.phase.ToString());
+    public void OnJump(InputAction.CallbackContext context) {//緊急回避もここで判定
         if (context.started) {
-            if (GetPlayerActSt() == PlayerActionState.jumpcharge) { }//koko
+            if (GetPlayerActSt() == PlayerActionState.jumpcharge) {//ジャンプチャージ中にもう一度ジャンプを押すと緊急回避に派生
+                jumpChargeCnt = 0;
+                jumpContext = false;
+                evasionMoveContext = true;
+                return;
+            }
             jumpContext = true;
 
         }
@@ -293,35 +301,52 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         }
 
         //チャージ系入力加算
+        //ダッシュチャージ
         if (dashItrContext && dashItrCnt < dashInteractTime) dashItrCnt += Time.deltaTime;
         if (dashItrCnt >= dashInteractTime) {
             dashContext = true;
         }
-
+        //ジャンプチャージ
+        bool jumpCharge = false;
         if (jumpContext)
         {
             PlayerActionState pas = GetPlayerActSt();
             switch (pas)
             {
+                //ジャンプしない、ジャンプをキャンセルするアクション
                 case PlayerActionState.falling:
-                case PlayerActionState.dashcancel:
                 case PlayerActionState.jump:
+                case PlayerActionState.touchdown:
+                case PlayerActionState.evasionmove:
                     jumpChargeCnt = 0;
                     jumpContext = false;
+                    jump = false;
                     break;
 
+                //ジャンプチャージを開始、継続するアクション
                 case PlayerActionState.move:
                 case PlayerActionState.dash:
+                case PlayerActionState.dashcancel:
                 case PlayerActionState.dashcharge:
                 case PlayerActionState.idle:
-                    jumpChargeCnt += Time.deltaTime;
-                    break;
-
                 case PlayerActionState.jumpcharge:
+                    jumpCharge = true;
                     break;
-
+                default :
+                    Debug.LogWarning("[PlayerController] > ジャンプ呼び動作中にこのアクションが行われることを想定していません。\n" +
+                        "ジャンプチャージ処理を編集してください　(アクション:" + GetPlayerActSt() + ")");
+                    break;
             }
         }
+        if (jumpCharge) {
+            jumpChargeCnt += Time.deltaTime;
+            if (jumpChargeCnt > jumpChargeTime) {
+                jump = true;
+                jumpChargeCnt = 0;
+                jumpContext = false;
+            }
+        }
+        
 
         //実移動量計算
         lastActualMovement = this.transform.position - oldPosition;
@@ -361,8 +386,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
 
         //移動入力計算
-
-        if (gs.isGrounded(out groundNormal) && !wallBound) //接地判定
+        jumped = false;
+        if (gs.isGrounded(out groundNormal) && !wallBound && !jump) //接地判定
         {
             
             if (dashCTcnt == 0) {
@@ -396,10 +421,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
             }
             if (inAir) {//着地の瞬間
-                if(Vector3.Angle(groundNormal, Vector3.up) > cc.slopeLimit) {
+                if(Vector3.Angle(groundNormal, Vector3.up) > cc.slopeLimit) {//groundSensorが着地判定を出したが、坂の角度がslopeLimitを越えていた場合
+                    //ここではinAirはfalseにしない。　if(wallBound) 部で跳ね返りを計算しながら滑り落ちていく
                     wallBoundVector = Vector3.Reflect(lastMovement, groundNormal);
                     wallBound = true;
-                    //Debug.LogWarning($"ha {Vector3.Angle(groundNormal, Vector3.up)}");
                 } else {
                     inAir = false;
                     touchDownCnt = touchDownTime;
@@ -412,13 +437,22 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 }
                 movement = worldVec2localVec(lastMovement) * 0.5f;
             }
+            
+            movement.y = -30; //接地時重力
 
 
-            movement.y = -30;//接地時重力
         } else {//空中に居る場合
             if (!inAir) {
+                
+                if (jump) {
+                    gs.Sleep(jumpTime, false);
+                    jump = false;
+                    jumped = true;  //GetPlayerActSt()を使用して他コンポーネントからジャンプを検知する時の為
+                                    //1フレーム猶予を設ける(jumpedは次のフレームでfalseになる)
+                    inAirCnt = -jumpTime;
+                }
+                else inAirCnt = 0;
                 inAir = true;
-                inAirCnt = 0;
                 lastMovement.y = 0;
             } else {
                 if(inAirCnt < 1.8)inAirCnt += Time.deltaTime;
@@ -437,7 +471,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 else horLMDiff *= 0.1f;
                 lastMovement.x = lastActualMovement.x - (horLMDiff.x);
                 lastMovement.z = lastActualMovement.z - (horLMDiff.y);
-                
+                if(lastActualMovement.y < 0) {
+                    gs.WakeUp();
+                }
                 //Debug.Log("つっかえ " + lastActualMovement);
             } else {
                 //Debug.Log("Notつっかえ");
@@ -486,6 +522,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
         if (fireContext) selectWep.MainAction();
         pcc.zoom = focusContext;
+
+        //--------------------
+        //　↑射撃　↓その他
+        //--------------------
+        Debug.Log($"{GetPlayerActSt().ToString()}");
     }
 
     //その他関数
@@ -546,6 +587,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 1, 0);
     }
 
+    /// <summary>
+    /// テストの為初期に作ったアクション取得用メソッド。非推奨。GetPlayerActSt()を使う事
+    /// </summary>
+    /// <returns></returns>
     public string getActState()
     {
         if (inAir)          return "in the air";
@@ -561,8 +606,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         PlayerActionState pas =
             inAir && lastMovement.y <= 0 ? PlayerActionState.jump :
             inAir ? PlayerActionState.falling :
-            dashCTcnt > 0 ? PlayerActionState.dashcancel :
+            touchDownCnt > 0 ? PlayerActionState.touchdown :
             jumpChargeCnt > 0 ? PlayerActionState.jumpcharge :
+            jump || jumped ? PlayerActionState.jump :
+            dashCTcnt > 0 ? PlayerActionState.dashcancel :
             dash ? PlayerActionState.dash :
             dashItrContext ? PlayerActionState.dashcharge :
             moveMagnContext > 0 ? PlayerActionState.move :
