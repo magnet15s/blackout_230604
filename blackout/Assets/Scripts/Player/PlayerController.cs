@@ -72,8 +72,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool dashItrContext = false;
     private float dashItrCnt = 0;
     private bool jumpContext = false;
-    private bool jumpable = false;
-    [SerializeField]private float jumpChargeCnt = 0;
+    private float jumpChargeCnt = 0;
     private bool evasionMoveContext = false;
     private bool fireContext = false;
     private Vector2 viewPoint;

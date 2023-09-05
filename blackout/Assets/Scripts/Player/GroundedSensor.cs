@@ -8,7 +8,7 @@ public class GroundedSensor : MonoBehaviour
 
     public Vector3 sensorOriginOffset = Vector3.zero;
     public float sensorRange = 0.2f;
-
+    public float sensorRadius = 1; 
     public bool layerMask = false; 
     public int catchLayer = 0;
 
@@ -16,6 +16,7 @@ public class GroundedSensor : MonoBehaviour
 
     private Vector3 rayDirection;
     private Ray ray;
+    private Ray[] arRay = new Ray[8];
 
     public float sleep { get; private set; }
     private bool sensorAns;//ƒXƒŠ[ƒv’†‚Ì‰ğ“š
@@ -23,8 +24,18 @@ public class GroundedSensor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         ray = new Ray(transform.position + sensorOriginOffset, -transform.up);
+        int i = 0;
+        for(int x = -1; x <= 1; x++)
+        {
+            for(int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0) break;
+                //arRay[i] = 
+                i++;
+            }
+        }
         if (drawRay) Debug.DrawRay(ray.origin, ray.direction * sensorRange, Color.green, Time.deltaTime);
     }
 
