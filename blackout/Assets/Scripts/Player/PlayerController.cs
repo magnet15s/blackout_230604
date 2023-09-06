@@ -477,7 +477,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             } else {
                 //Debug.Log("Not‚Â‚Á‚©‚¦");
             }
-            movement = worldVec2localVec(lastMovement)
+            movement = worldVec2localVec(lastMovement);
+
+            
+
+            
+            
             
         }
 
