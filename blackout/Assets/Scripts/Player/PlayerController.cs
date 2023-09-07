@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     //移動計算用
     private float gravity = 9.8f;
     private bool inAir = false;
-    private float inAirCnt = 0;
+    [SerializeField]private float inAirCnt = 0;
     private float touchDownCnt = 0;
     private Vector3 movement = Vector3.zero;
     private Vector3 lastMovement = Vector3.zero;
@@ -150,13 +150,13 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     public void OnJump(InputAction.CallbackContext context) {//緊急回避もここで判定
         if (context.started) {
+            jumpContext = true;
             if (GetPlayerActSt() == PlayerActionState.jumpcharge) {//ジャンプチャージ中にもう一度ジャンプを押すと緊急回避に派生
                 jumpChargeCnt = 0;
                 jumpContext = false;
                 evasionMoveContext = true;
                 return;
             }
-            jumpContext = true;
 
         }
 
@@ -525,7 +525,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
         //　↑射撃　↓その他
         //--------------------
-        Debug.Log($"{GetPlayerActSt().ToString()}");
+        Debug.Log($"{movement}");
     }
 
     //その他関数
