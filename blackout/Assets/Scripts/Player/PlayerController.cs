@@ -525,7 +525,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
         //@ªËŒ‚@«‚»‚Ì‘¼
         //--------------------
-        Debug.Log($"{movement}");
+        //Debug.Log($"{movement}");
     }
 
     //‚»‚Ì‘¼ŠÖ”

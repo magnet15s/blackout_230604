@@ -87,7 +87,6 @@ public class MiniTank : Enemy , WeaponUser{
         if(armorPoint <= 0) {
             if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);
-            EnemiesList.Remove(this);
             OnEnemyDestroy(this);//Ž©•ª‚ªŽ€‚ñ‚¾‚±‚Æ‚ð’Ê’m
         }
     }

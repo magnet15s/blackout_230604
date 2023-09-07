@@ -56,6 +56,7 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
 
     protected virtual void OnEnemyDestroy(Enemy enemy)
     {
+        EnemiesList.Remove(this);
         EnemyDestroy?.Invoke(enemy);
     }
 }
