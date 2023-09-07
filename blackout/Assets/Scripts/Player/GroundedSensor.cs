@@ -26,7 +26,7 @@ public class GroundedSensor : MonoBehaviour
     {
 
         ray = new Ray(transform.position + sensorOriginOffset, -transform.up);
-        int i = 0;
+        /*int i = 0;
         for(int x = -1; x <= 1; x++)
         {
             for(int y = -1; y <= 1; y++)
@@ -35,7 +35,7 @@ public class GroundedSensor : MonoBehaviour
                 //arRay[i] = 
                 i++;
             }
-        }
+        }*/
         if (drawRay) Debug.DrawRay(ray.origin, ray.direction * sensorRange, Color.green, Time.deltaTime);
     }
 
