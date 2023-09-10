@@ -1,10 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
+    public class Conc : Weapon, WeaponUser {
+        public class BulletHitEventOrgs : EventArgs {
+            public GameObject bullet { get; private set; }
+            public GameObject hitObject { get; private set; }
+            public static new BulletHitEventOrgs Empty { get { return new BulletHitEventOrgs(null, null); } }
+            public BulletHitEventOrgs(GameObject _bullet, GameObject _hitObject) {
+                bullet = _bullet;
+                hitObject = _hitObject;
+            }
+        }
+        public event EventHandler bulletHit;
+        protected virtual void OnBulletHit(BulletHitEventOrgs e) {
+            bulletHit?.Invoke(this, BulletHitEventOrgs.Empty);
+        }
 
+        public override WeaponUser sender { get { return this; } set {} }
+        public override string weaponName { get; set; }
+        public override int? remainAmmo { get; set; }
+        public override string remainAmmoType { get; set; }
+        public override float cooldownProgress { get; set; }
+        public override string cooldownMsg { get; set; }
+        public override void Ready() { }
+        public override void PutAway() { }
+        public override void MainAction() { }
+        public override void SubAction() { }
+        public override void Reload() { }
+        Animator WeaponUser.getAnim() { return null; }
+        string WeaponUser.getWepUseAnimLayer() { return null; }
+
+        GameObject WeaponUser.getAimingObj() { return null; }
+
+        void WeaponUser.ThrowHitResponse() {
+            OnBulletHit(BulletHitEventOrgs.Empty);
+        }
+        void WeaponUser.ThrowHitResponse(GameObject bullet, GameObject hitObject) {//bulletがコイツを叩く
+            OnBulletHit(new BulletHitEventOrgs(bullet, hitObject));//そしたらイベント発火→Concにsubscribeしてる奴らのEventHandlerを実行
+        }
+    }
+    public static Conc GetWeapon() {
+        return new Conc();
+    }
     
     public abstract WeaponUser sender { get; set; } 
     public void setSender(WeaponUser sender) {
@@ -23,7 +65,7 @@ public abstract class Weapon : MonoBehaviour
     public abstract int? remainAmmo { get; set; }
 
     /// <summary>
-    /// 弾のタイプ（実弾、エネルギー等）の表示名
+    /// 残弾のタイプ（実弾、エネルギー等）の表示名
     /// </summary>
     public abstract string remainAmmoType { get; set; }
 
@@ -80,3 +122,4 @@ public abstract class Weapon : MonoBehaviour
     public abstract void Reload();
 
 }
+

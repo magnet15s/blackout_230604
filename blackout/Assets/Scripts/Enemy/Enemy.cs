@@ -56,7 +56,9 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
 
     protected virtual void OnEnemyDestroy(Enemy enemy)
     {
-        EnemiesList.Remove(this);
+        int idx = EnemiesList.FindIndex(x => x.Equals(enemy));
+        if(idx != -1) EnemiesList.Remove(EnemiesList[idx]);
+        if (targetReporter != null && targetReporter.Equals(enemy)) targetReporter = null;
         EnemyDestroy?.Invoke(enemy);
     }
 }

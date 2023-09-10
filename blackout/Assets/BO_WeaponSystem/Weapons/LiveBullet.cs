@@ -90,7 +90,7 @@ public class LiveBullet : MonoBehaviour
             if ((dr = other.GetComponent<DamageReceiver>()) != null) {
                 Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
                 dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
-                shooter.sender.ThrowHitResponse();
+                shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject );
             }
         }
        
