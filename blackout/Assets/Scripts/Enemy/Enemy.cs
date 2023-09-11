@@ -15,10 +15,10 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
     private static int lastId = 0;
 
     
-    public static GameObject sharedTarget = null;
-    public static Vector3? sharedTargetPosition = null;
-    public static Enemy targetReporter = null;
-    public static List<Enemy> EnemiesList = new();
+    public static GameObject sharedTarget { get; set; } = null;
+    public static Vector3? sharedTargetPosition { get; protected set; } = null;
+    public static Enemy targetReporter { get; protected set; } = null;
+    public static List<Enemy> EnemiesList { get; protected set; } = new();
 
 
     public int enemyId { get; private set; } = -1;

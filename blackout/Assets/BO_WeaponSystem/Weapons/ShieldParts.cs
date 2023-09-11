@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ShieldParts : MonoBehaviour, DamageReceiver
 {
-    [SerializeField] ShieldRoot shieldRoot;
+
+    [SerializeField] private GameObject _shieldRoot;
+    [SerializeField] private ShieldRoot shieldRoot;
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         if (shieldRoot != null) {
             shieldRoot.HitReceive(this, damage, hitPosition, source, damageType);
@@ -16,7 +18,7 @@ public class ShieldParts : MonoBehaviour, DamageReceiver
     // Start is called before the first frame update
     void Start()
     {
-        
+        shieldRoot = _shieldRoot.GetComponent<ShieldRoot>();
     }
 
     // Update is called once per frame

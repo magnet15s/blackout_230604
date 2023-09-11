@@ -10410,7 +10410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &821880634616358498
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11799,6 +11799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 874129741}
 --- !u!33 &6466404891785970291
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11936,6 +11937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 874129741}
 --- !u!1 &7268704625329688737
 GameObject:
   m_ObjectHideFlags: 0
@@ -12235,7 +12237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &8934709929555188091
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -12262,6 +12264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 874129741}
 --- !u!4 &8997901378691935931
 Transform:
   m_ObjectHideFlags: 0
