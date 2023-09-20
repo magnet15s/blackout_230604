@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TrackingIcon : MonoBehaviour
 {
+    public RectTransform canvas;
     public static TrackingIcon closestIconToCenter = null;
     public Image image;
     public GameObject trackingTarget;
@@ -38,7 +39,11 @@ public class TrackingIcon : MonoBehaviour
         }
 
         TUICnt -= Time.deltaTime;
-        rectTransform.position = Camera.main.WorldToScreenPoint(player.transform.position + trackingPoint);
+        
+        Vector3 rlp = Camera.main.WorldToScreenPoint(player.transform.position + trackingPoint) - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+
+        rectTransform.localPosition = new Vector3(rlp.x, rlp.y, 0); 
+        Debug.Log(rectTransform.localPosition);
         if (TUICnt < 0)
         {
             TUICnt = trackingUpdateInterval;
