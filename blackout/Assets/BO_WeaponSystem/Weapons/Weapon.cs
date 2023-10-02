@@ -6,7 +6,8 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public class Conc : Weapon, WeaponUser {
+    public class Conc : Weapon, WeaponUser { //とりあえずWeaponを持たせる時用のWeaponを継承させた具象クラス
+        
         public class BulletHitEventOrgs : EventArgs {
             public GameObject bullet { get; private set; }
             public GameObject hitObject { get; private set; }
@@ -16,7 +17,9 @@ public abstract class Weapon : MonoBehaviour
                 hitObject = _hitObject;
             }
         }
+
         public event EventHandler bulletHit;
+
         protected virtual void OnBulletHit(BulletHitEventOrgs e) {
             bulletHit?.Invoke(this, BulletHitEventOrgs.Empty);
         }
@@ -44,6 +47,8 @@ public abstract class Weapon : MonoBehaviour
             OnBulletHit(new BulletHitEventOrgs(bullet, hitObject));//そしたらイベント発火→Concにsubscribeしてる奴らのEventHandlerを実行
         }
     }
+
+
     public static Conc GetWeapon() {
         return new Conc();
     }
