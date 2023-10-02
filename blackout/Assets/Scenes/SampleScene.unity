@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 177.90009, y: 81.5}
+  m_AnchoredPosition: {x: 177.90015, y: 81.5}
   m_SizeDelta: {x: 272.9, y: -633}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &29020666
@@ -2749,7 +2749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -779.9, y: -360.5}
+  m_AnchoredPosition: {x: -779.9001, y: -360.5}
   m_SizeDelta: {x: -1640, y: -800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486002024
@@ -2987,7 +2987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 76e87ff3550e55d4087e1274141ce31d, type: 2}
-  m_Color: {r: 0.70199996, g: 0.70199996, b: 0.70199996, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3629,7 +3629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 664.49994, y: -422.40002}
+  m_AnchoredPosition: {x: 664.5, y: -422.40002}
   m_SizeDelta: {x: -1392, y: -891.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &653972385
@@ -5553,7 +5553,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06fa3380922fb5643867833224ef6c3b, type: 3}
   m_Name: 
@@ -8083,7 +8083,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 963194227}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 0.5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -8353,7 +8353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -782.1, y: 430.59998}
+  m_AnchoredPosition: {x: -782.10004, y: 430.59998}
   m_SizeDelta: {x: -1608.6, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657657736
@@ -9144,7 +9144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 644.10004, y: 164.90002}
+  m_AnchoredPosition: {x: 644.1001, y: 164.90002}
   m_SizeDelta: {x: -1331.6, y: -329.09998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848143413
@@ -9441,7 +9441,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.5
   m_Range: 200
   m_SpotAngle: 60
   m_InnerSpotAngle: 6
@@ -11367,8 +11367,8 @@ MonoBehaviour:
   selWepIdx: 0
   maxArmorPoint: 500
   armorPoint: 500
-  speed: 12
-  dashSpeed: 25
+  speed: 15
+  dashSpeed: 28
   dashInteractTime: 0.5
   dashCoolTime: 0.6
   touchDownTime: 0.8

@@ -85,22 +85,27 @@ Shader "Unlit/PostEffect"
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-                col.r = max(min(col.r, 1), 0.01);
-                col.g = max(min(col.g, 1), 0.01);
-                col.b = max(min(col.b, 1), 0.01);
-                col.a = max(min(col.a, 1), 0.01);
-                half a = 0.7;
-                half b = 0.5;
-                col = saturate(a * (col - b) + .38) ;//saturate((sin((col - 0.5) * PI )/2.5) + 0.5);
+                col.r = saturate(col.r);
+                col.g = saturate(col.g);
+                col.b = saturate(col.b);
+                col.a = 1;
+                half a = 1.5;
+                half b = 0.4;
+                //col = saturate(a * (col - b) + .38) ;//saturate((sin((col - 0.5) * PI )/2.5) + 0.5);
+                col.r = col.r > 0.5 ? min(a * (col.r - b) + 0.5, 1 / a * (col.r - 1) + 1) : max(a * (col.r - b) + 0.5, 1 / a * col.r);
+                col.g = col.g > 0.5 ? min(a * (col.g - b) + 0.5, 1 / a * (col.g - 1) + 1) : max(a * (col.g - b) + 0.5, 1 / a * col.g);
+                col.b = col.b > 0.5 ? min(a * (col.b - b) + 0.5, 1 / a * (col.b - 1) + 1) : max(a * (col.b - b) + 0.5, 1 / a * col.b);
                 fixed4 blCol = contConf(getBoxSamp(i.uv, .004), _BloomThres);
-                col += blCol * 0.04; 
+                col += blCol * 0.06; 
                 blCol = contConf(getBoxSamp(i.uv, .003), _BloomThres);
-                col += blCol * 0.05;
+                col += blCol * 0.08;
                 blCol = contConf(getBoxSamp(i.uv, .002), _BloomThres);
-                col += blCol * 0.1;
-                blCol = contConf(getBoxSamp(i.uv, .001), _BloomThres);
                 col += blCol * 0.2;
+                blCol = contConf(getBoxSamp(i.uv, .001), _BloomThres);
+                col += blCol * 0.3;
                 col += contConf(col, _BloomThres);
+
+
 
                 // apply noise
                 #ifdef _NOISE_ON
