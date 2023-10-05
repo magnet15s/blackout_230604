@@ -17,6 +17,8 @@ public class A53_31 : Weapon
     private bool ready = false;
     private bool trigger = false;
 
+    [SerializeField] private PlayerCameraCood pcc;
+    [Space]
 
     private Animator anim;
     private int RAAnimLayerIdx;
@@ -39,6 +41,8 @@ public class A53_31 : Weapon
 
     [Space]
     public Material HUDImage = null;
+
+    private float zoomCancCnt = 0;
 
     
     void Start() {
@@ -116,6 +120,12 @@ public class A53_31 : Weapon
                     cooldownProgress = aRIntCnt / autoReloadInterval;
                 }
             }
+            //------ªŽ©“®‘•“U-----
+            //------«ƒJƒƒ‰ƒY[ƒ€-
+            if(zoomCancCnt > 0) pcc.zoom = true;
+            else pcc.zoom = false;
+
+            zoomCancCnt -= Time.deltaTime;
             
 
         }
@@ -131,11 +141,11 @@ public class A53_31 : Weapon
     }
 
     public override void Ready() {
-        Debug.Log($"Ready{this}");
+        //Debug.Log($"Ready{this}");
         ready = true;
     }
     public override void PutAway() {
-        Debug.Log($"PutAway{this}");
+        //Debug.Log($"PutAway{this}");
         ready = false;
     }
     public override void MainAction() {
@@ -146,9 +156,11 @@ public class A53_31 : Weapon
         }
     }
     public override void SubAction() {
-        Debug.Log($"SubAct{this}");
+        zoomCancCnt = 0.05f;
+
+        //Debug.Log($"SubAct{this}");
     }
     public override void Reload() {
-        Debug.Log($"Reload{this}");
+        //Debug.Log($"Reload{this}");
     }
 }

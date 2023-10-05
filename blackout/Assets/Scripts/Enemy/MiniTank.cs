@@ -8,14 +8,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 using UnityEngine.UIElements;
 
-public class MiniTank : Enemy , WeaponUser{
+public class MiniTank : Enemy{
     public Animator anim;
     public GroundedSensor gg;
     public NavMeshAgent navAgent;
     public GameObject Target;
     public GameObject gunTurretBone;
     public GameObject gunBone;
-    public EmptyWeaponSlot gun;
+    private Weapon cgun;
 
     private GameObject damageFX;
     private float lastRotate = 1;
@@ -72,22 +72,20 @@ public class MiniTank : Enemy , WeaponUser{
         if(armorPoint == 0)armorPoint = 200;
         if (onRadarDist == 0) onRadarDist = 500;
 
+        cgun = transform.AddComponent<Weapon.Conc>();
+        cgun.weaponName = "mini tank gun";
+
         if (Target == null && Enemy.sharedTarget != null) Target = Enemy.sharedTarget;
 
         oldYAngle = navAgent.gameObject.transform.eulerAngles.y;
         turretForward = gunTurretBone.transform.forward;
 
-        gun = gameObject.AddComponent<EmptyWeaponSlot>();
-        gun.weaponName = "mini tank gun";
-        gun.sender = this;
     }
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         armorPoint -=  damage;
         Instantiate(damageFX, hitPosition, Quaternion.identity).transform.LookAt(hitPosition + (hitPosition - transform.position));
         if(armorPoint <= 0) {
-            if(Enemy.targetReporter == this)Enemy.targetReporter = null;
             anim.SetBool("Destroy", true);
-            EnemiesList.Remove(this);
             OnEnemyDestroy(this);//Ž©•ª‚ªŽ€‚ñ‚¾‚±‚Æ‚ð’Ê’m
         }
     }
@@ -224,7 +222,7 @@ public class MiniTank : Enemy , WeaponUser{
     }
     public override void MainFire() {
         if(fireIntervalCnt == 0) {
-            LiveBullet.BulletInstantiate(gun, gunBone.transform.position + gunBone.transform.up * 2.5f, targetFireAngle * bulletVelocity, bulletDamage);
+            LiveBullet.BulletInstantiate(cgun, gunBone.transform.position + gunBone.transform.up * 2.5f, targetFireAngle * bulletVelocity, bulletDamage);
             fireIntervalCnt = fireInterval;
         }
     }
@@ -239,8 +237,5 @@ public class MiniTank : Enemy , WeaponUser{
 
     public GameObject getAimingObj() {
         throw new System.NotImplementedException();
-    }
-
-    public void ThrowHitResponse() {
     }
 }

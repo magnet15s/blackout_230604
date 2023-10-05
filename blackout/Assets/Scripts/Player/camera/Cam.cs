@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Cam : MonoBehaviour
 {
-
     private float nRotZ;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +15,7 @@ public class Cam : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+
     }
     void LateUpdate()
     {
@@ -24,3 +23,4 @@ public class Cam : MonoBehaviour
         transform.eulerAngles = new Vector3(old.x, old.y, nRotZ);
     }
 }
+    
