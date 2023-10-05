@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.020924293, g: 0.015797466, b: 0.010614466, a: 1}
+  m_IndirectSpecularColor: {r: 0.020924274, g: 0.015797427, b: 0.010614467, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 177.9, y: 81.5}
+  m_AnchoredPosition: {x: 177.90015, y: 81.5}
   m_SizeDelta: {x: 272.9, y: -633}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &29020666
@@ -1495,7 +1495,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -314.90002, y: -444.3}
+  m_AnchoredPosition: {x: -314.90005, y: -444.3}
   m_SizeDelta: {x: 382.4, y: 161.29999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284833433
@@ -2749,7 +2749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -779.9, y: -360.5}
+  m_AnchoredPosition: {x: -779.90015, y: -360.5}
   m_SizeDelta: {x: -1640, y: -800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486002024
@@ -2987,7 +2987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 76e87ff3550e55d4087e1274141ce31d, type: 2}
-  m_Color: {r: 0.70199996, g: 0.70199996, b: 0.70199996, a: 1}
+  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3629,7 +3629,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 664.5, y: -422.4}
+  m_AnchoredPosition: {x: 664.5, y: -422.40002}
   m_SizeDelta: {x: -1392, y: -891.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &653972385
@@ -5425,6 +5425,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5545,6 +5546,19 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fa3380922fb5643867833224ef6c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postEffect: {fileID: 2100000, guid: cd81cba85b5c1de4ab04e983bbd825e0, type: 2}
 --- !u!1 &970191233
 GameObject:
   m_ObjectHideFlags: 0
@@ -8067,16 +8081,16 @@ Canvas:
   m_GameObject: {fileID: 1588981284}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 963194227}
+  m_PlaneDistance: 0.5
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: 2075295371
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1588981288
@@ -8433,7 +8447,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -782.1, y: 430.6}
+  m_AnchoredPosition: {x: -782.1001, y: 430.59998}
   m_SizeDelta: {x: -1608.6, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657657736
@@ -9224,7 +9238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 644.1, y: 164.9}
+  m_AnchoredPosition: {x: 644.1001, y: 164.90002}
   m_SizeDelta: {x: -1331.6, y: -329.09998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848143413
@@ -9371,6 +9385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7445b24e860c77f48b8515db374ecc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pcc: {fileID: 586725632}
   wepChangeDelay: 0.2
   AimingObj: {fileID: 700344415}
   fireInterval: 0.07
@@ -9521,7 +9536,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1.5
   m_Range: 200
   m_SpotAngle: 60
   m_InnerSpotAngle: 6
@@ -9619,7 +9634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -363.4}
+  m_AnchoredPosition: {x: 0, y: -363.40002}
   m_SizeDelta: {x: -1350.2, y: -729.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2014781479
@@ -10181,7 +10196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 186.8}
+  m_AnchoredPosition: {x: 0, y: 186.79999}
   m_SizeDelta: {x: 530, y: 530}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &2114101043
@@ -11447,8 +11462,8 @@ MonoBehaviour:
   selWepIdx: 0
   maxArmorPoint: 500
   armorPoint: 500
-  speed: 12
-  dashSpeed: 25
+  speed: 15
+  dashSpeed: 28
   dashInteractTime: 0.5
   dashCoolTime: 0.6
   touchDownTime: 0.8
@@ -11893,6 +11908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 874129741}
 --- !u!33 &6466404891785970291
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12030,6 +12046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 874129741}
 --- !u!1 &7268704625329688737
 GameObject:
   m_ObjectHideFlags: 0
@@ -12356,6 +12373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 874129741}
 --- !u!4 &8997901378691935931
 Transform:
   m_ObjectHideFlags: 0

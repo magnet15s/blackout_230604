@@ -28,7 +28,7 @@ public class HUDAim : MonoBehaviour
         {
             trackingIcon = (GameObject)Resources.Load("HUD/EnemyTracking");
         }
-        Debug.Log(rectTransform.sizeDelta.x + " " + rectTransform.sizeDelta.y );
+        //Debug.Log(rectTransform.sizeDelta.x + " " + rectTransform.sizeDelta.y );
 
 
     }
@@ -38,9 +38,9 @@ public class HUDAim : MonoBehaviour
     {
         //自身のスクリーン座標を計算
         Vector2 w2sPos = Camera.main.WorldToScreenPoint(trackObj.position);
-        rectTransform.position = new Vector2(
-            w2sPos.x,
-            w2sPos.y);
+        rectTransform.localPosition = new Vector2(
+            w2sPos.x - Screen.width / 2,
+            w2sPos.y - Screen.height / 2);
 
         //トラッキング更新
         TUICnt -= Time.deltaTime;
@@ -83,10 +83,11 @@ public class HUDAim : MonoBehaviour
                     if (result.transform != null && result.transform.Equals(enemy.transform))
                     {
                         trackingEnemies.Add(enemy);
-                        TrackingIcon ti = Instantiate(trackingIcon, this.transform).GetComponent<TrackingIcon>();
+                        TrackingIcon ti = Instantiate(trackingIcon, Canvas.transform).GetComponent<TrackingIcon>();
                         icons.Add(ti);
                         ti.player = player.gameObject;
                         ti.trackingTarget = enemy.gameObject;
+                        ti.canvas = Canvas;
 
                     }
                 }
@@ -155,6 +156,8 @@ public class HUDAim : MonoBehaviour
         if(Mathf.Abs(dist.x) < (Mathf.Abs(rectTransform.sizeDelta.x) * 0.5) / 2 && Mathf.Abs(dist.y) < (Mathf.Abs(rectTransform.sizeDelta.y) * 0.5) / 2)//sizeDeltaの係数は自身のサイズにおけるトラッキングエリアのサイズの割合
             return true;
         else return false;*/
+
+
         Vector2 areaOfsMin = rectTransform.offsetMin * 2;
         Vector2 areaOfsMax = new Vector2(Screen.width,Screen.height) + rectTransform.offsetMax * 2;
         

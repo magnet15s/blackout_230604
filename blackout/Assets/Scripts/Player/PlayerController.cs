@@ -520,12 +520,13 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
 
         if (fireContext) selectWep.MainAction();
-        pcc.zoom = focusContext;
+        if (focusContext) selectWep.SubAction();
+        //pcc.zoom = focusContext;
 
         //--------------------
         //Å@Å™éÀåÇÅ@Å´ÇªÇÃëº
         //--------------------
-        Debug.Log($"{movement}");
+        //Debug.Log($"{movement}");
     }
 
     //ÇªÇÃëºä÷êî
