@@ -12,5 +12,10 @@ public class CamPostEffect : MonoBehaviour
     {
         Graphics.Blit(source, destination, postEffect);
     }
+
+    private void Start()
+    {
+        GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
+    }
 }
 
