@@ -2749,7 +2749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -779.9001, y: -360.5}
+  m_AnchoredPosition: {x: -779.90015, y: -360.5}
   m_SizeDelta: {x: -1640, y: -800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486002024
@@ -3990,7 +3990,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01fe413965c34c0428eb57c73ba47a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightingDPSMat: {fileID: 2100000, guid: 808e6b9565a9c5b43855984c5b986e38, type: 2}
   cpfx: {fileID: 963194231}
   solarLight: {fileID: 705507995}
 --- !u!1 &708361510
@@ -8463,7 +8462,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -782.10004, y: 430.59998}
+  m_AnchoredPosition: {x: -782.1001, y: 430.59998}
   m_SizeDelta: {x: -1608.6, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657657736
