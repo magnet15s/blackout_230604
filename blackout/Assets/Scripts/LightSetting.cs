@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightSetting : MonoBehaviour
 {
-    [SerializeField] Material lightingDPSMat;
+    private Material lightingDPSMat;
     [SerializeField] CamPostEffect cpfx;
     [SerializeField] Transform solarLight;
     
@@ -27,6 +27,8 @@ public class LightSetting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lightingDPSMat = (Material)Resources.Load("DevPrivateSetting/SettingMaterials/Lighting");
+        if (lightingDPSMat == null) return;
         playerCamMat = new Material(cpfx.postEffect.shader);
         defPlayerCamMat = cpfx.postEffect;
         cpfx.postEffect = playerCamMat;
@@ -37,6 +39,8 @@ public class LightSetting : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (lightingDPSMat == null) return;
+
         float ud = lightingDPSMat.GetFloat("_UseDPS");
         
 
