@@ -4,12 +4,21 @@ Shader "Unlit/LightingDPS"
     {
         [Toggle]_UseDPS("Enable setting", Float) = 1
         [Space(10)]
-        _SolarAngle("Solar angle", Range(0, 360)) = 90
+        _SolarAngle("Solar angle", Range(0, 360)) = 189.77
         _SolarDirection("Solar direction", Range(0,360)) = 0
 
-        [Toggle]_SunlightColorOverride("SunlightColorOverride", Float) = 1
-        _SunlightColor("Sunlight color", Color) = (1,1,1,1)
+        [Toggle]_SunlightColorOverride("Sunlight color override", Float) = 1
+        _SunlightColor("Sunlight color", Color) = (0.57,0.54,0.51,1)
 
+        [Toggle]_CamFXOverride("Camera effect override", Float) = 1
+        [Space(20)]
+        _NoiseIts("Noise intensity", Range(0.01, 1.0)) = 0.7
+        [Space(10)]
+        _BloomThres("Bloom threshold", Range(0.0, 1.0)) = 0.4
+        _BloomIts("Bloom intensity", Float) = 1
+        [Space(10)]
+        _Lightness("Lightness", Float) = 1
+        _Contrast("Contrast", Float) = 1
         
 
 

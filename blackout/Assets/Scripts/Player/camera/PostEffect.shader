@@ -6,10 +6,13 @@ Shader "Unlit/PostEffect"
         _Noise ("Noise", 2D) = "white"{}
         _NoiseIts ("Noise intensity", Range(0.01, 1.0)) = 0.7
         _BloomThres ("Bloom threshold", Range(0.0, 1.0)) = 0.4
+        _BloomIts ("Bloom intensity", Float) = 1
         [Space(10)]
-        _FogColor("Fog color", Color) = (1,1,1,1)
+        _Lightness ("Lightness", Float) = 1
+        _Contrast ("Contrast", Float) = 1
+        /*_FogColor("Fog color", Color) = (1,1,1,1)
         _FogStart ("Fog start depth", Range(0.0, 1.0)) = 0.8
-        _FogLineIntersect("Fog line intersection", Range(0.0, 1.0)) = 0.5
+        _FogLineIntersect("Fog line intersection", Range(0.0, 1.0)) = 0.5*/
     }
     SubShader
     {
@@ -57,6 +60,10 @@ Shader "Unlit/PostEffect"
             float4 _MainTex_ST;
             float4 _Noise_ST;
             fixed _BloomThres;
+            float _BloomIts;
+            float _Lightness;
+            float _Contrast;
+            
 
             //funcs
 
@@ -105,8 +112,8 @@ Shader "Unlit/PostEffect"
                 fixed depth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv));
                 
                 //cont
-                half a = 1.5;
-                half b = 0.4;
+                half a = 1.5 * _Contrast;
+                half b = 0.4 * _Lightness;
                 //col = saturate(a * (col - b) + .38) ;//saturate((sin((col - 0.5) * PI )/2.5) + 0.5);
                 col.r = col.r > 0.5 ? min(a * (col.r - b) + 0.5, 1 / a * (col.r - 1) + 1) : max(a * (col.r - b) + 0.5, 1 / a * col.r);
                 col.g = col.g > 0.5 ? min(a * (col.g - b) + 0.5, 1 / a * (col.g - 1) + 1) : max(a * (col.g - b) + 0.5, 1 / a * col.g);
@@ -114,13 +121,13 @@ Shader "Unlit/PostEffect"
                 
                 //bloom
                 fixed4 blCol = contConf(getBoxSamp(i.uv, .004), _BloomThres);
-                col += blCol * 0.06; 
+                col += blCol * 0.06 * _BloomIts;
                 blCol = contConf(getBoxSamp(i.uv, .003), _BloomThres);
-                col += blCol * 0.08;
+                col += blCol * 0.08 * _BloomIts;
                 blCol = contConf(getBoxSamp(i.uv, .002), _BloomThres);
-                col += blCol * 0.2;
+                col += blCol * 0.2 * _BloomIts;
                 blCol = contConf(getBoxSamp(i.uv, .001), _BloomThres);
-                col += blCol * 0.3;
+                col += blCol * 0.3 * _BloomIts;
                 col += contConf(col, _BloomThres);
 
 

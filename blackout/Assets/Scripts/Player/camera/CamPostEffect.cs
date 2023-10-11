@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteInEditMode, ImageEffectAllowedInSceneView]
 public class CamPostEffect : MonoBehaviour
 {
 
-    [SerializeField] Material postEffect;
+    public Material postEffect;
     // Start is called before the first frame update
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
@@ -17,5 +18,6 @@ public class CamPostEffect : MonoBehaviour
     {
         GetComponent<Camera>().depthTextureMode |= DepthTextureMode.Depth;
     }
+    
 }
 
