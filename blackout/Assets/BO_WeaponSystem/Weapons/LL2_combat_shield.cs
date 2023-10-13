@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LL2_combat_shield : Weapon, ShieldRoot
 {
+    public PlayerController pc;
     // Start is called before the first frame update
     public override WeaponUser sender { get; set; }
     
@@ -18,6 +20,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     [SerializeField] GameObject connectShield;
     [SerializeField] GameObject leftShield;
     [SerializeField] GameObject rightShield;
+
+    private Animator anim;
+    
 
     // Start is called before the first frame update
     void Start() {
@@ -54,5 +59,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     public void HitReceive(ShieldParts receiver, int damage, Vector3 hitPosition, GameObject source, string damageType) {
         
+    }
+    public override void setSender(WeaponUser sender) {
+        base.setSender(sender);
+        anim = sender.getAnim();
     }
 }
