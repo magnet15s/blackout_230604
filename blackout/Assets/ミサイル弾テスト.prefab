@@ -116,8 +116,8 @@ MonoBehaviour:
   lifeTime: 3
   limitAcceleration: 1
   maxAcceleration: 70
-  minInitVelocity: {x: 10, y: 10, z: 10}
-  maxInitVelocity: {x: 0, y: 50, z: 0}
+  minInitVelocity: {x: -50, y: 10, z: 10}
+  maxInitVelocity: {x: 50, y: 50, z: 0}
 --- !u!1 &9204558181152804428
 GameObject:
   m_ObjectHideFlags: 0
