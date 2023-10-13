@@ -5,6 +5,8 @@
 /blackout/[Bb]uilds/
 /blackout/[Ll]ogs/
 /blackout/[Uu]ser[Ss]ettings/
+# Deveroper private setting directry
+/blackout/[Aa]ssets/Resources/DevPrivateSetting/SettingMaterials/
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #

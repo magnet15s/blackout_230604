@@ -6,9 +6,19 @@ Shader "Unlit/PostEffect"
         _Noise ("Noise", 2D) = "white"{}
         _NoiseIts ("Noise intensity", Range(0.01, 1.0)) = 0.7
         _BloomThres ("Bloom threshold", Range(0.0, 1.0)) = 0.4
+        _BloomIts ("Bloom intensity", Float) = 1
+        [Space(10)]
+        _Lightness ("Lightness", Float) = 1
+        _Contrast ("Contrast", Float) = 1
+        /*_FogColor("Fog color", Color) = (1,1,1,1)
+        _FogStart ("Fog start depth", Range(0.0, 1.0)) = 0.8
+        _FogLineIntersect("Fog line intersection", Range(0.0, 1.0)) = 0.5*/
     }
     SubShader
     {
+        Ztest Always
+        Zwrite Off
+
         Tags { "RenderType"="Opaque" }
         LOD 100
 
@@ -31,16 +41,18 @@ Shader "Unlit/PostEffect"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
-                float2 uvn : TEXCOORD2;
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                float2 uvn : TEXCOORD2;
-                UNITY_FOG_COORDS(1)
+                /*UNITY_FOG_COORDS(1)*/
                 float4 vertex : SV_POSITION;
             };
+
+            //fields
+
+            sampler2D _CameraDepthTexture;
 
             sampler2D _MainTex;
             sampler2D _Noise;
@@ -48,6 +60,12 @@ Shader "Unlit/PostEffect"
             float4 _MainTex_ST;
             float4 _Noise_ST;
             fixed _BloomThres;
+            float _BloomIts;
+            float _Lightness;
+            float _Contrast;
+            
+
+            //funcs
 
             fixed luma(fixed4 col) {
                 return col.r * 0.299 + col.g * 0.587 + col.b * 0.114;
@@ -75,8 +93,6 @@ Shader "Unlit/PostEffect"
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.uvn = TRANSFORM_TEX(v.uvn, _Noise);
-                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
             #define PI 3.14159265
@@ -89,20 +105,29 @@ Shader "Unlit/PostEffect"
                 col.g = saturate(col.g);
                 col.b = saturate(col.b);
                 col.a = 1;
-                half a = 1.5;
-                half b = 0.4;
+                
+
+
+                //fog
+                fixed depth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv));
+                
+                //cont
+                half a = 1.5 * _Contrast;
+                half b = 0.4 * _Lightness;
                 //col = saturate(a * (col - b) + .38) ;//saturate((sin((col - 0.5) * PI )/2.5) + 0.5);
                 col.r = col.r > 0.5 ? min(a * (col.r - b) + 0.5, 1 / a * (col.r - 1) + 1) : max(a * (col.r - b) + 0.5, 1 / a * col.r);
                 col.g = col.g > 0.5 ? min(a * (col.g - b) + 0.5, 1 / a * (col.g - 1) + 1) : max(a * (col.g - b) + 0.5, 1 / a * col.g);
                 col.b = col.b > 0.5 ? min(a * (col.b - b) + 0.5, 1 / a * (col.b - 1) + 1) : max(a * (col.b - b) + 0.5, 1 / a * col.b);
+                
+                //bloom
                 fixed4 blCol = contConf(getBoxSamp(i.uv, .004), _BloomThres);
-                col += blCol * 0.06; 
+                col += blCol * 0.06 * _BloomIts;
                 blCol = contConf(getBoxSamp(i.uv, .003), _BloomThres);
-                col += blCol * 0.08;
+                col += blCol * 0.08 * _BloomIts;
                 blCol = contConf(getBoxSamp(i.uv, .002), _BloomThres);
-                col += blCol * 0.2;
+                col += blCol * 0.2 * _BloomIts;
                 blCol = contConf(getBoxSamp(i.uv, .001), _BloomThres);
-                col += blCol * 0.3;
+                col += blCol * 0.3 * _BloomIts;
                 col += contConf(col, _BloomThres);
 
 
@@ -118,8 +143,7 @@ Shader "Unlit/PostEffect"
                 #else
                 #endif
 
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
+
                 return col;
             }
 

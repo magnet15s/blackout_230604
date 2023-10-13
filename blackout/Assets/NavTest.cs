@@ -8,7 +8,7 @@ public class NavTest : MonoBehaviour
 {
     public NavMeshAgent _nma;
     public Transform _target;
-    int age = 0;
+    //int age = 0;
     // Start is called before the first frame update
     void Start()
     {

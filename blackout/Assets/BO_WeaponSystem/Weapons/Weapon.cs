@@ -54,7 +54,7 @@ public abstract class Weapon : MonoBehaviour
     }
     
     public abstract WeaponUser sender { get; set; } 
-    public void setSender(WeaponUser sender) {
+    public virtual void setSender(WeaponUser sender) {
         this.sender = sender;
     }
 
