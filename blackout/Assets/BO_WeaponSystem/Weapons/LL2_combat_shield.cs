@@ -21,6 +21,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     [SerializeField] GameObject leftShield;
     [SerializeField] GameObject rightShield;
 
+    private Animator anim;
+    
+
     // Start is called before the first frame update
     void Start() {
         HUDWeaponImage = HUDImage;
@@ -59,6 +62,6 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     }
     public override void setSender(WeaponUser sender) {
         base.setSender(sender);
-        
+        anim = sender.getAnim();
     }
 }
