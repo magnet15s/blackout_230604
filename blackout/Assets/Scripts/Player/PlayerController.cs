@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEditor;
 //using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     [SerializeField] private Weapon selectWep;
     [SerializeField] private int selWepIdx;
+    private List<bool> WepActReqBools = new();
 
     //入力コンテキスト
     private Vector3 moveAngleContext;
@@ -109,6 +111,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
+
+
     //------------継承-------------
     public Animator getAnim() {
         return anim;
@@ -151,6 +155,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public void OnJump(InputAction.CallbackContext context) {//緊急回避もここで判定
         if (context.started) {
             jumpContext = true;
+            
             if (GetPlayerActSt() == PlayerActionState.jumpcharge) {//ジャンプチャージ中にもう一度ジャンプを押すと緊急回避に派生
                 jumpChargeCnt = 0;
                 jumpContext = false;
@@ -193,6 +198,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (context.performed)
         {
             selectWep.Reload();
+
         }
     }
     public void WeaponsListUp(InputAction.CallbackContext context) {
@@ -289,6 +295,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     // Update is called once per frame
     void Update()
     {
+        try { Debug.Log("pc : " + WepActReqBools.First()); } catch(Exception ex) { }
         //弾ヒット時のレティクル
         if(hitResponse.color.r >= 0) {
             hitResponse.color = new Color(
@@ -392,6 +399,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             if (dashCTcnt == 0) {
                 if (!dash)//非ダッシュ時
                 {
+                    Vector3 lm = lastMovement;
+                    lm.y = 0;
+                    if (moveAngleContext.magnitude < lm.magnitude / speed) Debug.Log(lastMovement);
                     movement = moveAngleContext * speed;
                 } else//ダッシュ時→
                   {
@@ -520,7 +530,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
 
         if (fireContext) selectWep.MainAction();
-        if (focusContext) selectWep.SubAction();
+        if (focusContext) { selectWep.SubAction();
+            WepActReqBools[0] = false;
+        };
         //pcc.zoom = focusContext;
 
         //--------------------
@@ -635,4 +647,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public void ThrowHitResponse() {
         hitResponse.color = new Color(1, 1, 1, 1);
     }
+
+    bool WeaponUser.RequestWepAction(ref bool weaponUsable) {
+        WepActReqBools.Add( weaponUsable);
+
+        return true;
+    }
+    
 }

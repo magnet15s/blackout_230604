@@ -22,6 +22,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     [SerializeField] GameObject rightShield;
 
     private Animator anim;
+    private bool robWepUsable = false;
+    private bool attacking = false;
     
 
     // Start is called before the first frame update
@@ -31,7 +33,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     // Update is called once per frame
     void Update() {
-
+        if (attacking) {
+            Debug.Log(robWepUsable);
+        }
     }
     public override void Ready() {
         Debug.Log($"Ready{this}");
@@ -48,7 +52,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     }
 
     public override void MainAction() {
-        Debug.Log($"MainAct{this}");
+        robWepUsable = true;
+        sender.RequestWepAction(ref robWepUsable);
+        attacking = true;
     }
     public override void SubAction() {
         Debug.Log($"SubAct{this}");
@@ -63,5 +69,6 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public override void setSender(WeaponUser sender) {
         base.setSender(sender);
         anim = sender.getAnim();
+        
     }
 }

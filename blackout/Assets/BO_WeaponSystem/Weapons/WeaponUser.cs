@@ -11,4 +11,5 @@ public interface WeaponUser
     public virtual void ThrowHitResponse(GameObject bullet, GameObject hitObject) {
         ThrowHitResponse();
     }
+    public virtual bool RequestWepAction(ref bool usable) { return true; }
 }
