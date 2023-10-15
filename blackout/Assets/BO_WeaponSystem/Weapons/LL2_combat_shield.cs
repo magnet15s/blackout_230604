@@ -52,9 +52,24 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     }
 
     public override void MainAction() {
-        robWepUsable = true;
-        sender.RequestWepAction();
-        attacking = true;
+
+        if (sender.RequestWepAction())  //UŒ‚‰Â”\ó‘Ô‚Å‚ ‚ê‚Î
+        {
+            if (!attacking)
+            {
+                robWepUsable = true;
+                attacking = true;
+            }
+            if (robWepUsable)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        
     }
     public override void SubAction() {
         Debug.Log($"SubAct{this}");
@@ -69,6 +84,6 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public override void setSender(WeaponUser sender) {
         base.setSender(sender);
         anim = sender.getAnim();
-        
+        sender.WepActionCancel += (_,_) => { robWepUsable = false; };
     }
 }
