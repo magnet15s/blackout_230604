@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private int armorPoint = 500;
     [Space]
     [SerializeField] private float speed = 10;
+    [SerializeField] private float brake = 2;
     [SerializeField] private float dashSpeed = 22;
     [SerializeField] private float dashInteractTime = 0.5f;
     [SerializeField] private float dashCoolTime = 1;
@@ -123,7 +124,34 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public GameObject getAimingObj() {
         return sightOrigin;
     }
-    
+    public void ThrowHitResponse()
+    {
+        hitResponse.color = new Color(1, 1, 1, 1);
+    }
+
+    bool WeaponUser.RequestWepAction()
+    {
+        return true;
+    }
+    public event EventHandler WepActionCancel;
+    void OnWepActionCancel(EventArgs e) {
+        WepActionCancel.Invoke(this, e);
+    }
+
+    public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
+    {
+        Debug.Log("Damage!! " + Time.frameCount);
+        armorPoint -= damage;
+        GameObject dfx;
+        (dfx = Instantiate(damageFX, hitPosition, Quaternion.identity)).transform.LookAt(hitPosition + (hitPosition - transform.position));
+        dfx.transform.localScale = new Vector3(3, 3, 3);
+
+
+        statusView.gameObject.GetComponent<Animator>().SetFloat("Armor", (float)armorPoint / (float)maxArmorPoint);
+        statusView.gameObject.GetComponent<Animator>().SetTrigger("Damage");
+
+    }
+
 
     //------------入力受け取り-----------
     public void OnMove(InputAction.CallbackContext context)
@@ -339,7 +367,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                     jumpCharge = true;
                     break;
                 default :
-                    Debug.LogWarning("[PlayerController] > ジャンプ呼び動作中にこのアクションが行われることを想定していません。\n" +
+                    Debug.LogWarning("[PlayerController] > ジャンプ予備動作中にこのアクションが行われることを想定していません。\n" +
                         "ジャンプチャージ処理を編集してください　(アクション:" + GetPlayerActSt() + ")");
                     break;
             }
@@ -399,10 +427,14 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             if (dashCTcnt == 0) {
                 if (!dash)//非ダッシュ時
                 {
-                    Vector3 lm = lastMovement;
+                    Vector3 lm = worldVec2localVec(lastMovement);
                     lm.y = 0;
-                    if (moveAngleContext.magnitude < lm.magnitude / speed) Debug.Log(lastMovement);
-                    movement = moveAngleContext * speed;
+                    Vector3 dlm = lm.normalized * Mathf.Max(lm.magnitude - lm.magnitude * Time.deltaTime * brake, 0);
+                    if (moveAngleContext.magnitude * speed < dlm.magnitude)
+                    {
+                        movement = dlm;
+                    }
+                    else movement = moveAngleContext * speed;
                 } else//ダッシュ時→
                   {
                     if (dashAngle == Vector3.zero)   //ダッシュ開始フレームの場合
@@ -425,7 +457,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 dashCTcnt -= Time.deltaTime;
                 if (dashCTcnt <= 0) {
                     dashCTcnt = 0;
-                    inertiaAngle = Vector3.zero;
+                    //inertiaAngle = Vector3.zero;
                 }
                 movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
             }
@@ -630,28 +662,6 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         return pas;
     }
 
-    public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
-        Debug.Log("Damage!! " + Time.frameCount);
-        armorPoint -= damage;
-        GameObject dfx;
-        (dfx = Instantiate(damageFX, hitPosition, Quaternion.identity)).transform.LookAt(hitPosition + (hitPosition - transform.position));
-        dfx.transform.localScale = new Vector3(3, 3, 3);
-
-
-        statusView.gameObject.GetComponent<Animator>().SetFloat("Armor", (float)armorPoint / (float)maxArmorPoint);
-        statusView.gameObject.GetComponent<Animator>().SetTrigger("Damage");
-
-
-    }
-
-    public void ThrowHitResponse() {
-        hitResponse.color = new Color(1, 1, 1, 1);
-    }
-
-    bool WeaponUser.RequestWepAction(ref bool weaponUsable) {
-        WepActReqBools.Add( weaponUsable);
-
-        return true;
-    }
+    
     
 }

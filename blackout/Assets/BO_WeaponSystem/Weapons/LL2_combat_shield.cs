@@ -53,7 +53,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     public override void MainAction() {
         robWepUsable = true;
-        sender.RequestWepAction(ref robWepUsable);
+        sender.RequestWepAction();
         attacking = true;
     }
     public override void SubAction() {
