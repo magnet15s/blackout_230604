@@ -24,7 +24,11 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     private Animator anim;
     private bool robWepUsable = false;
     private bool attacking = false;
-    
+    private float attackTime = 0f;
+    private float attackDelayCnt = 0f;
+    private readonly float ATTACK_MOTION_TRANS_TIME = 0.5f;
+    private readonly float ATTACK_DELAY = 0.7f;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -33,8 +37,12 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     // Update is called once per frame
     void Update() {
+        attackDelayCnt -= Time.deltaTime;
         if (attacking) {
-            Debug.Log(robWepUsable);
+            attackTime += Time.deltaTime;
+            if(attackTime < ATTACK_MOTION_TRANS_TIME) {
+                anim.SetLayerWeight(anim.GetLayerIndex("close_combat"), attackTime / ATTACK_MOTION_TRANS_TIME);
+            }
         }
     }
     public override void Ready() {
@@ -57,16 +65,20 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         {
             if (!attacking)
             {
-                robWepUsable = true;
+                robWepUsable = true;    //sender‚ÅwepActionCancel‚ª”­‰Î‚µ‚½‚Æ‚«false‚É‚È‚é
                 attacking = true;
             }
             if (robWepUsable)
             {
-
+                if (attackDelayCnt <= 0) {
+                    anim.SetTrigger("punch_fire");
+                    attackDelayCnt = ATTACK_DELAY;
+                }
             }
             else
             {
-
+                attackTime = 0;
+                attacking = false;
             }
         }
         
