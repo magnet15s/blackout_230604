@@ -25,9 +25,11 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     private bool robWepUsable = false;
     private bool attacking = false;
     private float attackTime = 0f;
+    private float attackStartCnt = 0f;
     private float attackDelayCnt = 0f;
     private readonly float ATTACK_MOTION_TRANS_TIME = 0.5f;
     private readonly float ATTACK_DELAY = 0.7f;
+    private readonly float ATTACK_FOLLOW_THROUGH = 1f;
 
 
     // Start is called before the first frame update
@@ -37,11 +39,25 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     // Update is called once per frame
     void Update() {
+        Debug.Log(anim.GetLayerWeight(anim.GetLayerIndex("close_combat")));
         attackDelayCnt -= Time.deltaTime;
+
         if (attacking) {
+            attackStartCnt += Time.deltaTime;
             attackTime += Time.deltaTime;
-            if(attackTime < ATTACK_MOTION_TRANS_TIME) {
-                anim.SetLayerWeight(anim.GetLayerIndex("close_combat"), attackTime / ATTACK_MOTION_TRANS_TIME);
+            if(attackStartCnt < ATTACK_MOTION_TRANS_TIME) {
+                Debug.Log("amtt");
+                anim.SetLayerWeight(anim.GetLayerIndex("close_combat"), Mathf.Min(attackStartCnt / ATTACK_MOTION_TRANS_TIME, 1));
+            }
+            if(attackTime > ATTACK_DELAY) {
+                Debug.Log("ad");
+                anim.SetLayerWeight(anim.GetLayerIndex("close_combat"), Mathf.Min(1 - ((attackTime - ATTACK_DELAY) / ATTACK_FOLLOW_THROUGH), 1));
+            }
+            if(attackTime > ATTACK_DELAY + ATTACK_FOLLOW_THROUGH) {
+                attackStartCnt = 0;
+                attackTime = 0;
+                attackDelayCnt = 0;
+                attacking = false;
             }
         }
     }
@@ -67,21 +83,24 @@ public class LL2_combat_shield : Weapon, ShieldRoot
             {
                 robWepUsable = true;    //sender‚ÅwepActionCancel‚ª”­‰Î‚µ‚½‚Æ‚«false‚É‚È‚é
                 attacking = true;
+                attackStartCnt = 0;
             }
             if (robWepUsable)
             {
                 if (attackDelayCnt <= 0) {
                     anim.SetTrigger("punch_fire");
                     attackDelayCnt = ATTACK_DELAY;
+                    attackTime = 0;
+                    
                 }
             }
             else
             {
                 attackTime = 0;
+                attackStartCnt = 0;
                 attacking = false;
             }
         }
-        
     }
     public override void SubAction() {
         Debug.Log($"SubAct{this}");
