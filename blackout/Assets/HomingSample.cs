@@ -23,6 +23,9 @@ public sealed class HomingSample : MonoBehaviour {
     Vector3 velocity;
     Vector3 acceleration;
     Transform thisTransform;
+    public Weapon shooter;
+    public int damage;
+    string damageType;
 
     public Transform Target {
         set {
@@ -63,9 +66,17 @@ public sealed class HomingSample : MonoBehaviour {
         thisTransform.position = position;
         thisTransform.rotation = Quaternion.LookRotation(velocity);
     }
-    void OnCollisionEnter(Collision collision) {
+
+    public void OnTriggerEnter(Collider other) {
+        DamageReceiver dr;
+        if ((dr = other.GetComponent<DamageReceiver>()) != null) {
+            Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
+            dr.Damage(damage, hitPos, shooter.gameObject, "missile");
+            shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
+        }
         Destroy(gameObject);
     }
+
 
 
     IEnumerator Timer() {

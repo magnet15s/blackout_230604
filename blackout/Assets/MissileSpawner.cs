@@ -34,10 +34,10 @@ public class MissileSpawner : MonoBehaviour {
 
         Vector3 euler;
         Quaternion rot;
-        HomingSample homing;
+        Livemissile homing;
 
         for (int i = 0; i < iterationCount; i++) {
-            homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<HomingSample>();
+            homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<Livemissile>();
             homing.Target = target;
         }
 
