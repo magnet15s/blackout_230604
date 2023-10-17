@@ -43,7 +43,7 @@ public class TrackingIcon : MonoBehaviour
         Vector3 rlp = Camera.main.WorldToScreenPoint(player.transform.position + trackingPoint) - new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
         rectTransform.localPosition = new Vector3(rlp.x, rlp.y, 0); 
-        Debug.Log(rectTransform.localPosition);
+        //Debug.Log(rectTransform.localPosition);
         if (TUICnt < 0)
         {
             TUICnt = trackingUpdateInterval;

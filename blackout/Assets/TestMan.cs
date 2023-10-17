@@ -11,6 +11,9 @@ public class TestMan : MonoBehaviour , WeaponUser
     Vector3[] trail;
     public float velocity = 100f;
     public Weapon weapon;
+
+    public event EventHandler WepActionCancel;
+
     // Start is called before the first frame update
     void Start()
     {
