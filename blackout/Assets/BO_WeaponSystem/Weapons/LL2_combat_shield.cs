@@ -43,14 +43,16 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         attackDelayCnt -= Time.deltaTime;
 
         if (attacking) {
+            if (attackStartCnt <= ATTACK_MOTION_TRANS_TIME && attackTime < ATTACK_DELAY) attackStartCnt += Time.deltaTime;
             attackStartCnt += Time.deltaTime;
             attackTime += Time.deltaTime;
             if(attackStartCnt < ATTACK_MOTION_TRANS_TIME) {
                 Debug.Log("amtt");
                 anim.SetLayerWeight(anim.GetLayerIndex("close_combat"), Mathf.Min(attackStartCnt / ATTACK_MOTION_TRANS_TIME, 1));
             }
-            if(attackTime > ATTACK_DELAY) {
+            if(attackDelayCnt < 0) {
                 Debug.Log("ad");
+                if (attackStartCnt >= 0) attackStartCnt -= Time.deltaTime;
                 anim.SetLayerWeight(anim.GetLayerIndex("close_combat"), Mathf.Min(1 - ((attackTime - ATTACK_DELAY) / ATTACK_FOLLOW_THROUGH), 1));
             }
             if(attackTime > ATTACK_DELAY + ATTACK_FOLLOW_THROUGH) {
