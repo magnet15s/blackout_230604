@@ -77,8 +77,6 @@ public sealed class HomingSample : MonoBehaviour {
         Destroy(gameObject);
     }
 
-
-
     IEnumerator Timer() {
         yield return new WaitForSeconds(lifeTime);
 
