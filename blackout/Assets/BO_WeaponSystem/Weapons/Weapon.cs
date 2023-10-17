@@ -19,6 +19,7 @@ public abstract class Weapon : MonoBehaviour
         }
 
         public event EventHandler bulletHit;
+        public event EventHandler WepActionCancel;
 
         protected virtual void OnBulletHit(BulletHitEventOrgs e) {
             bulletHit?.Invoke(this, BulletHitEventOrgs.Empty);
