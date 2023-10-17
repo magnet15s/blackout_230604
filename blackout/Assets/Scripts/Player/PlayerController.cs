@@ -562,9 +562,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
 
         if (fireContext) selectWep.MainAction();
-        if (focusContext) { selectWep.SubAction();
-            WepActReqBools[0] = false;
-        };
+        if (focusContext)selectWep.SubAction();
         //pcc.zoom = focusContext;
 
         //--------------------
