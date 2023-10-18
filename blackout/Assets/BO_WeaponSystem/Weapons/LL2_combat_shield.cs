@@ -21,8 +21,20 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     [SerializeField] GameObject leftShield;
     [SerializeField] GameObject rightShield;
 
+    private readonly string ANIM_MOTION_LAYER = "close_combat";
+    private readonly string ANIM_FIRE_TRIGGER = "punch_fire";
+    private readonly string ANIM_MOTION_RESET = "punch_reset";
+
     private Animator anim;
-    
+    private bool robWepUsable = false;
+    private bool attacking = false;
+    private float attackTime = 0f;
+    private float attackStartCnt = 0f;
+    private float animLayerWeight = 0f;
+    private readonly float ATTACK_MOTION_TRANS_TIME = 0.5f;
+    private readonly float ATTACK_DELAY = 0.7f;
+    private readonly float ATTACK_FOLLOW_THROUGH = 1f;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -31,7 +43,51 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     // Update is called once per frame
     void Update() {
+        if (robWepUsable)
+        {
+            if (attacking)
+            {
+                attackTime += Time.deltaTime;
+                attackStartCnt += Time.deltaTime;
 
+                if (attackStartCnt <= ATTACK_MOTION_TRANS_TIME) //初撃
+                {
+                    animLayerWeight = attackStartCnt / ATTACK_MOTION_TRANS_TIME;
+                }
+                else if (attackTime < ATTACK_DELAY) //攻撃中
+                {
+                    if(animLayerWeight < 1)
+                    {
+                        animLayerWeight += Time.deltaTime / ATTACK_MOTION_TRANS_TIME;
+                        if(animLayerWeight > 1)animLayerWeight = 1;
+                    }
+                }
+                else if (attackTime < ATTACK_DELAY + ATTACK_FOLLOW_THROUGH) //攻撃後フォロースルー
+                {
+                    animLayerWeight -= Time.deltaTime / ATTACK_FOLLOW_THROUGH;
+                }
+                else    //攻撃終了
+                {
+                    AttackEnd();
+                    animLayerWeight = 0;
+                }
+                Debug.Log("alw:" + animLayerWeight);
+                anim.SetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER), animLayerWeight);
+            }
+            else 
+            {
+                attackTime = ATTACK_DELAY;
+            }
+
+        }
+        else
+        {
+            if (attacking)
+            {
+                AttackEnd();
+            }
+        }
+        
     }
     public override void Ready() {
         Debug.Log($"Ready{this}");
@@ -48,8 +104,29 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     }
 
     public override void MainAction() {
-        Debug.Log($"MainAct{this}");
+
+        if (robWepUsable = sender.RequestWepAction())  //senderが攻撃可能状態であれば
+        {
+            
+            if(attackTime >= ATTACK_DELAY )  //アタックディレイが終わっていれば
+            {
+                anim.SetTrigger(ANIM_FIRE_TRIGGER);
+                if (!attacking)     //最初の攻撃であれば
+                {
+                    attackTime = 0;
+                    attackStartCnt = 0;
+                    attacking = true;
+                }
+                else
+                {
+                    attackTime = 0;
+                }
+                
+            }
+            
+        }
     }
+    
     public override void SubAction() {
         Debug.Log($"SubAct{this}");
     }
@@ -63,5 +140,15 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public override void setSender(WeaponUser sender) {
         base.setSender(sender);
         anim = sender.getAnim();
+        sender.WepActionCancel += (_,_) => { robWepUsable = false; };
+    }
+
+    private void AttackEnd()
+    {
+        attacking = false;
+        attackTime = ATTACK_DELAY + ATTACK_FOLLOW_THROUGH;
+        attackStartCnt = 0;
+        animLayerWeight = 0;
+        anim.SetTrigger(ANIM_MOTION_RESET);
     }
 }
