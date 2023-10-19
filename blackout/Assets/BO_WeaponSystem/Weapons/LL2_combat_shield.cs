@@ -52,18 +52,23 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
                 if (attackStartCnt <= ATTACK_MOTION_TRANS_TIME) //‰Œ‚
                 {
+                    MotionLocking = true;
                     animLayerWeight = attackStartCnt / ATTACK_MOTION_TRANS_TIME;
                 }
                 else if (attackTime < ATTACK_DELAY) //UŒ‚’†
                 {
+                    MotionLocking = true;
                     if(animLayerWeight < 1)
                     {
                         animLayerWeight += Time.deltaTime / ATTACK_MOTION_TRANS_TIME;
                         if(animLayerWeight > 1)animLayerWeight = 1;
                     }
+                    
+
                 }
                 else if (attackTime < ATTACK_DELAY + ATTACK_FOLLOW_THROUGH) //UŒ‚ŒãƒtƒHƒ[ƒXƒ‹[
                 {
+                    MotionLocking = false;
                     animLayerWeight -= Time.deltaTime / ATTACK_FOLLOW_THROUGH;
                 }
                 else    //UŒ‚I—¹
@@ -86,8 +91,12 @@ public class LL2_combat_shield : Weapon, ShieldRoot
             {
                 AttackEnd();
             }
+            float lw;
+            if((lw = anim.GetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER))) != 0) {
+                lw -= Time.deltaTime / ATTACK_MOTION_TRANS_TIME;
+                anim.SetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER), lw);
+            }
         }
-        
     }
     public override void Ready() {
         Debug.Log($"Ready{this}");

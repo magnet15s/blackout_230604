@@ -59,6 +59,8 @@ public abstract class Weapon : MonoBehaviour
         this.sender = sender;
     }
 
+    public virtual bool MotionLocking { get; protected set; }
+
     // Start is called before the first frame update
     /// <summary>
     /// •Ší‚Ì•\¦–¼

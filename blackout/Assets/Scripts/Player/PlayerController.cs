@@ -651,6 +651,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             touchDownCnt > 0 ? PlayerActionState.touchdown :
             jumpChargeCnt > 0 ? PlayerActionState.jumpcharge :
             jump || jumped ? PlayerActionState.jump :
+
             dashCTcnt > 0 ? PlayerActionState.dashcancel :
             dash ? PlayerActionState.dash :
             dashItrContext ? PlayerActionState.dashcharge :
