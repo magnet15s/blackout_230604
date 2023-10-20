@@ -138,6 +138,26 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         WepActionCancel.Invoke(this, e);
     }
 
+    private struct MoveORReq {
+        public Vector3 Movement;
+        public float time;
+        public Vector3 weight;
+        public bool gOnly;
+        public bool running;
+        public MoveORReq(Vector3 m, float t, Vector3 w, bool g, bool r) {
+            Movement = m;
+            time = t;
+            weight = w;
+            gOnly = g;
+            running = r;
+        }
+    }
+    private List<MoveORReq> MoveORReqs = new List<MoveORReq>();
+    void WeaponUser.ReqMoveOverrideForWepAct(UnityEngine.Vector3 localMovement, float time, UnityEngine.Vector3 overrideWeight, bool groundedOnly) {
+        MoveORReqs.Add(new MoveORReq(localMovement, time, overrideWeight, groundedOnly, false));
+    }
+
+
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
     {
         Debug.Log("Damage!! " + Time.frameCount);
@@ -323,7 +343,32 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     // Update is called once per frame
     void Update()
     {
-        try { Debug.Log("pc : " + WepActReqBools.First()); } catch(Exception ex) { }
+        //MoveOverrideReqestsの処理
+
+        if(MoveORReqs.Count >= 1) {
+            List<MoveORReq> remList = new();
+            MoveORReqs.ForEach(item => {
+                item.time -= Time.deltaTime;
+                if (item.time <= 0) {
+                    remList.Add(item);
+                    return;
+                }
+                if (item.Equals(MoveORReqs.First())) {
+                    item.running = true;
+                } else {
+                    remList.Add(item);
+                    return;
+                }
+            });
+            if(remList.Count > 0) {
+                remList.ForEach(item => {
+                    MoveORReqs.Remove(item);
+                });
+                remList.Clear();
+            }
+        }
+
+
         //弾ヒット時のレティクル
         if(hitResponse.color.r >= 0) {
             hitResponse.color = new Color(
@@ -520,11 +565,6 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 //Debug.Log("Notつっかえ");
             }
             movement = worldVec2localVec(lastMovement);
-
-            
-
-            
-            
             
         }
 

@@ -3076,7 +3076,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -779.90015, y: -360.5}
+  m_AnchoredPosition: {x: -779.9001, y: -360.5}
   m_SizeDelta: {x: -1640, y: -800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486002024
@@ -3150,7 +3150,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 30
+  m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1104896844}
   m_Follow: {fileID: 1104896844}
@@ -5926,9 +5926,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 0.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -5953,8 +5953,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.74017, y: 4.72, z: 88.6364}
+  m_LocalRotation: {x: 0.028797507, y: 0.011191798, z: -0.00032244987, w: 0.99952257}
+  m_LocalPosition: {x: -147.90309, y: 40.97758, z: 103.16245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9130,7 +9130,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -782.1001, y: 430.59998}
+  m_AnchoredPosition: {x: -782.10004, y: 430.59998}
   m_SizeDelta: {x: -1608.6, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657657736

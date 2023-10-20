@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface WeaponUser
-{
+public interface WeaponUser {
     public abstract event EventHandler WepActionCancel;
-
+    
     protected virtual void OnWepActionCancel(EventArgs e) { }
     public abstract Animator getAnim();
     public abstract string getWepUseAnimLayer();
@@ -16,4 +15,7 @@ public interface WeaponUser
         ThrowHitResponse();
     }
     public virtual bool RequestWepAction() { return true; }
+    public virtual void ReqMoveOverrideForWepAct(Vector3 localMovement, float time, Vector3 overrideWeight, bool groundedOnly) {
+        return;
+    }
 }
