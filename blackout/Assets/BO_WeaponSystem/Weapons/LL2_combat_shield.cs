@@ -26,6 +26,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     private readonly string ANIM_MOTION_RESET = "punch_reset";
 
     private Animator anim;
+    private bool ready = false;
+    private Transform aimingObj;
+    public float vAiming;
     private bool robWepUsable = false;
     private bool attacking = false;
     private float attackTime = 0f;
@@ -43,6 +46,13 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     // Update is called once per frame
     void Update() {
+
+        vAiming = aimingObj.localEulerAngles.x;
+        if (vAiming > 180) vAiming = -(360 - vAiming);
+        vAiming = vAiming / 160 + 0.5f;
+        if (ready) anim.SetFloat("verticalAiming", vAiming);
+
+        if (anim.GetFloat("verticalAiming") < 0.1) Debug.Log("aaaaaaaa");
         if (robWepUsable)
         {
             if (attacking)
@@ -76,13 +86,15 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                     AttackEnd();
                     animLayerWeight = 0;
                 }
-                Debug.Log("alw:" + animLayerWeight);
+                
                 anim.SetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER), animLayerWeight);
             }
             else 
             {
                 attackTime = ATTACK_DELAY;
             }
+
+
 
         }
         else
@@ -103,6 +115,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         connectShield.SetActive(false);
         leftShield.SetActive(true);
         rightShield.SetActive(true);
+        ready = true;
     }
 
     public override void PutAway() {
@@ -110,9 +123,12 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         connectShield.SetActive(true);
         leftShield.SetActive(false);
         rightShield.SetActive(false);
+        ready = false;
     }
 
     public override void MainAction() {
+
+        
 
         if (robWepUsable = sender.RequestWepAction())  //sender‚ªUŒ‚‰Â”\ó‘Ô‚Å‚ ‚ê‚Î
         {
@@ -149,6 +165,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public override void setSender(WeaponUser sender) {
         base.setSender(sender);
         anim = sender.getAnim();
+        aimingObj = sender.getAimingObj().transform;
         sender.WepActionCancel += (_,_) => { robWepUsable = false; };
     }
 
@@ -159,5 +176,11 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         attackStartCnt = 0;
         animLayerWeight = 0;
         anim.SetTrigger(ANIM_MOTION_RESET);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(rightShield.transform.position + rightShield.transform.forward * 1.5f, 0.5f);
     }
 }
