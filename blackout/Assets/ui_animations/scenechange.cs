@@ -24,7 +24,9 @@ public class scenechange : MonoBehaviour
         if (Sname == "menu_01") {
             Initiate.Fade("menu_02", Color.black, 1.0f);
         }
-        else {
+        else if(Sname=="menu_02"){
+            Initiate.Fade("menu_01", Color.black, 1.0f);
+        }else if (Sname == "menu_03") {
             Initiate.Fade("menu_01", Color.black, 1.0f);
         }
     }
