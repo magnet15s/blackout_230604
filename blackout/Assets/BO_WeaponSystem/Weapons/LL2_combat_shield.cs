@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LL2_combat_shield : Weapon, ShieldRoot
@@ -14,6 +15,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public override string remainAmmoType { get; set; } = "";
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "WAIT";
+
+    [SerializeField] private int damage = 200;
 
     public Material HUDImage;
 
@@ -31,12 +34,15 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     public float vAiming;
     private bool robWepUsable = false;
     private bool attacking = false;
+    private bool attackHitChecked = false;
     private float attackTime = 0f;
     private float attackStartCnt = 0f;
+    public bool lastAttackIsRight = false;
     private float animLayerWeight = 0f;
     private readonly float ATTACK_MOTION_TRANS_TIME = 0.5f;
     private readonly float ATTACK_DELAY = 0.7f;
     private readonly float ATTACK_FOLLOW_THROUGH = 1f;
+    private readonly float ATTACK_HIT_CHK_TIMING = 0.5f;
 
 
     // Start is called before the first frame update
@@ -50,6 +56,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         vAiming = aimingObj.localEulerAngles.x;
         if (vAiming > 180) vAiming = -(360 - vAiming);
         vAiming = vAiming / 160 + 0.5f;
+        vAiming = Mathf.Max(Mathf.Min(vAiming * 1.2f, 1), -1);
         if (ready) anim.SetFloat("verticalAiming", vAiming);
 
         if (anim.GetFloat("verticalAiming") < 0.1) Debug.Log("aaaaaaaa");
@@ -68,10 +75,30 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                 else if (attackTime < ATTACK_DELAY) //çUåÇíÜ
                 {
                     MotionLocking = true;
-                    if(animLayerWeight < 1)
+                    if(animLayerWeight < 1)//äiì¨ÉAÉjÉÅÅ[ÉVÉáÉìÉåÉCÉÑÅ[ÇÃweightÇ™1à»â∫ÇÃä‘
                     {
                         animLayerWeight += Time.deltaTime / ATTACK_MOTION_TRANS_TIME;
                         if(animLayerWeight > 1)animLayerWeight = 1;
+                    }
+                    if(attackTime > ATTACK_HIT_CHK_TIMING && !attackHitChecked) {//çUåÇîªíËÇÃèuä‘
+                        RaycastHit[] results = 
+                        Physics.SphereCastAll(lastAttackIsRight ? rightShield.transform.position : leftShield.transform.position,
+                            2f, lastAttackIsRight ? rightShield.transform.forward : leftShield.transform.forward,
+                            2f
+                        );
+                        List<RaycastHit> drList = new();
+                        foreach(RaycastHit res in results) {
+                            DamageReceiver dr;
+                            if((dr = res.transform.GetComponent<DamageReceiver>()) != null) {
+                                drList.Add(res);
+                            }
+                        }
+                        foreach(RaycastHit dr in drList) {
+                            dr.transform.GetComponent<DamageReceiver>().Damage(damage, dr.point, gameObject, "ArmStrike");
+                        }
+
+
+                        attackHitChecked = true;
                     }
                     
 
@@ -141,10 +168,14 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                     attackTime = 0;
                     attackStartCnt = 0;
                     attacking = true;
+                    attackHitChecked = false;
+                    lastAttackIsRight = true;
                 }
                 else
                 {
                     attackTime = 0;
+                    attackHitChecked = false;
+                    lastAttackIsRight = !lastAttackIsRight;
                 }
                 
             }
@@ -173,6 +204,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     {
         attacking = false;
         attackTime = ATTACK_DELAY + ATTACK_FOLLOW_THROUGH;
+        lastAttackIsRight = false;
         attackStartCnt = 0;
         animLayerWeight = 0;
         anim.SetTrigger(ANIM_MOTION_RESET);
