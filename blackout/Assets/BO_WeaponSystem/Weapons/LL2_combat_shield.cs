@@ -25,8 +25,15 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     [SerializeField] GameObject rightShield;
 
     private readonly string ANIM_MOTION_LAYER = "close_combat";
+    private readonly string ANIM_MOTION_PARAM = "CC_motion_number";
+    private readonly int ANIM_MOTION_NUMBER = 1;
     private readonly string ANIM_FIRE_TRIGGER = "punch_fire";
     private readonly string ANIM_MOTION_RESET = "punch_reset";
+
+    private readonly string ANIM_DEFENSE_LAYER = "upper_body";
+    private readonly string ANIM_DEFENSE_PALAM = "UB_motion_number";
+    private readonly int ANIM_DEFENSE_NUMBER = 1;
+    private readonly string ANIM_DEFENSE_RESET = "UB_reset"; 
 
     private Animator anim;
     private bool ready = false;
@@ -44,6 +51,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     private readonly float ATTACK_FOLLOW_THROUGH = 1f;
     private readonly float ATTACK_HIT_CHK_TIMING = 0.5f;
 
+    private float defenseEnterWaitCnt = 0;
+    private readonly float DEFENSE_MOTION_TRANS_TIME = 0.3f;
 
     // Start is called before the first frame update
     void Start() {
@@ -52,14 +61,13 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     // Update is called once per frame
     void Update() {
+        //----Å´äiì¨----
 
         vAiming = aimingObj.localEulerAngles.x;
         if (vAiming > 180) vAiming = -(360 - vAiming);
         vAiming = vAiming / 160 + 0.5f;
         vAiming = Mathf.Max(Mathf.Min(vAiming * 1.2f, 1), -1);
         if (ready) anim.SetFloat("verticalAiming", vAiming);
-
-        if (anim.GetFloat("verticalAiming") < 0.1) Debug.Log("aaaaaaaa");
         if (robWepUsable)
         {
             if (attacking)
@@ -121,11 +129,31 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                 attackTime = ATTACK_DELAY;
             }
 
+            //----Å™äiì¨----
+            //----Å´ñhå‰----
 
-
+            if((defenseEnterWaitCnt -= Time.deltaTime) > 0) {
+                Debug.Log($"defense{attacking}");
+                if (!attacking) {
+                    float lw;
+                    if((lw = anim.GetLayerWeight(anim.GetLayerIndex(ANIM_DEFENSE_LAYER))) < 1) {
+                        lw += Time.deltaTime / DEFENSE_MOTION_TRANS_TIME;
+                        if (lw > 1) lw = 1;
+                        anim.SetLayerWeight(anim.GetLayerIndex(ANIM_DEFENSE_LAYER), lw);
+                    }
+                }
+            } else {
+                float lw;
+                if((lw = anim.GetLayerWeight(anim.GetLayerIndex(ANIM_DEFENSE_LAYER))) > 0) {
+                    lw -= Time.deltaTime / DEFENSE_MOTION_TRANS_TIME;
+                    if (lw < 0) lw = 0;
+                    anim.SetLayerWeight(anim.GetLayerIndex(ANIM_DEFENSE_LAYER), lw);
+                }
+            }
         }
         else
         {
+            //----Å´äiì¨----
             if (attacking)
             {
                 AttackEnd();
@@ -135,6 +163,11 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                 lw -= Time.deltaTime / ATTACK_MOTION_TRANS_TIME;
                 anim.SetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER), lw);
             }
+            //----Å™äiì¨----
+            //----Å´ñhå‰----
+            if(defenseEnterWaitCnt > 0) {
+                defenseEnterWaitCnt = 0;
+            }
         }
     }
     public override void Ready() {
@@ -143,6 +176,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         leftShield.SetActive(true);
         rightShield.SetActive(true);
         ready = true;
+        anim.SetInteger(ANIM_MOTION_PARAM, ANIM_MOTION_NUMBER);
+        anim.SetInteger(ANIM_DEFENSE_PALAM, ANIM_DEFENSE_NUMBER);
     }
 
     public override void PutAway() {
@@ -151,11 +186,13 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         leftShield.SetActive(false);
         rightShield.SetActive(false);
         ready = false;
+        anim.SetInteger(ANIM_MOTION_PARAM, -1);
+        anim.SetInteger(ANIM_DEFENSE_PALAM, -1);
+        anim.SetTrigger(ANIM_MOTION_RESET);
+        anim.SetTrigger(ANIM_DEFENSE_RESET);
     }
 
     public override void MainAction() {
-
-        
 
         if (robWepUsable = sender.RequestWepAction())  //senderÇ™çUåÇâ¬î\èÛë‘Ç≈Ç†ÇÍÇŒ
         {
@@ -184,7 +221,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     }
     
     public override void SubAction() {
-        Debug.Log($"SubAct{this}");
+        if(robWepUsable = sender.RequestWepAction())
+        defenseEnterWaitCnt = 0.2f;
+        
     }
     public override void Reload() {
         Debug.Log($"Reload{this}");
@@ -208,11 +247,5 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         attackStartCnt = 0;
         animLayerWeight = 0;
         anim.SetTrigger(ANIM_MOTION_RESET);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(rightShield.transform.position + rightShield.transform.forward * 1.5f, 0.5f);
     }
 }
