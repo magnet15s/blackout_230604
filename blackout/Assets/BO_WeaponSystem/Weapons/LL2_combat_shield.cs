@@ -53,6 +53,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
 
     private float defenseEnterWaitCnt = 0;
     private readonly float DEFENSE_MOTION_TRANS_TIME = 0.3f;
+    [SerializeField] private float assaultSpeed = 30;
 
     // Start is called before the first frame update
     void Start() {
@@ -79,6 +80,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                 {
                     MotionLocking = true;
                     animLayerWeight = attackStartCnt / ATTACK_MOTION_TRANS_TIME;
+                    sender.SetWepMove(AssaultMove, ATTACK_DELAY + 3);
+                    assaultTimeCnt = 0;
                 }
                 else if (attackTime < ATTACK_DELAY) //UŒ‚’†
                 {
@@ -103,6 +106,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                         }
                         foreach(RaycastHit dr in drList) {
                             dr.transform.GetComponent<DamageReceiver>().Damage(damage, dr.point, gameObject, "ArmStrike");
+                            
+                            sender.ThrowHitResponse(lastAttackIsRight ? rightShield : leftShield, dr.transform.gameObject);
                         }
 
 
@@ -133,7 +138,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
             //----«–hŒä----
 
             if((defenseEnterWaitCnt -= Time.deltaTime) > 0) {
-                Debug.Log($"defense{attacking}");
+                //Debug.Log($"defense{attacking}");
                 if (!attacking) {
                     float lw;
                     if((lw = anim.GetLayerWeight(anim.GetLayerIndex(ANIM_DEFENSE_LAYER))) < 1) {
@@ -247,5 +252,36 @@ public class LL2_combat_shield : Weapon, ShieldRoot
         attackStartCnt = 0;
         animLayerWeight = 0;
         anim.SetTrigger(ANIM_MOTION_RESET);
+    }
+
+    private float assaultTimeCnt = 0;
+    private bool assaultAttack = false;
+    private Transform assaultTarget = null;
+    private Vector3 AssaultMove(Vector3 movement, bool grounded, Transform user) { 
+        if(assaultTimeCnt == 0)
+        {
+            assaultAttack = grounded;
+            if (TrackingIcon.closestIconToCenter == null) assaultAttack = false;
+            else
+            {
+                assaultTarget = TrackingIcon.closestIconToCenter.trackingTarget.transform;
+            }
+        }
+
+        assaultTimeCnt += Time.deltaTime;
+
+        if (assaultAttack)
+        {
+            Vector3 dir = user.InverseTransformPoint(assaultTarget.position);
+            float dist = Mathf.Min(dir.magnitude * 1.4f + 8.0f, assaultSpeed);
+            dir.Normalize();
+            Vector3 ret = (Mathf.Max(1.0f - (assaultTimeCnt / ATTACK_DELAY) - -0,2f, 0) * (dir * dist)) + (Mathf.Min(assaultTimeCnt / ATTACK_DELAY + -0.2f, 1) * movement);
+            Debug.Log(ret);
+            ret.y = movement.y;
+
+            if (assaultTimeCnt > ATTACK_DELAY) sender.removeWepMove(AssaultMove);
+            return ret;
+
+        }else return movement;
     }
 }

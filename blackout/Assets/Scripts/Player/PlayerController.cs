@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool wallBound = false;
     private bool jump = false;
     private bool jumped = false;
+    private bool wepMoving = false;
 
     [SerializeField] private Weapon selectWep;
     [SerializeField] private int selWepIdx;
@@ -137,13 +138,15 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     void OnWepActionCancel(EventArgs e) {
         WepActionCancel.Invoke(this, e);
     }
-
+    /// <summary>
+    /// 武器による移動上書きリクエストの内容管理用構造体
+    /// </summary>
     private struct MoveORReq {
-        public Vector3 Movement;
-        public float time;
-        public Vector3 weight;
-        public bool gOnly;
-        public bool running;
+        public Vector3 Movement;    //移動ベクトル（ローカル空間）
+        public float time;          //移動時間
+        public Vector3 weight;      //上書き度合
+        public bool gOnly;          //grounded only
+        public bool running;        //リクエスト実行中
         public MoveORReq(Vector3 m, float t, Vector3 w, bool g, bool r) {
             Movement = m;
             time = t;
@@ -156,6 +159,27 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     void WeaponUser.ReqMoveOverrideForWepAct(UnityEngine.Vector3 localMovement, float time, UnityEngine.Vector3 overrideWeight, bool groundedOnly) {
         MoveORReqs.Add(new MoveORReq(localMovement, time, overrideWeight, groundedOnly, false));
     }
+
+    private WeaponUser.MoveOverrideForWepAct wepMove = null;
+    private float wepMoveLiveTime = 0;
+    bool WeaponUser.SetWepMove(WeaponUser.MoveOverrideForWepAct wepMove, float overallTime)
+    {
+        if (this.wepMove == null)
+        {
+            this.wepMove = null;
+            this.wepMove = wepMove;
+            wepMoveLiveTime = overallTime;
+            return true;
+        }
+        else return false;
+    }
+    void WeaponUser.removeWepMove(WeaponUser.MoveOverrideForWepAct wepMove)
+    {
+        if (this.wepMove == wepMove) { Debug.LogWarning("wepmove hit"); } else { Debug.LogWarning("wepmove not found"); }
+        this.wepMove -= wepMove;
+        
+    }
+
 
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
@@ -343,7 +367,15 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     // Update is called once per frame
     void Update()
     {
+
+        if((wepMoveLiveTime -= Time.deltaTime) < 0)
+        {
+            wepMoveLiveTime = 0;
+            wepMove = null;
+        }
         //MoveOverrideReqestsの処理
+
+        
 
         if(MoveORReqs.Count >= 1) {
             List<MoveORReq> remList = new();
@@ -360,6 +392,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                     return;
                 }
             });
+
             if(remList.Count > 0) {
                 remList.ForEach(item => {
                     MoveORReqs.Remove(item);
@@ -468,36 +501,48 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         jumped = false;
         if (gs.isGrounded(out groundNormal) && !wallBound && !jump) //接地判定
         {
-            
+            //ダッシュクールタイム中でなければ
             if (dashCTcnt == 0) {
-                if (!dash)//非ダッシュ時
-                {
+
+                //非ダッシュ時
+                if (!dash){
+
+                    //最初にlastMovementに自然減速量を掛ける
                     Vector3 lm = worldVec2localVec(lastMovement);
                     lm.y = 0;
                     Vector3 dlm = lm.normalized * Mathf.Max(lm.magnitude - lm.magnitude * Time.deltaTime * brake, 0);
-                    if (moveAngleContext.magnitude * speed < dlm.magnitude)
-                    {
+
+                    //自然減速後の値より入力movementのほうが大きければそちらを採る
+                    if (moveAngleContext.magnitude * speed < dlm.magnitude){
                         movement = dlm;
                     }
                     else movement = moveAngleContext * speed;
-                } else//ダッシュ時→
-                  {
-                    if (dashAngle == Vector3.zero)   //ダッシュ開始フレームの場合
+                }
+
+                //ダッシュ時
+                else{
+
+                    //ダッシュ開始フレームの場合
+                    if (dashAngle == Vector3.zero)   
                     {
+                        //ダッシュ開始時の方向を保存
                         movement = moveAngleContext.normalized * dashSpeed;
                         dashAngle = movement.normalized;
-                    } else                            //ダッシュ中
-                      {
+                    }
+                    //ダッシュ中
+                    else{
                         if (Vector3.Angle(moveAngleContext, dashAngle) > 100) {
-                            DashCancel();    //ダッシュ方向から100度以上の入力転換（ダッシュキャンセル）
+                            DashCancel();    //(ダッシュ方向から100度以上の入力転換でダッシュキャンセル）
                         } else {
+                            //ダッシュ開始フレーム以外は前フレームの方向に基づいて方向を決定
                             movement = Vector3.Normalize(dashAngle + moveAngleContext * Time.deltaTime * 2) * dashSpeed;
                             dashAngle = movement.normalized;
                         }
                     }
                 }
             }
-            if (dashCTcnt > 0)    //ダッシュ後減速
+            //ダッシュ後減速
+            if (dashCTcnt > 0)    
             {
                 dashCTcnt -= Time.deltaTime;
                 if (dashCTcnt <= 0) {
@@ -506,17 +551,23 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 }
                 movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
             }
-            if (inAir) {//着地の瞬間
-                if(Vector3.Angle(groundNormal, Vector3.up) > cc.slopeLimit) {//groundSensorが着地判定を出したが、坂の角度がslopeLimitを越えていた場合
+
+            //着地の瞬間
+            if (inAir) {
+
+                //groundSensorが着地判定を出したが、坂の角度がslopeLimitを越えていた場合
+                if (Vector3.Angle(groundNormal, Vector3.up) > cc.slopeLimit) {
                     //ここではinAirはfalseにしない。　if(wallBound) 部で跳ね返りを計算しながら滑り落ちていく
                     wallBoundVector = Vector3.Reflect(lastMovement, groundNormal);
                     wallBound = true;
-                } else {
+                }
+                //着地可能な地面だった場合
+                else {
                     inAir = false;
                     touchDownCnt = touchDownTime;
                 }
             }
-            if (touchDownCnt > 0) {
+            if (touchDownCnt > 0) {//着地後硬直
                 touchDownCnt -= Time.deltaTime;
                 if (touchDownCnt < 0) {
                     touchDownCnt = 0;
@@ -525,6 +576,16 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             }
             
             movement.y = -30; //接地時重力
+
+            //wepMove処理
+            //wepMoveに何か関数が入っていたら
+            if (wepMove != null)
+            {
+                //wepMoveを処理する場合lastMovementをwepMove処理前に確定させる
+                wepMoving = true; 
+                if (!inAir && touchDownCnt <= 0) lastMovement = localVec2worldVec(movement);
+                movement = wepMove(movement, true, transform);
+            }else wepMoving = false;
 
 
         } else {//空中に居る場合
@@ -565,8 +626,18 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 //Debug.Log("Notつっかえ");
             }
             movement = worldVec2localVec(lastMovement);
-            
+
+            if(wepMove != null)
+            {
+                wepMoving = true;
+                if (!inAir && touchDownCnt <= 0) lastMovement = localVec2worldVec(movement);
+                wepMove(movement, false, transform);
+            }else wepMoving = false;
+        
         }
+
+
+
 
         //アニメーター用
         //ダッシュキャンセル
@@ -584,7 +655,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         MotionChange();
 
         //移動反映
-        if(!inAir && touchDownCnt <= 0)lastMovement = localVec2worldVec(movement);
+        if(!inAir && touchDownCnt <= 0 && !wepMoving)lastMovement = localVec2worldVec(movement);
         movement *= Time.deltaTime;
         movement = localVec2worldVec(movement);
         oldPosition = transform.position;

@@ -144,8 +144,8 @@ Transform:
   m_GameObject: {fileID: 3576672954151673474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1051752298381336413}
   - {fileID: 7613540943151312455}
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorOriginOffset: {x: 0, y: -0.35, z: 0}
   sensorRange: 0.2
+  sensorRadius: 1
   layerMask: 0
   catchLayer: 0
   drawRay: 1
@@ -210,16 +211,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920841712a061be4f943963a9b091fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   modelName: miniTank
   maxArmorPoint: 200
   armorPoint: 200
+  onRadarDist: 0
   anim: {fileID: 3576672954151673529}
   gg: {fileID: 3576672954151673477}
   navAgent: {fileID: 5228340101659750198}
   Target: {fileID: 0}
   gunTurretBone: {fileID: 3920736066403878643}
   gunBone: {fileID: 4523963603243727698}
-  gun: {fileID: 0}
   approachPhaseChangeLug: 0
   turretRotationLimit: 60
   sensorRange: 100
