@@ -27,6 +27,10 @@ public class mission_select : MonoBehaviour
         Initiate.Fade("menu_04", Color.black, 3f);
     }
     public void OnButtonClickRe() {
+        Initiate.Fade("menu_02", Color.black, 3f);
+    }
+
+    public void OnButtonClickInmenu() {
         Initiate.Fade("menu_03", Color.black, 3f);
     }
 }
