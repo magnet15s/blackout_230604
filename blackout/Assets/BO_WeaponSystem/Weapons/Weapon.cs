@@ -17,7 +17,6 @@ public abstract class Weapon : MonoBehaviour
                 hitObject = _hitObject;
             }
         }
-
         public event EventHandler bulletHit;
         public event EventHandler WepActionCancel;
 

@@ -93,4 +93,4 @@ MonoBehaviour:
   image: {fileID: 1632454674018645754}
   trackingTarget: {fileID: 0}
   player: {fileID: 0}
-  trackingUpdateInterval: 0.15
+  trackingUpdateInterval: 0.05
