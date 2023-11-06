@@ -17,7 +17,6 @@ public abstract class Weapon : MonoBehaviour
                 hitObject = _hitObject;
             }
         }
-
         public event EventHandler bulletHit;
         public event EventHandler WepActionCancel;
 
@@ -58,6 +57,8 @@ public abstract class Weapon : MonoBehaviour
     public virtual void setSender(WeaponUser sender) {
         this.sender = sender;
     }
+
+    public virtual bool MotionLocking { get; protected set; }
 
     // Start is called before the first frame update
     /// <summary>
