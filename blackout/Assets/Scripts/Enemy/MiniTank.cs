@@ -106,7 +106,7 @@ public class MiniTank : Enemy{
                 //Debug.Log(result.transform.gameObject.Equals(Target) + " " + result.transform.gameObject);
 
                 //“G‚ðŽ‹”F‚µ‚Ä‚¢‚éê‡
-                if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && result.transform.Equals(Target.transform)))
+                if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && (result.collider.CompareTag("Player") || result.collider.CompareTag("PlayerOption"))))
                 {
                     if (discoveredTargetShare)
                     {
@@ -141,7 +141,7 @@ public class MiniTank : Enemy{
 
                     //ˆÚ“®ƒpƒ^[ƒ“«
                     float targetdist = (Target.transform.position - transform.position).magnitude;
-
+                    Debug.Log($"td : {targetdist}  ");
                     //“G‚ª‰“‚¢ê‡
                     if (targetdist > ApproachDist)
                     {
