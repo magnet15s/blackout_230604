@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
     [Space]
-    private List<WeaponConnectionToBone> connections;
+    private WeaponConnectionToBone[] connections = new WeaponConnectionToBone[];
     [SerializeField] private Image weaponImage;
     [SerializeField] private Material noDataWeaponImage;
     [SerializeField] private Image hitResponse;
