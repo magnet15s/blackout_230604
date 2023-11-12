@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1105 &110500000
+HumanTemplate:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: falena Human Template
+  m_BoneTemplate:
+    Hips: root.001
+    Left Index Distal: hitosasi2_L
+    Left Index Intermediate: hitosasi1_L
+    Left Index Proximal: hitosasi_L
+    Left Little Distal: koyubi2_L
+    Left Little Intermediate: koyubi1_L
+    Left Little Proximal: koyubi_L
+    Left Thumb Distal: oyayubi2_L
+    Left Thumb Intermediate: oyayubi1_L
+    Left Thumb Proximal: oyayubi_L
+    LeftFoot: foot_L
+    LeftHand: hand_L
+    LeftLowerArm: lowwer_arm_L
+    LeftLowerLeg: lowwer_leg_L
+    LeftUpperArm: upper_arm_L
+    LeftUpperLeg: upper_leg_L
+    Right Index Distal: hitosasi2_R
+    Right Index Intermediate: hitosasi1_R
+    Right Index Proximal: hitosasi_R
+    Right Little Distal: koyubi2_R
+    Right Little Intermediate: koyubi1_R
+    Right Little Proximal: koyubi_R
+    Right Thumb Distal: oyayubi2_R
+    Right Thumb Intermediate: oyayubi1_R
+    Right Thumb Proximal: oyayubi_R
+    RightFoot: foot_R
+    RightHand: hand_R
+    RightLowerArm: lowwer_arm_R
+    RightLowerLeg: lowwer_leg_R
+    RightUpperArm: upper_arm_R
+    RightUpperLeg: upper_leg_R
+    Spine: doutai

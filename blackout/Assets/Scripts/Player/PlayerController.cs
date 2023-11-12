@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
     [Space]
-    private WeaponConnectionToBone[] connections = new WeaponConnectionToBone[];
     [SerializeField] private Image weaponImage;
     [SerializeField] private Material noDataWeaponImage;
     [SerializeField] private Image hitResponse;
@@ -43,6 +42,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private PlayerCameraCood pcc;
     [Space]
     public List<Weapon> weapons;
+
     [Space]
     //移動計算用
     private float gravity = 9.8f;
@@ -65,9 +65,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool jumped = false;
     private bool wepMoving = false;
 
+    //武器制御
     [SerializeField] private Weapon selectWep;
     [SerializeField] private int selWepIdx;
     private List<bool> WepActReqBools = new();
+    private List<WeaponConnectionToBone> wepConnectors = new();
+    [SerializeField] private WeaponConnectionToBone wepCRoot, wepCRightForearm, WepCLeftForearm;
 
     //入力コンテキスト
     private Vector3 moveAngleContext;
