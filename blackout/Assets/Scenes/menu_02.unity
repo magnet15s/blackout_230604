@@ -567,6 +567,7 @@ GameObject:
   - component: {fileID: 385011837}
   - component: {fileID: 385011836}
   - component: {fileID: 385011835}
+  - component: {fileID: 385011841}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -718,7 +719,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 385011839}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 385011841}
+        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
+        m_MethodName: OnSceneTransition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &385011839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,6 +770,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385011833}
   m_CullTransparentMesh: 1
+--- !u!114 &385011841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385011833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 924d2147bf8e1a1488615c8541b2aa05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionSceneName: SampleScene
+  fadeColor: {r: 0, g: 0, b: 0, a: 1}
+  fadeTime: 3
 --- !u!1 &393017023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,6 +1871,7 @@ GameObject:
   - component: {fileID: 1690012179}
   - component: {fileID: 1690012178}
   - component: {fileID: 1690012184}
+  - component: {fileID: 1690012185}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1949,7 +1978,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1690012182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1690012185}
+        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
+        m_MethodName: OnSceneTransition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1690012182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2033,6 +2074,21 @@ MonoBehaviour:
             m_StringArgument: notHover
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1690012185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690012176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 924d2147bf8e1a1488615c8541b2aa05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionSceneName: AssembleScene
+  fadeColor: {r: 0, g: 0, b: 0, a: 1}
+  fadeTime: 3
 --- !u!1 &1852480539
 GameObject:
   m_ObjectHideFlags: 0
