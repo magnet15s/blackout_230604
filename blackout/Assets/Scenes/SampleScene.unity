@@ -800,6 +800,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
 --- !u!1 &194540814
@@ -2168,6 +2184,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
 --- !u!1 &346999547
@@ -2426,6 +2458,22 @@ PrefabInstance:
     - target: {fileID: 5228340101659750199, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
@@ -2908,7 +2956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -779.9001, y: -360.5}
+  m_AnchoredPosition: {x: -779.90015, y: -360.5}
   m_SizeDelta: {x: -1640, y: -800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486002024
@@ -3155,6 +3203,22 @@ PrefabInstance:
     - target: {fileID: 5228340101659750199, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
@@ -6999,6 +7063,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
 --- !u!1 &1336379850
@@ -7711,6 +7791,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
 --- !u!1 &1462614792
@@ -8131,6 +8227,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
 --- !u!1001 &1557674695
@@ -8191,6 +8303,22 @@ PrefabInstance:
     - target: {fileID: 5228340101659750199, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
@@ -8805,7 +8933,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -782.10004, y: 430.59998}
+  m_AnchoredPosition: {x: -782.1001, y: 430.59998}
   m_SizeDelta: {x: -1608.6, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657657736
@@ -8909,6 +9037,22 @@ PrefabInstance:
     - target: {fileID: 5228340101659750199, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714441032491282, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5353714442170709368, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+      propertyPath: m_VertexStreams.Array.size
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
