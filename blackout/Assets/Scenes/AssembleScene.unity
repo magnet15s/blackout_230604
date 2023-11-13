@@ -992,8 +992,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u88C5\u5099\u306E\u8A2D\u5B9A\u3092\u884C\u3044\u307E\u3059"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 13d7d74b9b0eca441ac254034245371f, type: 2}
-  m_sharedMaterial: {fileID: -646463328572707429, guid: 13d7d74b9b0eca441ac254034245371f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d25e1d479013b724cb3ae03ae4018df2, type: 2}
+  m_sharedMaterial: {fileID: 4306851088828103056, guid: d25e1d479013b724cb3ae03ae4018df2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
