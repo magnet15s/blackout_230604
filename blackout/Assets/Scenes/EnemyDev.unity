@@ -1499,6 +1499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7445b24e860c77f48b8515db374ecc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pcc: {fileID: 0}
   wepChangeDelay: 0.2
   AimingObj: {fileID: 275526880}
   fireInterval: 0.07
@@ -1752,6 +1753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 0}
 --- !u!64 &610592659
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2354,10 +2356,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05299646decf3694caf7c0642034df10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pc: {fileID: 0}
+  damage: 200
   HUDImage: {fileID: 2100000, guid: 41d9a7044ff5a1e40ac144fbd9612836, type: 2}
   connectShield: {fileID: 610592656}
   leftShield: {fileID: 1663674922}
   rightShield: {fileID: 1593633544}
+  vAiming: 0
+  lastAttackIsRight: 0
+  assaultSpeed: 30
 --- !u!4 &823628045
 Transform:
   m_ObjectHideFlags: 0
@@ -4569,6 +4576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 0}
 --- !u!64 &1593633546
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4744,6 +4752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ea25818074dc47a40de86d0af4d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldRoot: {fileID: 0}
 --- !u!64 &1663674925
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5502,6 +5511,7 @@ MonoBehaviour:
   maxArmorPoint: 500
   armorPoint: 500
   speed: 12
+  brake: 2
   dashSpeed: 25
   dashInteractTime: 0.5
   dashCoolTime: 0.6
