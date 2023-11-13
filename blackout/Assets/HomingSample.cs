@@ -18,6 +18,7 @@ public sealed class HomingSample : MonoBehaviour {
     Vector3 minInitVelocity;
     [SerializeField]
     Vector3 maxInitVelocity;
+    float Homingdelay;
 
     Vector3 position;
     Vector3 velocity;
@@ -26,6 +27,7 @@ public sealed class HomingSample : MonoBehaviour {
     public Weapon shooter;
     public int damage;
     string damageType;
+    private float timers = 0.0f;
 
     public Transform Target {
         set {
@@ -48,23 +50,26 @@ public sealed class HomingSample : MonoBehaviour {
         if (target == null) {
             return;
         }
+        timers+= Time.deltaTime;
+        if (Homingdelay > timers) {
+            acceleration = 2f / (time * time) * (target.position - position - time * velocity);
 
-        acceleration = 2f / (time * time) * (target.position - position - time * velocity);
+            if (limitAcceleration && acceleration.sqrMagnitude > maxAcceleration * maxAcceleration) {
+                acceleration = acceleration.normalized * maxAcceleration;
+            }
 
-        if (limitAcceleration && acceleration.sqrMagnitude > maxAcceleration * maxAcceleration) {
-            acceleration = acceleration.normalized * maxAcceleration;
+            time -= Time.deltaTime;
+
+            if (time < 0f) {
+                return;
+            }
+
+            velocity += acceleration * Time.deltaTime;
+            position += velocity * Time.deltaTime;
+            thisTransform.position = position;
+            thisTransform.rotation = Quaternion.LookRotation(velocity);
         }
-
-        time -= Time.deltaTime;
-
-        if (time < 0f) {
-            return;
-        }
-
-        velocity += acceleration * Time.deltaTime;
-        position += velocity * Time.deltaTime;
-        thisTransform.position = position;
-        thisTransform.rotation = Quaternion.LookRotation(velocity);
+        
     }
 
     public void OnTriggerEnter(Collider other) {

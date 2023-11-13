@@ -14322,6 +14322,7 @@ MonoBehaviour:
   minInitVelocity: {x: -20, y: -20, z: 0}
   maxInitVelocity: {x: 20, y: 30, z: 0}
   weapon_name: 
+  Homingdelay: 20
   shooter: {fileID: 0}
   damage: 24
   generatedTime: 0
