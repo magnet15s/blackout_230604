@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private PlayerCameraCood pcc;
     [Space]
     public List<Weapon> weapons;
+
     [Space]
     //移動計算用
     private float gravity = 9.8f;
@@ -64,9 +65,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool jumped = false;
     private bool wepMoving = false;
 
+    //武器制御
     [SerializeField] private Weapon selectWep;
     [SerializeField] private int selWepIdx;
     private List<bool> WepActReqBools = new();
+    private List<WeaponConnectionToBone> wepConnectors = new();
+    [SerializeField] private WeaponConnectionToBone wepCRoot, wepCRightForearm, WepCLeftForearm;
 
     //入力コンテキスト
     private Vector3 moveAngleContext;
@@ -130,34 +134,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         hitResponse.color = new Color(1, 1, 1, 1);
     }
 
-    bool WeaponUser.RequestWepAction()
-    {
-        return true;
-    }
+   
     public event EventHandler WepActionCancel;
     void OnWepActionCancel(EventArgs e) {
         WepActionCancel.Invoke(this, e);
-    }
-    /// <summary>
-    /// 武器による移動上書きリクエストの内容管理用構造体
-    /// </summary>
-    private struct MoveORReq {
-        public Vector3 Movement;    //移動ベクトル（ローカル空間）
-        public float time;          //移動時間
-        public Vector3 weight;      //上書き度合
-        public bool gOnly;          //grounded only
-        public bool running;        //リクエスト実行中
-        public MoveORReq(Vector3 m, float t, Vector3 w, bool g, bool r) {
-            Movement = m;
-            time = t;
-            weight = w;
-            gOnly = g;
-            running = r;
-        }
-    }
-    private List<MoveORReq> MoveORReqs = new List<MoveORReq>();
-    void WeaponUser.ReqMoveOverrideForWepAct(UnityEngine.Vector3 localMovement, float time, UnityEngine.Vector3 overrideWeight, bool groundedOnly) {
-        MoveORReqs.Add(new MoveORReq(localMovement, time, overrideWeight, groundedOnly, false));
     }
 
     private WeaponUser.MoveOverrideForWepAct wepMove = null;
@@ -372,33 +352,6 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         {
             wepMoveLiveTime = 0;
             wepMove = null;
-        }
-        //MoveOverrideReqestsの処理
-
-        
-
-        if(MoveORReqs.Count >= 1) {
-            List<MoveORReq> remList = new();
-            MoveORReqs.ForEach(item => {
-                item.time -= Time.deltaTime;
-                if (item.time <= 0) {
-                    remList.Add(item);
-                    return;
-                }
-                if (item.Equals(MoveORReqs.First())) {
-                    item.running = true;
-                } else {
-                    remList.Add(item);
-                    return;
-                }
-            });
-
-            if(remList.Count > 0) {
-                remList.ForEach(item => {
-                    MoveORReqs.Remove(item);
-                });
-                remList.Clear();
-            }
         }
 
 
