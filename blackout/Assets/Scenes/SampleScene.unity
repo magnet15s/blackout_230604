@@ -2330,7 +2330,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3576672954151673479, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
 --- !u!1 &407610879
 GameObject:
@@ -5083,6 +5084,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!195 &840107419 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 5228340101659750198, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+  m_PrefabInstance: {fileID: 388250067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &859288947
 GameObject:
   m_ObjectHideFlags: 0
@@ -8795,6 +8801,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657657734}
   m_CullTransparentMesh: 1
+--- !u!1 &1658841605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3576672954151673474, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
+  m_PrefabInstance: {fileID: 388250067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1670296362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9777,12 +9788,44 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3576672954151673477, guid: 4ce2b1788da57fc4e86a06c0b08bf5f9, type: 3}
   m_PrefabInstance: {fileID: 388250067}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1658841605}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0875bbcad9b40f49b1256e872f86b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1912866728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658841605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ae1551b2967ef4381ed4f719f343b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 0
+  modelName: 
+  maxArmorPoint: 0
+  armorPoint: 0
+  onRadarDist: 0
+  anim: {fileID: 0}
+  gg: {fileID: 0}
+  navAgent: {fileID: 840107419}
+  Target: {fileID: 0}
+  prefab: {fileID: 6618401040682188846, guid: 6cadd6d432ebd264cbda2c14ca352c69, type: 3}
+  approachPhaseChangeLug: 0
+  sensorRange: 300
+  discoveredTargetShare: 1
+  flankAttackAngleTangent: 0
+  ApproachDist: 100
+  overApproachDist: 50
+  retreatBoundary: 50
+  interval: 0.1
+  iterationCount: 3
+  weaponrange: 200
 --- !u!1 &1947453244
 GameObject:
   m_ObjectHideFlags: 0
