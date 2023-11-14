@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 public class missile_tank : Enemy {
     public Animator anim;
     [SerializeField]
+    Transform target;
     public GroundedSensor gg;
     public NavMeshAgent navAgent;
     public GameObject Target;
@@ -90,8 +91,11 @@ public class missile_tank : Enemy {
     }
     // Update is called once per frame
     void Update() {
-        
+        if (isSpawning) {
+            return;
+        }
 
+        StartCoroutine(nameof(SpawnMissile));
         if (armorPoint > 0) {
             if (fireIntervalCnt > 0) {
                 fireIntervalCnt -= Time.deltaTime;
@@ -105,7 +109,7 @@ public class missile_tank : Enemy {
                 //Debug.Log(result.transform.gameObject.Equals(Target) + " " + result.transform.gameObject);
 
                 //“G‚ğ‹”F‚µ‚Ä‚¢‚éê‡
-                if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && (result.collider.CompareTag("Player") || result.collider.CompareTag("PlayerOption")))) {
+                if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid && (result.transform != null && result.transform.Equals(Target.transform))) {
                     if (discoveredTargetShare) {
                         Enemy.sharedTargetPosition = result.transform.position;
                         Enemy.targetReporter = this;
@@ -179,7 +183,6 @@ public class missile_tank : Enemy {
             }
         }
 
-
         ///ˆÚ“®
 
 
@@ -192,14 +195,25 @@ public class missile_tank : Enemy {
 
 
     }
-    
-    public override void MainFire() {
-        Livemissile homing;
-        homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<Livemissile>();
-        homing.Target = Target.transform;
+    IEnumerator SpawnMissile() {
+        isSpawning = true;
 
+        Vector3 euler;
+        Quaternion rot;
+        Livemissile homing;
+
+        for (int i = 0; i < iterationCount; i++) {
+            if (fire == true) {
+                homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<Livemissile>();
+                homing.Target = target;
+            }
+            
+        }
+
+        yield return intervalWait;
+
+        isSpawning = false;
     }
-   
 
     public Animator getAnim() {
         throw new System.NotImplementedException();

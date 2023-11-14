@@ -153,6 +153,7 @@ public class Livemissile : MonoBehaviour
         if (target == null) {
             return;
         }
+
         acceleration = 2f / (time * time) * (target.position - position - time * velocity);
 
         if (limitAcceleration && acceleration.sqrMagnitude > maxAcceleration * maxAcceleration) {
@@ -169,7 +170,6 @@ public class Livemissile : MonoBehaviour
         position += velocity * Time.deltaTime;
         thisTransform.position = position;
         thisTransform.rotation = Quaternion.LookRotation(velocity);
-        
 
         Vector3 Movement = velocity * Time.deltaTime;
 
