@@ -23,8 +23,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         jump = 6,
         jumpcharge = 7,
         evasionmove = 8,
-        touchdown = 9
-    } 
+        touchdown = 9,
+        weaponmove = 10,
+        weaponairmove = 11,
+    }
 
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
@@ -45,9 +47,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     [Space]
     //移動計算用
-    private float gravity = 9.8f;
+    [SerializeField]private float gravity = 9.8f;
     private bool inAir = false;
-    [SerializeField]private float inAirCnt = 0;
+    [SerializeField] private float inAirCnt = 0;
     private float touchDownCnt = 0;
     private Vector3 movement = Vector3.zero;
     private Vector3 lastMovement = Vector3.zero;
@@ -81,6 +83,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool jumpContext = false;
     private float jumpChargeCnt = 0;
     private bool evasionMoveContext = false;
+    private float evasionMoveTime = 0;
     private bool fireContext = false;
     private Vector2 viewPoint;
     private bool focusContext = false;
@@ -104,7 +107,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     [SerializeField, Tooltip("ジャンプのおおよその上昇時間")] private float jumpTime = 2;
     [SerializeField] private float jumpChargeTime = 0.3f;
-    
+    [Space]
+    [SerializeField] private float evasionMoveAllTime = 0.7f;
+    [SerializeField] private float evasionMoveSpeed = 30;
     [Space]
     [SerializeField] private float turningSpeed = 200;
     [SerializeField] private float dashTurningFactor = 0.4f;
@@ -129,12 +134,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public GameObject getAimingObj() {
         return sightOrigin;
     }
-    public void ThrowHitResponse()
-    {
+    public void ThrowHitResponse() {
         hitResponse.color = new Color(1, 1, 1, 1);
     }
 
-   
+
     public event EventHandler WepActionCancel;
     void OnWepActionCancel(EventArgs e) {
         WepActionCancel.Invoke(this, e);
@@ -142,28 +146,23 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     private WeaponUser.MoveOverrideForWepAct wepMove = null;
     private float wepMoveLiveTime = 0;
-    bool WeaponUser.SetWepMove(WeaponUser.MoveOverrideForWepAct wepMove, float overallTime)
-    {
-        if (this.wepMove == null)
-        {
+    bool WeaponUser.SetWepMove(WeaponUser.MoveOverrideForWepAct wepMove, float overallTime) {
+        if (this.wepMove == null) {
             this.wepMove = null;
             this.wepMove = wepMove;
             wepMoveLiveTime = overallTime;
             return true;
-        }
-        else return false;
+        } else return false;
     }
-    void WeaponUser.removeWepMove(WeaponUser.MoveOverrideForWepAct wepMove)
-    {
+    void WeaponUser.removeWepMove(WeaponUser.MoveOverrideForWepAct wepMove) {
         if (this.wepMove == wepMove) { Debug.LogWarning("wepmove hit"); } else { Debug.LogWarning("wepmove not found"); }
         this.wepMove -= wepMove;
-        
+
     }
 
 
 
-    public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
-    {
+    public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         Debug.Log("Damage!! " + Time.frameCount);
         armorPoint -= damage;
         GameObject dfx;
@@ -178,36 +177,34 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
 
     //------------入力受け取り-----------
-    public void OnMove(InputAction.CallbackContext context)
-    {
+    public void OnMove(InputAction.CallbackContext context) {
         moveAngleContext = context.ReadValue<Vector2>();
         moveAngleContext.z = moveAngleContext.y;
         moveAngleContext.y = 0;
 
         moveMagnContext = moveAngleContext.magnitude;
-        if(moveMagnContext > 1) moveMagnContext= 1;
+        if (moveMagnContext > 1) moveMagnContext = 1;
 
         moveAngleContext.Normalize();
 
     }
 
 
-    public void OnDash(InputAction.CallbackContext context)
-    {
+    public void OnDash(InputAction.CallbackContext context) {
         dashItrContext = context.performed;
-        
+
         if (context.canceled) {
             dashContext = false;
             dashItrCnt = 0;
             if (dash) DashCancel();
         }
-        
+
     }
 
     public void OnJump(InputAction.CallbackContext context) {//緊急回避もここで判定
         if (context.started) {
             jumpContext = true;
-            
+
             if (GetPlayerActSt() == PlayerActionState.jumpcharge) {//ジャンプチャージ中にもう一度ジャンプを押すと緊急回避に派生
                 jumpChargeCnt = 0;
                 jumpContext = false;
@@ -217,48 +214,43 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
         }
 
-        
+
     }
 
 
-    public void OnLook(InputAction.CallbackContext context)
-    {
+    public void OnLook(InputAction.CallbackContext context) {
         viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
         if (viewPoint.y > 80) viewPoint.y = 80;
         else if (viewPoint.y < -80) viewPoint.y = -80;
 
         //視点移動反映
-        
+
     }
 
 
     //武器関連
-    public void OnFire(InputAction.CallbackContext context)
-    {
-        if (context.started) fireContext = true; 
-        if(context.canceled)fireContext = false;
+    public void OnFire(InputAction.CallbackContext context) {
+        if (context.started) fireContext = true;
+        if (context.canceled) fireContext = false;
     }
 
-    public void OnFocus(InputAction.CallbackContext context)
-    {
-        if(context.performed) focusContext = true;
-        else if(context.canceled) focusContext = false;
+    public void OnFocus(InputAction.CallbackContext context) {
+        if (context.performed) focusContext = true;
+        else if (context.canceled) focusContext = false;
     }
 
-    public void OnReload(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
+    public void OnReload(InputAction.CallbackContext context) {
+        if (context.performed) {
             selectWep.Reload();
 
         }
     }
     public void WeaponsListUp(InputAction.CallbackContext context) {
-        if(context.started && selWepIdx > 0) {
+        if (context.started && selWepIdx > 0) {
             selectWep.PutAway();
             selWepIdx--;
             selectWep = weapons[selWepIdx];
-            selectWep.Ready(); 
+            selectWep.Ready();
             if (selectWep.HUDWeaponImage == null)
                 weaponImage.material = noDataWeaponImage;
             else
@@ -266,7 +258,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         }
     }
     public void WeaponsListDown(InputAction.CallbackContext context) {
-        if (context.started && selWepIdx+1 < weapons.Count) {
+        if (context.started && selWepIdx + 1 < weapons.Count) {
             selectWep.PutAway();
             selWepIdx++;
             selectWep = weapons[selWepIdx];
@@ -279,10 +271,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     }
     //----------------Updateなど----------------
 
-    void Awake()
-    {
+    void Awake() {
         //敵設定
-        if(setEnemiesShareTarget)Enemy.sharedTarget = this.gameObject;
+        if (setEnemiesShareTarget) Enemy.sharedTarget = this.gameObject;
 
         //視点基点決定
         levelAiming = transform.eulerAngles.y;
@@ -293,11 +284,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //アニメーター
         moveDirForAnim = Vector2.zero;
 
-        
+
 
     }
-    void Start()
-    {
+    void Start() {
         if (anim == null) anim = GetComponent<Animator>();
         if (cc == null) cc = GetComponent<CharacterController>();
         if (gs == null) gs = GetComponent<GroundedSensor>();
@@ -311,14 +301,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (armorPoint > maxArmorPoint) armorPoint = maxArmorPoint;
 
         //weapons
-        if (weapons.Count == 0)
-        {
+        if (weapons.Count == 0) {
             weapons.Add(new EmptyWeaponSlot());
         }
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            if (weapons[i] == null)
-            {
+        for (int i = 0; i < weapons.Count; i++) {
+            if (weapons[i] == null) {
                 weapons[i] = new EmptyWeaponSlot();
             }
             weapons[i].setSender(this);
@@ -327,36 +314,31 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         selWepIdx = 0;
         selectWep.Ready();
 
-        if (selectWep.HUDWeaponImage == null)
-        {
+        if (selectWep.HUDWeaponImage == null) {
             weaponImage.material = noDataWeaponImage;
             Debug.Log(selectWep);
-        }
-        else
-        {
+        } else {
             weaponImage.material = selectWep.HUDWeaponImage;
 
         }
-        
+
         hitResponse.color = new Color(1, 1, 1, 0);
 
-        
+
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
-        if((wepMoveLiveTime -= Time.deltaTime) < 0)
-        {
+        if ((wepMoveLiveTime -= Time.deltaTime) < 0) {
             wepMoveLiveTime = 0;
             wepMove = null;
         }
 
 
         //弾ヒット時のレティクル
-        if(hitResponse.color.r >= 0) {
+        if (hitResponse.color.r >= 0) {
             hitResponse.color = new Color(
                 hitResponse.color.r - Time.deltaTime / 0.3f,
                 hitResponse.color.g - Time.deltaTime / 0.3f,
@@ -373,16 +355,16 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         }
         //ジャンプチャージ
         bool jumpCharge = false;
-        if (jumpContext)
-        {
+        if (jumpContext) {
             PlayerActionState pas = GetPlayerActSt();
-            switch (pas)
-            {
+            switch (pas) {
                 //ジャンプしない、ジャンプをキャンセルするアクション
                 case PlayerActionState.falling:
                 case PlayerActionState.jump:
                 case PlayerActionState.touchdown:
                 case PlayerActionState.evasionmove:
+                case PlayerActionState.weaponmove:
+                case PlayerActionState.weaponairmove:
                     jumpChargeCnt = 0;
                     jumpContext = false;
                     jump = false;
@@ -397,7 +379,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 case PlayerActionState.jumpcharge:
                     jumpCharge = true;
                     break;
-                default :
+                default:
                     Debug.LogWarning("[PlayerController] > ジャンプ予備動作中にこのアクションが行われることを想定していません。\n" +
                         "ジャンプチャージ処理を編集してください　(アクション:" + GetPlayerActSt() + ")");
                     break;
@@ -411,7 +393,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 jumpContext = false;
             }
         }
-        
+
 
         //実移動量計算
         lastActualMovement = this.transform.position - oldPosition;
@@ -434,7 +416,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
         //camera
         pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
-        
+
 
 
         //----------------------------
@@ -443,8 +425,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
         //ダッシュ入力時判定
         //ダッシュクール中などダッシュが入力できる状態か判定
-        if (dashContext && moveMagnContext > 0 && dashCTcnt == 0 && !dash)
-        {
+        if (dashContext && moveMagnContext > 0 && dashCTcnt == 0 && !dash) {
             dash = true;
             turningSpeed *= dashTurningFactor;
         }
@@ -454,11 +435,17 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         jumped = false;
         if (gs.isGrounded(out groundNormal) && !wallBound && !jump) //接地判定
         {
+            if (evasionMoveContext) {
+                if(evasionMoveTime <= 0) {
+                    
+                }
+                float eMoveMagn = evasionMoveSpeed;
+            }
             //ダッシュクールタイム中でなければ
             if (dashCTcnt == 0) {
 
                 //非ダッシュ時
-                if (!dash){
+                if (!dash) {
 
                     //最初にlastMovementに自然減速量を掛ける
                     Vector3 lm = worldVec2localVec(lastMovement);
@@ -466,24 +453,22 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                     Vector3 dlm = lm.normalized * Mathf.Max(lm.magnitude - lm.magnitude * Time.deltaTime * brake, 0);
 
                     //自然減速後の値より入力movementのほうが大きければそちらを採る
-                    if (moveAngleContext.magnitude * speed < dlm.magnitude){
+                    if (moveAngleContext.magnitude * speed < dlm.magnitude) {
                         movement = dlm;
-                    }
-                    else movement = moveAngleContext * speed;
+                    } else movement = moveAngleContext * speed;
                 }
 
                 //ダッシュ時
-                else{
+                else {
 
                     //ダッシュ開始フレームの場合
-                    if (dashAngle == Vector3.zero)   
-                    {
+                    if (dashAngle == Vector3.zero) {
                         //ダッシュ開始時の方向を保存
                         movement = moveAngleContext.normalized * dashSpeed;
                         dashAngle = movement.normalized;
                     }
                     //ダッシュ中
-                    else{
+                    else {
                         if (Vector3.Angle(moveAngleContext, dashAngle) > 100) {
                             DashCancel();    //(ダッシュ方向から100度以上の入力転換でダッシュキャンセル）
                         } else {
@@ -495,8 +480,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 }
             }
             //ダッシュ後減速
-            if (dashCTcnt > 0)    
-            {
+            if (dashCTcnt > 0) {
                 dashCTcnt -= Time.deltaTime;
                 if (dashCTcnt <= 0) {
                     dashCTcnt = 0;
@@ -527,35 +511,33 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 }
                 movement = worldVec2localVec(lastMovement) * 0.5f;
             }
-            
+
             movement.y = -30; //接地時重力
 
             //wepMove処理
             //wepMoveに何か関数が入っていたら
-            if (wepMove != null)
-            {
+            if (wepMove != null) {
                 //wepMoveを処理する場合lastMovementをwepMove処理前に確定させる
-                wepMoving = true; 
+                wepMoving = true;
                 if (!inAir && touchDownCnt <= 0) lastMovement = localVec2worldVec(movement);
                 movement = wepMove(movement, true, transform);
-            }else wepMoving = false;
+            } else wepMoving = false;
 
 
         } else {//空中に居る場合
             if (!inAir) {
-                
+
                 if (jump) {
                     gs.Sleep(jumpTime, false);
                     jump = false;
                     jumped = true;  //GetPlayerActSt()を使用して他コンポーネントからジャンプを検知する時の為
                                     //1フレーム猶予を設ける(jumpedは次のフレームでfalseになる)
                     inAirCnt = -jumpTime;
-                }
-                else inAirCnt = 0;
+                } else inAirCnt = 0;
                 inAir = true;
                 lastMovement.y = 0;
             } else {
-                if(inAirCnt < 1.8)inAirCnt += Time.deltaTime;
+                if (inAirCnt < 1.8) inAirCnt += Time.deltaTime;
                 lastMovement.y = -(gravity * (float)Math.Pow(inAirCnt, 2) * Mathf.Sign(inAirCnt));
 
             }
@@ -564,14 +546,13 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 lastMovement.x = wallBoundVector.x;
                 lastMovement.z = wallBoundVector.z;
                 //Debug.Log("はねかえり");
-            }
-            else if (lastMovement.magnitude * 0.99 > lastActualMovement.magnitude) {
+            } else if (lastMovement.magnitude * 0.99 > lastActualMovement.magnitude) {
                 Vector2 horLMDiff = new Vector2(lastMovement.x, lastMovement.z) - new Vector2(lastActualMovement.x, lastActualMovement.z);
                 if (horLMDiff.magnitude * 0.1f < horLMDiff.normalized.magnitude) horLMDiff.Normalize();
                 else horLMDiff *= 0.1f;
                 lastMovement.x = lastActualMovement.x - (horLMDiff.x);
                 lastMovement.z = lastActualMovement.z - (horLMDiff.y);
-                if(lastActualMovement.y < 0) {
+                if (lastActualMovement.y < 0) {
                     gs.WakeUp();
                 }
                 //Debug.Log("つっかえ " + lastActualMovement);
@@ -580,13 +561,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             }
             movement = worldVec2localVec(lastMovement);
 
-            if(wepMove != null)
-            {
+            if (wepMove != null) {
                 wepMoving = true;
                 if (!inAir && touchDownCnt <= 0) lastMovement = localVec2worldVec(movement);
                 wepMove(movement, false, transform);
-            }else wepMoving = false;
-        
+            } else wepMoving = false;
+
         }
 
 
@@ -595,8 +575,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //アニメーター用
         //ダッシュキャンセル
         Vector3 mdfaDiff = ((movement * (dashCTcnt != 0 ? -1 : 1)) / dashSpeed - moveDirForAnim);
-        if (mdfaDiff.magnitude > 0.08f)
-        {
+        if (mdfaDiff.magnitude > 0.08f) {
             moveDirForAnim += (mdfaDiff.normalized * Time.deltaTime * 4);
         }
         if (dashCTcnt > dashCoolTime / 1.5) moveDirForAnim /= (1 + 4 * Time.deltaTime);
@@ -608,7 +587,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         MotionChange();
 
         //移動反映
-        if(!inAir && touchDownCnt <= 0 && !wepMoving)lastMovement = localVec2worldVec(movement);
+        if (!inAir && touchDownCnt <= 0 && !wepMoving) lastMovement = localVec2worldVec(movement);
         movement *= Time.deltaTime;
         movement = localVec2worldVec(movement);
         oldPosition = transform.position;
@@ -626,7 +605,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //--------------------
 
         if (fireContext) selectWep.MainAction();
-        if (focusContext)selectWep.SubAction();
+        if (focusContext) selectWep.SubAction();
         //pcc.zoom = focusContext;
 
         //--------------------
@@ -636,8 +615,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     }
 
     //その他関数
-    public void DashCancel()
-    {
+    public void DashCancel() {
         dash = false;
         dashCTcnt = dashCoolTime;
         turningSpeed /= dashTurningFactor;
@@ -649,8 +627,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     /// </summary>
     /// <param name="input"></param>
     /// <returns></returns>
-    private Vector3 localVec2worldVec(Vector3 input)
-    {
+    private Vector3 localVec2worldVec(Vector3 input) {
         //memo: 横移動時にz軸が、前後移動時にx軸が反転していたので無理矢理解消
         return new Vector3(
             Vector3.Dot(new Vector3(transform.right.x, transform.right.y, -transform.right.z), input),
@@ -658,8 +635,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             Vector3.Dot(new Vector3(-transform.forward.x, transform.forward.y, transform.forward.z), input)
         );
     }
-    private Vector3 worldVec2localVec(Vector3 input)
-    {
+    private Vector3 worldVec2localVec(Vector3 input) {
         return new Vector3(
             Vector3.Dot(input, new Vector3(transform.right.x, transform.right.y, transform.right.z)),
             Vector3.Dot(input, new Vector3(transform.up.x, transform.up.y, transform.up.z)),
@@ -671,25 +647,23 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         MotionReset();
         if (inAir) {
             anim.SetBool("fall", true);
-        }else if(touchDownCnt > 0) {
+        } else if (touchDownCnt > 0) {
             anim.SetBool("touch_down", true);
         } else {
             anim.SetBool("move", true);
         }
-    } 
+    }
     private void MotionReset() {
         anim.SetBool("move", false);
         anim.SetBool("fall", false);
         anim.SetBool("touch_down", false);
     }
 
-    public void onLturn(InputAction.CallbackContext context)
-    {
+    public void onLturn(InputAction.CallbackContext context) {
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 1, 0);
     }
 
-    public void onRturn(InputAction.CallbackContext context)
-    {
+    public void onRturn(InputAction.CallbackContext context) {
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 1, 0);
     }
 
@@ -697,12 +671,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     /// テストの為初期に作ったアクション取得用メソッド。非推奨。GetPlayerActSt()を使う事
     /// </summary>
     /// <returns></returns>
-    public string getActState()
-    {
-        if (inAir)          return "in the air";
-        
-        if (dashCTcnt > 0)  return "dash cancel";
-        if (dash)           return "dash";
+    public string getActState() {
+        if (inAir) return "in the air";
+
+        if (dashCTcnt > 0) return "dash cancel";
+        if (dash) return "dash";
         if (dashItrContext) return "dash interact";
         if (moveMagnContext > 0) return "move";
         return "idle";
@@ -710,6 +683,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public PlayerActionState GetPlayerActSt() {
 
         PlayerActionState pas =
+            inAir && wepMoving ? PlayerActionState.weaponairmove : 
+            wepMoving ? PlayerActionState.weaponmove :
             inAir && lastMovement.y <= 0 ? PlayerActionState.jump :
             inAir ? PlayerActionState.falling :
             touchDownCnt > 0 ? PlayerActionState.touchdown :
@@ -725,6 +700,6 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         return pas;
     }
 
-    
-    
+
+
 }
