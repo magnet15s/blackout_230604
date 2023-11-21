@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool jumpContext = false;
     private float jumpChargeCnt = 0;
     private bool evasionMoveContext = false;
+    private Vector3 evasionMoveAngle;
     private float evasionMoveTime = 0;
     private bool fireContext = false;
     private Vector2 viewPoint;
@@ -433,14 +434,22 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
         //移動入力計算
         jumped = false;
+
+        //カウントアップ＆ダウン
+        evasionMoveTime -= Time.deltaTime;
+        if (evasionMoveTime < 0)evasionMoveTime = 0;
+        
+
         if (gs.isGrounded(out groundNormal) && !wallBound && !jump) //接地判定
         {
-            if (evasionMoveContext) {
-                if(evasionMoveTime <= 0) {
-                    
-                }
-                float eMoveMagn = evasionMoveSpeed;
+            if (evasionMoveContext && evasionMoveTime <= 0) {
+                evasionMoveTime = evasionMoveAllTime;
+                evasionMoveAngle = moveAngleContext.normalized;
+                evasionMoveContext = false;
             }
+            if(evasionMoveTime > 0) {
+                movement = evasionMoveAngle * Mathf.Max(evasionMoveSpeed * (float)Math.Pow(evasionMoveTime / evasionMoveAllTime,2),evasionMoveSpeed * 0.1f);
+            }else
             //ダッシュクールタイム中でなければ
             if (dashCTcnt == 0) {
 
