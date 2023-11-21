@@ -8,7 +8,11 @@ Shader "Unlit/MenuBG"
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags {
+            "RenderType"="Transparent" 
+            "RenderPipeline" = "UniversalPipeline"
+            
+        }
         LOD 100
         GrabPass{"_BGTex"}
 
