@@ -448,7 +448,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 evasionMoveContext = false;
             }
             if(evasionMoveTime > 0) {
-                movement = evasionMoveAngle * Mathf.Max(evasionMoveSpeed * (float)Math.Pow(evasionMoveTime / evasionMoveAllTime,2),evasionMoveSpeed * 0.1f);
+                movement = evasionMoveAngle * Mathf.Max(evasionMoveSpeed * (float)(evasionMoveTime / evasionMoveAllTime),evasionMoveSpeed * 0.1f);
             }else
             //ダッシュクールタイム中でなければ
             if (dashCTcnt == 0) {
@@ -493,9 +493,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 dashCTcnt -= Time.deltaTime;
                 if (dashCTcnt <= 0) {
                     dashCTcnt = 0;
-                    //inertiaAngle = Vector3.zero;
                 }
-                movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
+                if(evasionMoveTime <= 0)
+                    movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
             }
 
             //着地の瞬間

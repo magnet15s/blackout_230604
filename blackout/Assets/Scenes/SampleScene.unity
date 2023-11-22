@@ -12397,8 +12397,8 @@ MonoBehaviour:
   touchDownTime: 0.8
   jumpTime: 1.5
   jumpChargeTime: 0.3
-  evasionMoveAllTime: 0.7
-  evasionMoveSpeed: 100
+  evasionMoveAllTime: 0.5
+  evasionMoveSpeed: 90
   turningSpeed: 170
   dashTurningFactor: 0.3
   viewRotetionFactor: {x: 0.5, y: -0.5}
