@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool wepMoving = false;
 
     //ïêäÌêßå‰
-    [SerializeField] private Weapon selectWep;
+    [SerializeField] public Weapon selectWep { get; private set; }
     [SerializeField] private int selWepIdx;
     private List<bool> WepActReqBools = new();
     private List<WeaponConnectionToBone> wepConnectors = new();
@@ -567,6 +567,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 //Debug.Log("Ç¬Ç¡Ç©Ç¶ " + lastActualMovement);
             } else {
                 //Debug.Log("NotÇ¬Ç¡Ç©Ç¶");
+            }
+            Vector2 lmVec;
+            if (( lmVec = new Vector2(lastMovement.x, lastMovement.z) ).magnitude > dashSpeed)
+            {
+                lastMovement = lastMovement.normalized * dashSpeed;
             }
             movement = worldVec2localVec(lastMovement);
 
