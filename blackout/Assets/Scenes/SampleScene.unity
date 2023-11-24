@@ -6902,6 +6902,127 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af3fedf8dbeb1774da24225204db7b5e, type: 3}
+--- !u!1 &1187964730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1187964731}
+  - component: {fileID: 1187964735}
+  - component: {fileID: 1187964734}
+  - component: {fileID: 1187964733}
+  - component: {fileID: 1187964732}
+  m_Layer: 0
+  m_Name: missilelauncher_test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1187964731
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187964730}
+  m_LocalRotation: {x: 0.3327089, y: -0.00087632384, z: 0.0013335603, w: 0.9430283}
+  m_LocalPosition: {x: -0.0091, y: 0.0121, z: 0.0074}
+  m_LocalScale: {x: 0.005, y: 0.005, z: -0.02}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6110038814043996469}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 38.867, y: -0.056, z: 0.142}
+--- !u!114 &1187964732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187964730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e669d3ab3dd848f4fb3597bdcb321372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6618401040682188846, guid: 0399f649dba5d95428f3984bed56f02b, type: 3}
+  Target: {fileID: 0}
+  pcc: {fileID: 586725632}
+  wepChangeDelay: 0.4
+  AimingObj: {fileID: 0}
+  fireInterval: 1000
+  autoReloadInterval: 0.3
+  firePoint: {fileID: 0}
+  bulletInitialVelocity: 0
+  bulletDamage: 0
+  HUDImage: {fileID: 0}
+--- !u!65 &1187964733
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187964730}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1187964734
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187964730}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1187964735
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187964730}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1257692552
 GameObject:
   m_ObjectHideFlags: 0
@@ -12569,6 +12690,8 @@ MonoBehaviour:
   weapons:
   - {fileID: 1895472667}
   - {fileID: 874129743}
+  - {fileID: 1187964732}
+  gravity: 9.8
   inAirCnt: 0
   selectWep: {fileID: 0}
   selWepIdx: 0
@@ -12582,6 +12705,8 @@ MonoBehaviour:
   touchDownTime: 0.8
   jumpTime: 1.5
   jumpChargeTime: 0.3
+  evasionMoveAllTime: 0.7
+  evasionMoveSpeed: 30
   turningSpeed: 170
   dashTurningFactor: 0.3
   viewRotetionFactor: {x: 0.5, y: -0.5}
@@ -12901,6 +13026,7 @@ Transform:
   - {fileID: 3671139742609064558}
   - {fileID: 874129742}
   - {fileID: 1895472666}
+  - {fileID: 1187964731}
   m_Father: {fileID: 543450651621419850}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

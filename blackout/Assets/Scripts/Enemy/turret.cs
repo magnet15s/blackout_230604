@@ -75,7 +75,7 @@ public class turret : Enemy {
         if (onRadarDist == 0) onRadarDist = 500;
 
         cgun = transform.AddComponent<Weapon.Conc>();
-        cgun.weaponName = "mini tank gun";
+        cgun.weaponName = "turret missile";
 
         if (Target == null && Enemy.sharedTarget != null) Target = Enemy.sharedTarget;
 
@@ -93,6 +93,7 @@ public class turret : Enemy {
     }
     // Update is called once per frame
     void Update() {
+        //EnemiesList.ForEach(e => { Debug.LogError(e.ToString()); });
 
         if (armorPoint > 0) {
             if (fireIntervalCnt > 0) {
@@ -131,7 +132,7 @@ public class turret : Enemy {
 
                     //ˆÚ“®ƒpƒ^[ƒ“«
                     float targetdist = (Target.transform.position - transform.position).magnitude;
-                    Debug.Log($"td : {targetdist}  ");
+                    //Debug.Log($"td : {targetdist}  ");
                     //“G‚ª‰“‚¢ê‡
                     if (targetdist > ApproachDist) {
                         navAgent.destination = Target.transform.position;
