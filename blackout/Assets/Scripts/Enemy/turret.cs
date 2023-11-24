@@ -8,14 +8,17 @@ using UnityEngine.EventSystems;
 using UnityEngine.Timeline;
 using UnityEngine.UIElements;
 
-public class missile_tank : Enemy {
+public class turret : Enemy {
     public Animator anim;
-    [SerializeField]
     public GroundedSensor gg;
     public NavMeshAgent navAgent;
     public GameObject Target;
+    public GameObject gunTurretBone;
+    public GameObject gunBone;
     private Weapon cgun;
     public GameObject prefab;
+    Transform thisTransform;
+
     private GameObject damageFX;
     private float lastRotate = 1;
     private float oldYAngle = 0;
@@ -25,11 +28,11 @@ public class missile_tank : Enemy {
     private int curve = 0;
     private bool overApproach = false;
     public float approachPhaseChangeLug = 0;
-    bool isSpawning = false;
-    Transform thisTransform;
-    WaitForSeconds intervalWait;
-    bool fire = false;
-    
+
+
+    [Space]
+    [Tooltip("タレットの旋回速度上限(degree/sec)")]
+    public float turretRotationLimit = 0;
 
     [Tooltip("ターゲットの視認距離")]
     public float sensorRange = 300;
@@ -49,22 +52,22 @@ public class missile_tank : Enemy {
     [Tooltip("ターゲットから距離をとる際、ターゲットとの距離がいくつになるまで下がるか")]
     [SerializeField] private float retreatBoundary;
 
-    
+    [Tooltip("弾速")]
+    [SerializeField] private float bulletVelocity = 100;
+
+    [Tooltip("弾のダメージ")]
+    [SerializeField] private int bulletDamage = 5;
 
     [Tooltip("弾の発射間隔(s)")]
-    [SerializeField] float fireInterval = 0.1f;
+    [SerializeField] private float fireInterval = 0.2f;
 
-    [Tooltip("弾の同時発射数")]
-    [SerializeField] int iterationCount = 3;
-
-    [Tooltip("発射し始める距離")]
-    [SerializeField] int weaponrange = 100;
+    [Tooltip("射撃時のターゲットとの距離と傾きの比(ターゲットとの距離がこの値の時、45°の角度で射撃します。)")]
+    [SerializeField] private float shotTangent2TargetDistRatio = 200f;
 
 
     // Start is called before the first frame update
     void Start() {
         thisTransform = transform;
-        intervalWait = new WaitForSeconds(fireInterval);
         damageFX = (GameObject)Resources.Load("BO_WeaponSystem/Particles/vulletHit");
         base.modelName = this.modelName;
         if (maxArmorPoint == 0) maxArmorPoint = 200;
@@ -77,7 +80,7 @@ public class missile_tank : Enemy {
         if (Target == null && Enemy.sharedTarget != null) Target = Enemy.sharedTarget;
 
         oldYAngle = navAgent.gameObject.transform.eulerAngles.y;
-        
+        turretForward = gunTurretBone.transform.forward;
 
     }
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
@@ -90,7 +93,6 @@ public class missile_tank : Enemy {
     }
     // Update is called once per frame
     void Update() {
-        
 
         if (armorPoint > 0) {
             if (fireIntervalCnt > 0) {
@@ -110,20 +112,26 @@ public class missile_tank : Enemy {
                         Enemy.sharedTargetPosition = result.transform.position;
                         Enemy.targetReporter = this;
                     }
-                    
+                    //照準
+                    targetFireAngle = Target.transform.position - transform.position;
+                    targetFireAngle.y += targetFireAngle.magnitude * (targetFireAngle.magnitude / shotTangent2TargetDistRatio) - 1;
+                    targetFireAngle.Normalize();
+                    //砲塔
+                    Vector3 targetPos = Target.transform.position;
+                    // ターゲットのY座標を自分と同じにすることで2次元に制限する。
+                    targetPos.y = this.transform.position.y;
+                    gunTurretBone.transform.LookAt(targetPos);
+                    gunTurretBone.transform.Rotate(0, -270, 0);
+                    //砲身
+                    gunBone.transform.up = gunTurretBone.transform.forward;
+                    gunBone.transform.right = gunTurretBone.transform.right;
+                    gunBone.transform.localEulerAngles = new Vector3(180-(90 - Mathf.Atan((Target.transform.position - transform.position).magnitude / shotTangent2TargetDistRatio)) * Mathf.Rad2Deg, 90, 90);
                     //射撃
                     if (result.transform.GetComponent<Enemy>() == null) MainFire();
 
                     //移動パターン↓
                     float targetdist = (Target.transform.position - transform.position).magnitude;
-
-                    if (targetdist <= weaponrange&&targetdist>=30) {
-                        fire = true;
-                    }
-                    else {
-                        fire = false;
-                    }
-
+                    Debug.Log($"td : {targetdist}  ");
                     //敵が遠い場合
                     if (targetdist > ApproachDist) {
                         navAgent.destination = Target.transform.position;
@@ -179,7 +187,6 @@ public class missile_tank : Enemy {
             }
         }
 
-
         ///移動
 
 
@@ -192,17 +199,15 @@ public class missile_tank : Enemy {
 
 
     }
-    
     public override void MainFire() {
+        
         if (fireIntervalCnt == 0) {
             Livemissile homing;
             homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<Livemissile>();
             homing.Target = Target.transform;
             fireIntervalCnt = fireInterval;
         }
-
     }
-   
 
     public Animator getAnim() {
         throw new System.NotImplementedException();
