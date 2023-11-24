@@ -7,6 +7,7 @@ public class TrackingIcon : MonoBehaviour
 {
     public RectTransform canvas;
     public static TrackingIcon closestIconToCenter = null;
+    public static List<TrackingIcon> Icons = new();
     public Image image;
     public GameObject trackingTarget;
     public GameObject player;
@@ -19,15 +20,17 @@ public class TrackingIcon : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         trackingPoint = player.transform.position - trackingTarget.transform.position;
+        Icons.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(TrackingIcon.closestIconToCenter != null)
         {
-            if((new Vector2(TrackingIcon.closestIconToCenter.rectTransform.position.x, TrackingIcon.closestIconToCenter.rectTransform.position.y) - (new Vector2(Screen.width, Screen.height) / 2)).magnitude > 
-                (new Vector2(rectTransform.position.x, rectTransform.position.y) - (new Vector2(Screen.width, Screen.height) / 2)).magnitude)
+            if(new Vector2(TrackingIcon.closestIconToCenter.rectTransform.localPosition.x, TrackingIcon.closestIconToCenter.rectTransform.localPosition.y).magnitude > 
+                new Vector2(rectTransform.localPosition.x, rectTransform.localPosition.y).magnitude)
             {
                 TrackingIcon.closestIconToCenter = this;
             }
@@ -53,7 +56,15 @@ public class TrackingIcon : MonoBehaviour
         }
         if(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward) >= 0)
         {
-            image.color = Color.white;
+            if (TrackingIcon.closestIconToCenter.Equals(this))
+            {
+                image.color = Color.white;
+            }
+            else
+            {
+                image.color = new Color(0.3f,0.3f,0.3f,1);
+            }
+
         }
         else
         {
@@ -67,5 +78,7 @@ public class TrackingIcon : MonoBehaviour
     private void OnDestroy()
     {
         if (TrackingIcon.closestIconToCenter == this) closestIconToCenter = null;
+        Icons.Remove(this);
+        
     }
 }
