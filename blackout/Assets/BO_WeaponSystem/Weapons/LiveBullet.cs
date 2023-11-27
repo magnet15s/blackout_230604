@@ -84,6 +84,10 @@ public class LiveBullet : MonoBehaviour
     }
 
     public void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("IgnoreCollision"))
+        {
+            return;
+        }
         if (!hit) {
             hit = true;
             DamageReceiver dr;

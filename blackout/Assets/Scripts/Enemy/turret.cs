@@ -131,7 +131,7 @@ public class turret : Enemy {
 
                     //ˆÚ“®ƒpƒ^[ƒ“«
                     float targetdist = (Target.transform.position - transform.position).magnitude;
-                    Debug.Log($"td : {targetdist}  ");
+                    //Debug.Log($"td : {targetdist}  ");
                     //“G‚ª‰“‚¢ê‡
                     if (targetdist > ApproachDist) {
                         navAgent.destination = Target.transform.position;
