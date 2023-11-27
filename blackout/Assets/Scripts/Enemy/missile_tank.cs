@@ -72,7 +72,7 @@ public class missile_tank : Enemy {
         if (onRadarDist == 0) onRadarDist = 500;
 
         cgun = transform.AddComponent<Weapon.Conc>();
-        cgun.weaponName = "mini tank gun";
+        cgun.weaponName = "missile tank gun";
 
         if (Target == null && Enemy.sharedTarget != null) Target = Enemy.sharedTarget;
 
