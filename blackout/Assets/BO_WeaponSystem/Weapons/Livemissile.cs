@@ -115,6 +115,10 @@ public class Livemissile : MonoBehaviour
     }*/
 
     public void OnTriggerEnter(Collider other) {
+        if (!other.CompareTag("IgnoreCollision"))
+        {
+            return;
+        }
         if (!hit) {
             if (age > 0.15) {
                 hit = true;

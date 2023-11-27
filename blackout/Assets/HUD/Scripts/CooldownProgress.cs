@@ -10,7 +10,7 @@ public class CooldownProgress : MonoBehaviour
 
     [SerializeField] private PlayerController pc;
     [SerializeField] private Weapon selectWeapon;
-
+    
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,6 @@ public class CooldownProgress : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        selectWeapon = pc.selectWep;
     }
 }
