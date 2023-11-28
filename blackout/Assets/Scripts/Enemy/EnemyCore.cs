@@ -160,7 +160,9 @@ public class EnemyCore : Enemy
 
     private void DefaultTargetFind()
     {
-
+        if (Target == null) return;
+        Vector3 posDiff = Target.transform.position - transform.position;
+        Ray ray = new Ray(transform.position, posDiff);
     }
 
     private void DefaultApproachMove()
