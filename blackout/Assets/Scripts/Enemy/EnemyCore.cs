@@ -5,6 +5,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
+public class DamageEventArgs : EventArgs
+{
+    public int damage;
+    public Vector3 hitPosition;
+    public GameObject source;
+    public string damageType;
+
+    public DamageEventArgs(int damage, Vector3 hitPosition, GameObject source, string damageType){
+        this.damage = damage;
+        this.hitPosition = hitPosition;
+        this.source = source;
+        this.damageType = damageType;
+    }
+}
 
 public class EnemyCore : Enemy
 {
@@ -17,7 +31,8 @@ public class EnemyCore : Enemy
     /// ターゲットの決定をするフェーズで呼ばれる処理
     /// 設定しない場合EnemyCore.DefaultTargetSet()が呼ばれる
     /// </summary>
-    [SerializeField] private UnityEvent TargetSetPhaseFunction;
+    [SerializeField, Tooltip("ターゲットの決定をするフェーズで呼ばれる処理　設定しない場合EnemyCore.DefaultTargetSet()が呼ばれる")] 
+    private UnityEvent TargetSetPhaseFunction;
 
     [Space]
     [Header("TargetFindPhase")]
@@ -25,23 +40,22 @@ public class EnemyCore : Enemy
     public bool targetFound;
     private bool _targetFound;
     [SerializeField] private float findRange;
-    /// <summary>
-    /// ターゲットが目視出来ているかを判断する処理
-    /// 設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる
-    /// </summary>
-    [SerializeField] private UnityEvent TargetFindPhaseFunction;
+    [SerializeField, Tooltip("ターゲットが目視出来ているかを判断する処理　設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる")] 
+    private UnityEvent TargetFindPhaseFunction;
 
     [Space]
     [Header("MovePhase")]
     [Space]
-    [SerializeField] private NavMeshAgent NavAgent;
-    public float targetDiff;
-    private float _targetDiff;
-    [SerializeField, Tooltip("距離に応じて実行する処理(実行距離はMovePhaseFunctionsRangeで指定。配列長が合わない場合idx=0の処理を常に実行)")]
+    [SerializeField] private NavMeshAgent navAgent;
+    public float targetDist;
+    private float _targetDist;
+    [SerializeField, Tooltip("距離に応じて実行する処理(実行距離はMovePhaseFunctionsRangeで指定。配列長が合わない場合idx=0の処理を常に実行)　配列が空の場合デフォルトの行動パターンが設定される")]
     private UnityEvent[] MovePhaseFunctions;
-    [SerializeField, Tooltip("インデックスの対応するMovePhaseFunctionの実行距離(targetDiffが値以下の場合対応する処理を実行。-1で距離∞。値の小さい物が優先される)")]
+    [SerializeField, Tooltip("インデックスの対応するMovePhaseFunctionの実行距離(targetDistが値以下の場合対応する処理を実行。-1で距離∞。値の小さい物が優先される)")]
     private float[] MovePhaseFunctionsRange;
     private int[] MoveFuncOrder;
+    [SerializeField, Tooltip("移動を行わない時の待機処理　デフォルトの移動が実行不能だった場合、フォールバック的に呼ばれる事もある")]
+    private UnityEvent MoveStayFunctions;
 
     [Space]
     [Header("AlignPhase")]
@@ -69,11 +83,18 @@ public class EnemyCore : Enemy
     [Space]
     [SerializeField] private UnityEvent AttackPhaseFunction;
 
+    [Space]
+    [Header("Other")]
+    [Space]
+
+    [SerializeField, Tooltip("ダメージを受けた時の処理　引数としてDamageEventArgsを持つ関数のみ設定可能")]
+    private UnityEvent<DamageEventArgs> DamageFunction; 
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         //MovePhaseの実行順序整理
         if(MovePhaseFunctions.Length != MovePhaseFunctionsRange.Length)
         {
@@ -131,7 +152,7 @@ public class EnemyCore : Enemy
         if(MovePhaseFunctions != null) { 
             foreach(int i in MoveFuncOrder)
             {
-                if (MovePhaseFunctionsRange[i] > targetDiff)
+                if (MovePhaseFunctionsRange[i] > targetDist)
                 {
                     if (MovePhaseFunctions != null) MovePhaseFunctions[i].Invoke();
                     else DefaultStayMove();
@@ -141,10 +162,10 @@ public class EnemyCore : Enemy
         }
         else
         {
-            if (targetFound)
+            if (_targetFound || (referenceSheredTarget && Enemy.sharedTargetPosition != null))
             {
-                if (targetDiff < 30) DefaultRetreatMove();
-                else if (targetDiff < 80) DefaultBattleMove();
+                if (targetDist < 30) DefaultRetreatMove();
+                else if (targetDist < 80) DefaultBattleMove();
                 else DefaultApproachMove();
             }
             else DefaultStayMove();
@@ -159,10 +180,19 @@ public class EnemyCore : Enemy
         if (AttackPhaseFunction != null) { AttackPhaseFunction.Invoke(); }
         else DefaultAttack();
 
-
+        
     }
 
+    public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
+    {
+        if (DamageFunction != null) DamageFunction.Invoke(new DamageEventArgs(damage, hitPosition, source, damageType));
+    }   
 
+
+    /// <summary>
+    /// EnemyCoreのデフォルトのターゲット決定処理
+    /// referenceSharedTargetがtrueの場合Enemy.SheredTargetをターゲットに設定する
+    /// </summary>
     public void DefaultTargetSet()
     {
         if (referenceSheredTarget)
@@ -171,47 +201,123 @@ public class EnemyCore : Enemy
         }
     }
 
+    /// <summary>
+    /// EnemyCoreのデフォルトのターゲット認識処理
+    /// ターゲットの位置までレイを飛ばし、途中に視界を遮る物が無いかを調べTargetFoundに反映する
+    /// </summary>
     public void DefaultTargetFind()
     {
         if (Target == null) return;
+
+        //プレイヤーの方向にレイを飛ばす
         Vector3 posDiff = Target.transform.position - transform.position;
-        targetDiff = posDiff.magnitude;
+        _targetDist = posDiff.magnitude;
         Ray ray = new Ray(transform.position, posDiff);
-        RaycastHit[] results = Physics.RaycastAll(ray, Mathf.Min(findRange,targetDiff));
-        foreach(RaycastHit res in results) {
-            if (res.transform.Equals(Target.transform)) break;
 
-            if (res.transform.CompareTag("charactorController")) continue;
-            if (res.transform.Equals(transform)) continue;
+        RaycastHit[] results = new RaycastHit[20];
+        int len = Physics.RaycastNonAlloc(ray, results, Mathf.Min(findRange,targetDist));
+
+        //リザルトに視界を塞ぐ物があるか調べる
+        bool blocked = false;
+
+        for(int i = 0; i < len; i++)
+        {
+            RaycastHit res = results[i];
+            //リザルトが自分orターゲットの場合無視して次のリザルトへ
+            if (res.transform == transform　|| res.transform == Target.transform) continue;
+
+            //親を遡って自分orターゲットに当たるか
+            Transform p = res.transform.parent;
+
+            while(p != transform || p != Target || p != null) p = p.parent;
             
+            if (p == null)
+            {
+                blocked = true;
+                break;
+            }
+            else continue;
+        }
+        _targetFound = !blocked;
 
-            Transform t = res.transform;
-            while (t.parent == null || t.parent == transform) t = t.parent;
+        //公開用public変数の更新
+        targetFound = _targetFound;
+        targetDist = _targetDist;
+    }
 
-            if (res.transform.Equals(Target.transform)) break;
+
+    /// <summary>
+    /// EnemyCoreのデフォルトの移動処理の内の接近処理
+    /// デフォルトではtargetDistが80以上の時呼ばれる
+    /// </summary>
+    public void DefaultApproachMove()
+    {
+        if(navAgent == null)
+        {
+            Debug.LogError("[EnemyCore.DefaultApproachMove] > navAgentがセットされていません　デフォルト接近処理を利用する場合はnavAgentをセットしてください");
+            DefaultStayMove();
+            return;
+        }
+        if(Target == null)
+        {
+            Debug.LogError("[EnemyCore.DefaultApproachMove] > Targetがnullです");
         }
 
 
+
+        if(Target != null)
+        {
+
+        }
+        navAgent.destination = Target.transform.position;
     }
 
-    public void DefaultApproachMove()
-    {
 
-    }
-
+    /// <summary>
+    /// EnemyCoreのデフォルトの移動処理の内の戦闘機動処理
+    /// デフォルトではtargetDistが30以上80未満の時呼ばれる
+    /// </summary>
     public void DefaultBattleMove()
     {
-        
+        if(navAgent == null)
+        {
+            Debug.LogError("[EnemyCore.DefaultBattleMove] > navAgentがセットされていません　デフォルト戦闘機動処理を利用する場合はnavAgentをセットしてください");
+            DefaultStayMove();
+            return;
+        }
+        if (Target == null)
+        {
+            Debug.LogError("[EnemyCore.DefaultBattleMove] > Targetがnullです");
+        }
     }
 
+
+    /// <summary>
+    /// EnemyCoreのデフォルトの移動処理の内の後退処理
+    /// デフォルトではtargetDistが30未満の時呼ばれる
+    /// </summary>
     public void DefaultRetreatMove()
     {
+        if(navAgent == null) {
+            Debug.LogError("[EnemyCore.DefaultRetreatMove] > navAgentがセットされていません　デフォルト後退処理を利用する場合はnavAgentをセットしてください");
+            DefaultStayMove();
+            return;
+        }
+        if (Target == null)
+        {
+            Debug.LogError("[EnemyCore.DefaultRetreatMove] > Targetがnullです");
+        }
 
     }
 
+
+    /// <summary>
+    /// EnemyCoreのデフォルトの移動処理のうちの待機処理
+    /// 他のデフォルト移動処理が実行不能（エラー等）な時にも呼ばれる
+    /// </summary>
     public void DefaultStayMove()
     {
-
+        
     }
 
     public void DefaultAlign()
@@ -222,6 +328,11 @@ public class EnemyCore : Enemy
     public void DefaultAttack()
     {
 
+    }
+
+    public void DefaultDamage(DamageEventArgs e)
+    {
+        base.Damage(e.damage, e.hitPosition, e.source, e.damageType);
     }
 
 
