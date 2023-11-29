@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18165898, g: 0.22731541, b: 0.3074168, a: 1}
+  m_IndirectSpecularColor: {r: 0.1816586, g: 0.2273147, b: 0.30741575, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1781,7 +1781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -314.90002, y: -444.3}
+  m_AnchoredPosition: {x: -314.90005, y: -444.3}
   m_SizeDelta: {x: 382.4, y: 161.29999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284833433
@@ -6083,7 +6083,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 80
+  field of view: 0.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -10847,7 +10847,19 @@ MonoBehaviour:
   referenceSheredTarget: 0
   TargetSetPhaseFunction:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1962649842}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   targetFound: 0
   TargetFindPhaseFunction:
     m_PersistentCalls:

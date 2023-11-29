@@ -13,6 +13,10 @@ public class EnemyCore : Enemy
     [Space]
     public GameObject Target;
     public bool referenceSheredTarget;
+    /// <summary>
+    /// ターゲットの決定をするフェーズで呼ばれる処理
+    /// 設定しない場合EnemyCore.DefaultTargetSet()が呼ばれる
+    /// </summary>
     [SerializeField] private UnityEvent TargetSetPhaseFunction;
 
     [Space]
@@ -20,6 +24,11 @@ public class EnemyCore : Enemy
     [Space]
     public bool targetFound;
     private bool _targetFound;
+    [SerializeField] private float findRange;
+    /// <summary>
+    /// ターゲットが目視出来ているかを判断する処理
+    /// 設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる
+    /// </summary>
     [SerializeField] private UnityEvent TargetFindPhaseFunction;
 
     [Space]
@@ -49,6 +58,10 @@ public class EnemyCore : Enemy
     private Vector3 AimDiffByGrounding;
     public Vector3 alignDiff;
     private Vector3 _alignDiff;
+    /// <summary>
+    /// ターゲットが目視出来ているかを判断する処理
+    /// 設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる
+    /// </summary>
     [SerializeField] private UnityEvent AlignPhaseFunction;
 
     [Space]
@@ -150,7 +163,7 @@ public class EnemyCore : Enemy
     }
 
 
-    private void DefaultTargetSet()
+    public void DefaultTargetSet()
     {
         if (referenceSheredTarget)
         {
@@ -158,39 +171,55 @@ public class EnemyCore : Enemy
         }
     }
 
-    private void DefaultTargetFind()
+    public void DefaultTargetFind()
     {
         if (Target == null) return;
         Vector3 posDiff = Target.transform.position - transform.position;
+        targetDiff = posDiff.magnitude;
         Ray ray = new Ray(transform.position, posDiff);
+        RaycastHit[] results = Physics.RaycastAll(ray, Mathf.Min(findRange,targetDiff));
+        foreach(RaycastHit res in results) {
+            if (res.transform.Equals(Target.transform)) break;
+
+            if (res.transform.CompareTag("charactorController")) continue;
+            if (res.transform.Equals(transform)) continue;
+            
+
+            Transform t = res.transform;
+            while (t.parent == null || t.parent == transform) t = t.parent;
+
+            if (res.transform.Equals(Target.transform)) break;
+        }
+
+
     }
 
-    private void DefaultApproachMove()
+    public void DefaultApproachMove()
     {
 
     }
 
-    private void DefaultBattleMove()
+    public void DefaultBattleMove()
     {
         
     }
 
-    private void DefaultRetreatMove()
+    public void DefaultRetreatMove()
     {
 
     }
 
-    private void DefaultStayMove()
+    public void DefaultStayMove()
     {
 
     }
 
-    private void DefaultAlign()
+    public void DefaultAlign()
     {
 
     }
 
-    private void DefaultAttack()
+    public void DefaultAttack()
     {
 
     }
