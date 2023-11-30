@@ -142,28 +142,29 @@ public class EnemyCore : Enemy
     void Update()
     {
         //ターゲットの設定
-        if (TargetSetPhaseFunction != null) { TargetSetPhaseFunction?.Invoke(); }
+        if (TargetSetPhaseFunction.GetPersistentEventCount() >= 1) { TargetSetPhaseFunction?.Invoke(); }
         else DefaultTargetSet();
 
         //ターゲットの捜索
-        if (TargetFindPhaseFunction != null) { TargetFindPhaseFunction?.Invoke(); }
+        if (TargetFindPhaseFunction.GetPersistentEventCount() >= 1) { TargetFindPhaseFunction?.Invoke(); }
         else DefaultTargetFind();
 
         //移動
-        if(MovePhaseFunctions != null) { 
+        if(MovePhaseFunctions.Length >= 1) { 
             foreach(int i in MoveFuncOrder)
             {
-                if (MovePhaseFunctionsRange[i] > targetDist)
+                if (MovePhaseFunctionsRange[i] > targetDist || MovePhaseFunctionsRange[i] == -1)
                 {
-                    if (MovePhaseFunctions != null) MovePhaseFunctions[i].Invoke();
+                    if (MovePhaseFunctions[i].GetPersistentEventCount() >= 1) MovePhaseFunctions[i].Invoke();
                     else DefaultStayMove();
                     break;
                 }
+                else DefaultStayMove();
             }
         }
         else
         {
-            if (_targetFound || (referenceSheredTarget && Enemy.sharedTargetPosition != null))
+            if (targetFound || (referenceSheredTarget && Enemy.sharedTargetPosition != null))
             {
                 if (targetDist < 30) DefaultRetreatMove();
                 else if (targetDist < 80) DefaultBattleMove();
@@ -174,11 +175,11 @@ public class EnemyCore : Enemy
         }
 
         //照準
-        if (AlignPhaseFunction != null) { AlignPhaseFunction.Invoke(); }
+        if (AlignPhaseFunction.GetPersistentEventCount() >= 1) { AlignPhaseFunction.Invoke(); }
         else DefaultAlign();
 
         //攻撃
-        if (AttackPhaseFunction != null) { AttackPhaseFunction.Invoke(); }
+        if (AttackPhaseFunction.GetPersistentEventCount() >= 1) { AttackPhaseFunction.Invoke(); }
         else DefaultAttack();
 
         
@@ -186,7 +187,7 @@ public class EnemyCore : Enemy
 
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
     {
-        if (DamageFunction != null) DamageFunction.Invoke(new DamageEventArgs(damage, hitPosition, source, damageType));
+        if (DamageFunction.GetPersistentEventCount() >= 1) DamageFunction.Invoke(new DamageEventArgs(damage, hitPosition, source, damageType));
         else DefaultDamage(new DamageEventArgs(damage, hitPosition, source, damageType));
     }  
 
@@ -265,6 +266,7 @@ public class EnemyCore : Enemy
     /// </summary>
     public void DefaultApproachMove()
     {
+        Debug.Log("mimimi");
         if(navAgent == null)
         {
             Debug.LogError("[EnemyCore.DefaultApproachMove] > navAgentがセットされていません　デフォルト接近処理を利用する場合はnavAgentをセットしてください");
@@ -280,7 +282,6 @@ public class EnemyCore : Enemy
 
         if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid) {
             if(Target != null && targetFound) {
-                Debug.Log("うごくぜ！");
                 navAgent.destination = Target.transform.position;
             } else if(referenceSheredTarget && Enemy.sharedTargetPosition != null) {
                 navAgent.destination = (Vector3)sharedTargetPosition;
@@ -288,7 +289,6 @@ public class EnemyCore : Enemy
         }
 
     }
-
 
     /// <summary>
     /// EnemyCoreのデフォルトの移動処理の内の戦闘機動処理
@@ -307,6 +307,21 @@ public class EnemyCore : Enemy
             Debug.LogError("[EnemyCore.DefaultBattleMove] > Targetがnullです");
             DefaultStayMove();
             return;
+        }
+
+        //右回りor左回りを決定
+        //自分から見てターゲットが左右どちらにいるか取得
+        Vector3 tPosOnLocSpc = transform.InverseTransformPoint(Target.transform.position);
+
+       
+        //移動方向を決定
+        if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            if(tPosOnLocSpc.x > 0)
+                navAgent.destination = transform.position + (Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized);
+            else
+                navAgent.destination = transform.position + (-Vector3.Cross(Target.transform.position - transform.position, Vector3.up).normalized);
+
         }
     }
 
@@ -327,6 +342,10 @@ public class EnemyCore : Enemy
             Debug.LogError("[EnemyCore.DefaultRetreatMove] > Targetがnullです");
             DefaultStayMove();
             return;
+        }
+        if(navAgent.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            navAgent.destination = transform.position - ((Target.transform.position - transform.position).normalized);
         }
 
     }

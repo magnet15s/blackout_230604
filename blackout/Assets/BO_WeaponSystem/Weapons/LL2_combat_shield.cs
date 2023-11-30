@@ -276,7 +276,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
             float dist = Mathf.Min(dir.magnitude * 1.4f + 8.0f, assaultSpeed);
             dir.Normalize();
             Vector3 ret = (Mathf.Max(1.0f - (assaultTimeCnt / ATTACK_DELAY) - -0,2f, 0) * (dir * dist)) + (Mathf.Min(assaultTimeCnt / ATTACK_DELAY + -0.2f, 1) * movement);
-            Debug.Log(ret);
+            //Debug.Log(ret);
             ret.y = movement.y;
 
             if (assaultTimeCnt > ATTACK_DELAY) sender.removeWepMove(AssaultMove);
