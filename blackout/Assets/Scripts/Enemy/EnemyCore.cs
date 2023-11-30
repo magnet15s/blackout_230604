@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -141,11 +142,11 @@ public class EnemyCore : Enemy
     void Update()
     {
         //ターゲットの設定
-        if (TargetSetPhaseFunction != null) { TargetSetPhaseFunction.Invoke(); }
+        if (TargetSetPhaseFunction != null) { TargetSetPhaseFunction?.Invoke(); }
         else DefaultTargetSet();
 
         //ターゲットの捜索
-        if (TargetFindPhaseFunction != null) { TargetFindPhaseFunction.Invoke(); }
+        if (TargetFindPhaseFunction != null) { TargetFindPhaseFunction?.Invoke(); }
         else DefaultTargetFind();
 
         //移動
@@ -186,7 +187,8 @@ public class EnemyCore : Enemy
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
     {
         if (DamageFunction != null) DamageFunction.Invoke(new DamageEventArgs(damage, hitPosition, source, damageType));
-    }   
+        else DefaultDamage(new DamageEventArgs(damage, hitPosition, source, damageType));
+    }  
 
 
     /// <summary>
@@ -207,36 +209,47 @@ public class EnemyCore : Enemy
     /// </summary>
     public void DefaultTargetFind()
     {
-        if (Target == null) return;
-
+        if (Target == null) {
+            targetFound = false;
+            _targetFound = false;
+            return;
+        }
         //プレイヤーの方向にレイを飛ばす
         Vector3 posDiff = Target.transform.position - transform.position;
         _targetDist = posDiff.magnitude;
+        if(_targetDist > findRange) {
+            targetDist = _targetDist;
+            _targetFound = false;
+            targetFound = false;
+            return;
+        }
         Ray ray = new Ray(transform.position, posDiff);
 
         RaycastHit[] results = new RaycastHit[20];
-        int len = Physics.RaycastNonAlloc(ray, results, Mathf.Min(findRange,targetDist));
-
+        int len = Physics.RaycastNonAlloc(ray, results, targetDist);
         //リザルトに視界を塞ぐ物があるか調べる
         bool blocked = false;
 
         for(int i = 0; i < len; i++)
         {
             RaycastHit res = results[i];
+            
             //リザルトが自分orターゲットの場合無視して次のリザルトへ
             if (res.transform == transform　|| res.transform == Target.transform) continue;
 
             //親を遡って自分orターゲットに当たるか
-            Transform p = res.transform.parent;
-
-            while(p != transform || p != Target || p != null) p = p.parent;
-            
-            if (p == null)
-            {
-                blocked = true;
-                break;
+            Transform p = res.transform;
+            while (p != null && !p.Equals(Target.transform) && !p.Equals(this.transform)) {
+                //Debug.Log($"p = {p} : parent = {p.parent}  {p.parent == Target.transform}");
+                if(p.parent == null) break;
+                else p = p.parent;
             }
-            else continue;
+
+            if (p.Equals(Target.transform) || p.Equals(this.transform)) {
+                continue;
+            } else {
+                blocked = true; break;
+            }
         }
         _targetFound = !blocked;
 
@@ -261,15 +274,19 @@ public class EnemyCore : Enemy
         if(Target == null)
         {
             Debug.LogError("[EnemyCore.DefaultApproachMove] > Targetがnullです");
+            DefaultStayMove();
+            return;
         }
 
-
-
-        if(Target != null)
-        {
-
+        if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid) {
+            if(Target != null && targetFound) {
+                Debug.Log("うごくぜ！");
+                navAgent.destination = Target.transform.position;
+            } else if(referenceSheredTarget && Enemy.sharedTargetPosition != null) {
+                navAgent.destination = (Vector3)sharedTargetPosition;
+            }
         }
-        navAgent.destination = Target.transform.position;
+
     }
 
 
@@ -288,6 +305,8 @@ public class EnemyCore : Enemy
         if (Target == null)
         {
             Debug.LogError("[EnemyCore.DefaultBattleMove] > Targetがnullです");
+            DefaultStayMove();
+            return;
         }
     }
 
@@ -306,6 +325,8 @@ public class EnemyCore : Enemy
         if (Target == null)
         {
             Debug.LogError("[EnemyCore.DefaultRetreatMove] > Targetがnullです");
+            DefaultStayMove();
+            return;
         }
 
     }
@@ -317,7 +338,9 @@ public class EnemyCore : Enemy
     /// </summary>
     public void DefaultStayMove()
     {
-        
+        if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid) {
+            navAgent.destination = transform.position;
+        }
     }
 
     public void DefaultAlign()
