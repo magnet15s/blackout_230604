@@ -11,7 +11,9 @@ public class Destructible : MonoBehaviour, DamageReceiver
     [SerializeField] private UnityEvent OnDestroyEvent;
 
     [SerializeField] private UnityEvent DamageEvent;
+
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
+        if (ArmorPoint <= 0) return;
         ArmorPoint -= damage;
         DamageEvent.Invoke();
         if(ArmorPoint <= 0) {
