@@ -62,10 +62,10 @@ public class EnemyCore : Enemy
     [Header("AlignPhase")]
     [Space]
     [SerializeField] private GroundedSensor gs;
-    public bool grounding;
-    public GameObject[] groundingObj;
-    public GameObject[] horizontalAlignObj;
-    public GameObject[] elevasionAlignObj;
+    [Tooltip("trueで地面の法線に対応して自身を回転します")]public bool grounding;
+    [Tooltip("地面の法線に対応して回転するオブジェクト")] public GameObject[] groundingObj;
+    [Tooltip("ターゲットの方を向くオブジェクト（水平方向）")] public GameObject[] horizontalAlignObj;
+    [Tooltip("ターゲットの方を向くオブジェクト（垂直方向）")] public GameObject[] elevasionAlignObj;
     private Vector3[] hAliObjInitVec;
     private Vector3[] eAliObjInitVec;
     private Vector3 Alignment;
@@ -364,7 +364,7 @@ public class EnemyCore : Enemy
 
     public void DefaultAlign()
     {
-
+        
     }
 
     public void DefaultAttack()
