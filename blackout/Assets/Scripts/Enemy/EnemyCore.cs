@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
+
 public class DamageEventArgs : EventArgs
 {
     public int damage;
@@ -24,7 +25,9 @@ public class DamageEventArgs : EventArgs
 public class EnemyCore : Enemy
 {
     [Space(30)]
-    [Header("TargetSetPhase")]
+    [SerializeField] private bool useDefaultFuncForEmptyPhase;
+    [Space(30)]
+    [Header("-----TargetSetPhase-----")]
     [Space]
     public GameObject Target;
     public bool referenceSheredTarget;
@@ -36,7 +39,7 @@ public class EnemyCore : Enemy
     private UnityEvent TargetSetPhaseFunction;
 
     [Space]
-    [Header("TargetFindPhase")]
+    [Header("-----TargetFindPhase-----")]
     [Space]
     public bool targetFound;
     private bool _targetFound;
@@ -45,7 +48,7 @@ public class EnemyCore : Enemy
     private UnityEvent TargetFindPhaseFunction;
 
     [Space]
-    [Header("MovePhase")]
+    [Header("-----MovePhase-----")]
     [Space]
     [SerializeField] private NavMeshAgent navAgent;
     public float targetDist;
@@ -59,7 +62,7 @@ public class EnemyCore : Enemy
     private UnityEvent MoveStayFunctions;
 
     [Space]
-    [Header("AlignPhase")]
+    [Header("-----AlignPhase-----")]
     [Space]
     [SerializeField] private GroundedSensor gs;
     public bool grounding;
@@ -80,16 +83,18 @@ public class EnemyCore : Enemy
     [SerializeField] private UnityEvent AlignPhaseFunction;
 
     [Space]
-    [Header("AttackPhase")]
+    [Header("-----AttackPhase-----")]
     [Space]
     [SerializeField] private UnityEvent AttackPhaseFunction;
 
     [Space]
-    [Header("Other")]
+    [Header("-----Other-----")]
     [Space]
 
-    [SerializeField, Tooltip("ダメージを受けた時の処理　引数としてDamageEventArgsを持つ関数のみ設定可能")]
-    private UnityEvent<DamageEventArgs> DamageFunction; 
+    [SerializeField, Tooltip("ダメージを受けた時の処理 (引数：int damage, Vector3 hitPosition, GameObject source, string damageType)")]
+    private UnityEvent<int,Vector3,GameObject,string> DamageFunction;
+    [SerializeField, Tooltip("ダメージを受けてarmorPointが0になったときの処理（enemyCore.InvokeDestroy()で他スクリプトから実行可能）")]
+    private UnityEvent DestroyFunction;
 
 
     // Start is called before the first frame update
@@ -143,11 +148,13 @@ public class EnemyCore : Enemy
     {
         //ターゲットの設定
         if (TargetSetPhaseFunction.GetPersistentEventCount() >= 1) { TargetSetPhaseFunction?.Invoke(); }
-        else DefaultTargetSet();
+        else if(useDefaultFuncForEmptyPhase) 
+            DefaultTargetSet();
 
         //ターゲットの捜索
         if (TargetFindPhaseFunction.GetPersistentEventCount() >= 1) { TargetFindPhaseFunction?.Invoke(); }
-        else DefaultTargetFind();
+        else  if(useDefaultFuncForEmptyPhase) 
+            DefaultTargetFind();
 
         //移動
         if(MovePhaseFunctions.Length >= 1) { 
@@ -162,7 +169,7 @@ public class EnemyCore : Enemy
                 else DefaultStayMove();
             }
         }
-        else
+        else if(useDefaultFuncForEmptyPhase)
         {
             if (targetFound || (referenceSheredTarget && Enemy.sharedTargetPosition != null))
             {
@@ -176,19 +183,21 @@ public class EnemyCore : Enemy
 
         //照準
         if (AlignPhaseFunction.GetPersistentEventCount() >= 1) { AlignPhaseFunction.Invoke(); }
-        else DefaultAlign();
+        else if (useDefaultFuncForEmptyPhase)
+            DefaultAlign();
 
         //攻撃
         if (AttackPhaseFunction.GetPersistentEventCount() >= 1) { AttackPhaseFunction.Invoke(); }
-        else DefaultAttack();
+        else if (useDefaultFuncForEmptyPhase)
+            DefaultAttack();
 
         
     }
 
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
     {
-        if (DamageFunction.GetPersistentEventCount() >= 1) DamageFunction.Invoke(new DamageEventArgs(damage, hitPosition, source, damageType));
-        else DefaultDamage(new DamageEventArgs(damage, hitPosition, source, damageType));
+        if (DamageFunction.GetPersistentEventCount() >= 1) DamageFunction.Invoke(damage, hitPosition, source, damageType);
+        else if(useDefaultFuncForEmptyPhase) DefaultDamage(damage, hitPosition, source, damageType);
     }  
 
 
@@ -357,6 +366,7 @@ public class EnemyCore : Enemy
     /// </summary>
     public void DefaultStayMove()
     {
+        if (navAgent == null) return;
         if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid) {
             navAgent.destination = transform.position;
         }
@@ -364,19 +374,55 @@ public class EnemyCore : Enemy
 
     public void DefaultAlign()
     {
+        if(Target == null)
+        {
+            Debug.LogError("[EnemyCore.DefaultAlign] > Targetがnullです");
+            return;
+        }
+
 
     }
+
+
 
     public void DefaultAttack()
     {
 
     }
 
-    public void DefaultDamage(DamageEventArgs e)
+    /// <summary>
+    /// デフォルトの被ダメージ処理　armorPointが0になった時InvokeDestroy()を実行する
+    /// </summary>
+    /// <param name="damage">ダメージの値</param>
+    /// <param name="hitPosition">攻撃の当たった場所</param>
+    /// <param name="source">攻撃を行ったオブジェクト</param>
+    /// <param name="damageType">ダメージのタイプ</param>
+    public void DefaultDamage(int damage, Vector3 hitPosition, GameObject source, string damageType)
     {
-        base.Damage(e.damage, e.hitPosition, e.source, e.damageType);
+        armorPoint -= damage;
+        if (armorPoint <= 0)
+        {
+            InvokeDestroy();
+        }
     }
 
+    public void DefaultDestroy()
+    {
+
+    }
+
+    /// <summary>
+    /// 登録されているDestroy処理を実行 処理が登録されておらずかつuseDefaultFuncForEmptyPhaseがtrueの場合DefaultDestroyを実行
+    /// </summary>
+    public void InvokeDestroy()
+    {
+        if (DestroyFunction.GetPersistentEventCount() >= 1)
+        {
+            DestroyFunction.Invoke();
+        }else if(useDefaultFuncForEmptyPhase) DefaultDestroy();
+    }
+
+    public void NoAction() { }
 
     override public void Awake()
     {
