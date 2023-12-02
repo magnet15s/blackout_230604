@@ -32,10 +32,10 @@ public class EnemyCore : Enemy
     public GameObject Target;
     public bool referenceSheredTarget;
     /// <summary>
-    /// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½Fï¿½[ï¿½Yï¿½ÅŒÄ‚Î‚ï¿½éˆï¿½ï¿½
-    /// ï¿½İ’è‚µï¿½È‚ï¿½ï¿½ê‡EnemyCore.DefaultTargetSet()ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½
+    /// ƒ^[ƒQƒbƒg‚ÌŒˆ’è‚ğ‚·‚éƒtƒF[ƒY‚ÅŒÄ‚Î‚ê‚éˆ—
+    /// İ’è‚µ‚È‚¢ê‡EnemyCore.DefaultTargetSet()‚ªŒÄ‚Î‚ê‚é
     /// </summary>
-    [SerializeField, Tooltip("ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ÌŒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½tï¿½Fï¿½[ï¿½Yï¿½ÅŒÄ‚Î‚ï¿½éˆï¿½ï¿½ï¿½@ï¿½İ’è‚µï¿½È‚ï¿½ï¿½ê‡EnemyCore.DefaultTargetSet()ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½")] 
+    [SerializeField, Tooltip("ƒ^[ƒQƒbƒg‚ÌŒˆ’è‚ğ‚·‚éƒtƒF[ƒY‚ÅŒÄ‚Î‚ê‚éˆ—@İ’è‚µ‚È‚¢ê‡EnemyCore.DefaultTargetSet()‚ªŒÄ‚Î‚ê‚é")] 
     private UnityEvent TargetSetPhaseFunction;
 
     [Space]
@@ -44,7 +44,7 @@ public class EnemyCore : Enemy
     public bool targetFound;
     private bool _targetFound;
     [SerializeField] private float findRange;
-    [SerializeField, Tooltip("ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½Úï¿½ï¿½oï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ğ”»’fï¿½ï¿½ï¿½éˆï¿½ï¿½ï¿½@ï¿½İ’è‚µï¿½È‚ï¿½ï¿½ê‡EnemyCore.DefaultTargetFind()ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½")] 
+    [SerializeField, Tooltip("ƒ^[ƒQƒbƒg‚ª–Ú‹o—ˆ‚Ä‚¢‚é‚©‚ğ”»’f‚·‚éˆ—@İ’è‚µ‚È‚¢ê‡EnemyCore.DefaultTargetFind()‚ªŒÄ‚Î‚ê‚é")] 
     private UnityEvent TargetFindPhaseFunction;
 
     [Space]
@@ -53,22 +53,22 @@ public class EnemyCore : Enemy
     [SerializeField] private NavMeshAgent navAgent;
     public float targetDist;
     private float _targetDist;
-    [SerializeField, Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½É‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½sï¿½ï¿½ï¿½éˆï¿½ï¿½(ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½MovePhaseFunctionsRangeï¿½Åwï¿½ï¿½Bï¿½zï¿½ñ’·‚ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡idx=0ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½s)ï¿½@ï¿½zï¿½ñ‚ª‹ï¿½Ìê‡ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìsï¿½ï¿½ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½İ’è‚³ï¿½ï¿½ï¿½")]
+    [SerializeField, Tooltip("‹——£‚É‰‚¶‚ÄÀs‚·‚éˆ—(Às‹——£‚ÍMovePhaseFunctionsRange‚Åw’èB”z—ñ’·‚ª‡‚í‚È‚¢ê‡idx=0‚Ìˆ—‚ğí‚ÉÀs)@”z—ñ‚ª‹ó‚Ìê‡ƒfƒtƒHƒ‹ƒg‚Ìs“®ƒpƒ^[ƒ“‚ªİ’è‚³‚ê‚é")]
     private UnityEvent[] MovePhaseFunctions;
-    [SerializeField, Tooltip("ï¿½Cï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½Xï¿½Ì‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½MovePhaseFunctionï¿½Ìï¿½ï¿½sï¿½ï¿½ï¿½ï¿½(targetDistï¿½ï¿½ï¿½lï¿½È‰ï¿½ï¿½Ìê‡ï¿½Î‰ï¿½ï¿½ï¿½ï¿½éˆï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½B-1ï¿½Å‹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bï¿½lï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Dï¿½æ‚³ï¿½ï¿½ï¿½)")]
+    [SerializeField, Tooltip("ƒCƒ“ƒfƒbƒNƒX‚Ì‘Î‰‚·‚éMovePhaseFunction‚ÌÀs‹——£(targetDist‚ª’lˆÈ‰º‚Ìê‡‘Î‰‚·‚éˆ—‚ğÀsB-1‚Å‹——£‡B’l‚Ì¬‚³‚¢•¨‚ª—Dæ‚³‚ê‚é)")]
     private float[] MovePhaseFunctionsRange;
     private int[] MoveFuncOrder;
-    [SerializeField, Tooltip("ï¿½Ú“ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Ì‘Ò‹@ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½sï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½tï¿½Hï¿½[ï¿½ï¿½ï¿½oï¿½bï¿½Nï¿½Iï¿½ÉŒÄ‚Î‚ï¿½é–ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField, Tooltip("ˆÚ“®‚ğs‚í‚È‚¢‚Ì‘Ò‹@ˆ—@ƒfƒtƒHƒ‹ƒg‚ÌˆÚ“®‚ªÀs•s”\‚¾‚Á‚½ê‡AƒtƒH[ƒ‹ƒoƒbƒN“I‚ÉŒÄ‚Î‚ê‚é–‚à‚ ‚é")]
     private UnityEvent MoveStayFunctions;
 
     [Space]
     [Header("-----AlignPhase-----")]
     [Space]
     [SerializeField] private GroundedSensor gs;
-    [Tooltip("trueï¿½Å’nï¿½Ê‚Ì–@ï¿½ï¿½ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½gï¿½ï¿½ï¿½ï¿½]ï¿½ï¿½ï¿½Ü‚ï¿½(gsï¿½ï¿½ï¿½Kï¿½v)")]public bool grounding;
-    [Tooltip("ï¿½nï¿½Ê‚Ì–@ï¿½ï¿½ï¿½É‘Î‰ï¿½ï¿½ï¿½ï¿½Ä‰ï¿½]ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g")] public GameObject[] groundingObj;
-    [Tooltip("ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j")] public GameObject[] horizontalAlignObj;
-    [Tooltip("ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j")] public GameObject[] elevasionAlignObj;
+    public bool grounding;
+    public GameObject[] groundingObj;
+    public GameObject[] horizontalAlignObj;
+    public GameObject[] elevasionAlignObj;
     private Vector3[] hAliObjInitVec;
     private Vector3[] eAliObjInitVec;
     private Vector3 Alignment;
@@ -77,8 +77,8 @@ public class EnemyCore : Enemy
     public Vector3 alignDiff;
     private Vector3 _alignDiff;
     /// <summary>
-    /// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½Úï¿½ï¿½oï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½ğ”»’fï¿½ï¿½ï¿½éˆï¿½ï¿½
-    /// ï¿½İ’è‚µï¿½È‚ï¿½ï¿½ê‡EnemyCore.DefaultTargetFind()ï¿½ï¿½ï¿½Ä‚Î‚ï¿½ï¿½
+    /// ƒ^[ƒQƒbƒg‚ª–Ú‹o—ˆ‚Ä‚¢‚é‚©‚ğ”»’f‚·‚éˆ—
+    /// İ’è‚µ‚È‚¢ê‡EnemyCore.DefaultTargetFind()‚ªŒÄ‚Î‚ê‚é
     /// </summary>
     [SerializeField] private UnityEvent AlignPhaseFunction;
 
@@ -91,9 +91,9 @@ public class EnemyCore : Enemy
     [Header("-----Other-----")]
     [Space]
 
-    [SerializeField, Tooltip("ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ó‚¯‚ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½Fint damage, Vector3 hitPosition, GameObject source, string damageType)")]
+    [SerializeField, Tooltip("ƒ_ƒ[ƒW‚ğó‚¯‚½‚Ìˆ— (ˆø”Fint damage, Vector3 hitPosition, GameObject source, string damageType)")]
     private UnityEvent<int,Vector3,GameObject,string> DamageFunction;
-    [SerializeField, Tooltip("ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ó‚¯‚ï¿½armorPointï¿½ï¿½0ï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ienemyCore.InvokeDestroy()ï¿½Å‘ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½vï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½Â”\ï¿½j")]
+    [SerializeField, Tooltip("ƒ_ƒ[ƒW‚ğó‚¯‚ÄarmorPoint‚ª0‚É‚È‚Á‚½‚Æ‚«‚Ìˆ—ienemyCore.InvokeDestroy()‚Å‘¼ƒXƒNƒŠƒvƒg‚©‚çÀs‰Â”\j")]
     private UnityEvent DestroyFunction;
 
 
@@ -101,7 +101,7 @@ public class EnemyCore : Enemy
     void Start()
     {
 
-        //MovePhaseï¿½Ìï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //MovePhase‚ÌÀs‡˜®—
         if(MovePhaseFunctions.Length != MovePhaseFunctionsRange.Length)
         {
             MovePhaseFunctionsRange = new float[1] { -1 };
@@ -131,33 +131,32 @@ public class EnemyCore : Enemy
             }
         }
 
-        //Alignï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //AlignŒn‰Šú‰»
         hAliObjInitVec = new Vector3[horizontalAlignObj.Length];
         eAliObjInitVec = new Vector3[elevasionAlignObj.Length];
-        for(int i = 0; i < hAliObjInitVec.Length; i++)
-            hAliObjInitVec[i] = horizontalAlignObj[i].transform.localEulerAngles;
-        for (int i = 0; i < eAliObjInitVec.Length; i++)
-            eAliObjInitVec[i] = elevasionAlignObj[i].transform.localEulerAngles;
-        
+
         Alignment = transform.forward;
         AlignTarget = transform.forward;
+
+
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ìİ’ï¿½
+        //ƒ^[ƒQƒbƒg‚Ìİ’è
         if (TargetSetPhaseFunction.GetPersistentEventCount() >= 1) { TargetSetPhaseFunction?.Invoke(); }
         else if(useDefaultFuncForEmptyPhase) 
             DefaultTargetSet();
 
-        //ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ì‘{ï¿½ï¿½
+        //ƒ^[ƒQƒbƒg‚Ì‘{õ
         if (TargetFindPhaseFunction.GetPersistentEventCount() >= 1) { TargetFindPhaseFunction?.Invoke(); }
         else  if(useDefaultFuncForEmptyPhase) 
             DefaultTargetFind();
 
-        //ï¿½Ú“ï¿½
+        //ˆÚ“®
         if(MovePhaseFunctions.Length >= 1) { 
             foreach(int i in MoveFuncOrder)
             {
@@ -182,12 +181,12 @@ public class EnemyCore : Enemy
             
         }
 
-        //ï¿½Æï¿½
+        //Æ€
         if (AlignPhaseFunction.GetPersistentEventCount() >= 1) { AlignPhaseFunction.Invoke(); }
         else if (useDefaultFuncForEmptyPhase)
             DefaultAlign();
 
-        //ï¿½Uï¿½ï¿½
+        //UŒ‚
         if (AttackPhaseFunction.GetPersistentEventCount() >= 1) { AttackPhaseFunction.Invoke(); }
         else if (useDefaultFuncForEmptyPhase)
             DefaultAttack();
@@ -203,8 +202,8 @@ public class EnemyCore : Enemy
 
 
     /// <summary>
-    /// EnemyCoreï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½èˆï¿½ï¿½
-    /// referenceSharedTargetï¿½ï¿½trueï¿½Ìê‡Enemy.SheredTargetï¿½ï¿½ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Éİ’è‚·ï¿½ï¿½
+    /// EnemyCore‚ÌƒfƒtƒHƒ‹ƒg‚Ìƒ^[ƒQƒbƒgŒˆ’èˆ—
+    /// referenceSharedTarget‚ªtrue‚Ìê‡Enemy.SheredTarget‚ğƒ^[ƒQƒbƒg‚Éİ’è‚·‚é
     /// </summary>
     public void DefaultTargetSet()
     {
@@ -215,8 +214,8 @@ public class EnemyCore : Enemy
     }
 
     /// <summary>
-    /// EnemyCoreï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½Fï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    /// ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½ÌˆÊ’uï¿½Ü‚Åƒï¿½ï¿½Cï¿½ï¿½ï¿½Î‚ï¿½ï¿½Aï¿½rï¿½ï¿½ï¿½Éï¿½ï¿½Eï¿½ï¿½ï¿½Õ‚é•¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ’²‚ï¿½TargetFoundï¿½É”ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½
+    /// EnemyCore‚ÌƒfƒtƒHƒ‹ƒg‚Ìƒ^[ƒQƒbƒg”F¯ˆ—
+    /// ƒ^[ƒQƒbƒg‚ÌˆÊ’u‚Ü‚ÅƒŒƒC‚ğ”ò‚Î‚µA“r’†‚É‹ŠE‚ğÕ‚é•¨‚ª–³‚¢‚©‚ğ’²‚×TargetFound‚É”½‰f‚·‚é
     /// </summary>
     public void DefaultTargetFind()
     {
@@ -225,7 +224,7 @@ public class EnemyCore : Enemy
             _targetFound = false;
             return;
         }
-        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì•ï¿½ï¿½ï¿½ï¿½Éƒï¿½ï¿½Cï¿½ï¿½ï¿½Î‚ï¿½
+        //ƒvƒŒƒCƒ„[‚Ì•ûŒü‚ÉƒŒƒC‚ğ”ò‚Î‚·
         Vector3 posDiff = Target.transform.position - transform.position;
         _targetDist = posDiff.magnitude;
         if(_targetDist > findRange) {
@@ -238,17 +237,17 @@ public class EnemyCore : Enemy
 
         RaycastHit[] results = new RaycastHit[20];
         int len = Physics.RaycastNonAlloc(ray, results, targetDist);
-        //ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½gï¿½Éï¿½ï¿½Eï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½ï¿½ï¿½×‚ï¿½
+        //ƒŠƒUƒ‹ƒg‚É‹ŠE‚ğÇ‚®•¨‚ª‚ ‚é‚©’²‚×‚é
         bool blocked = false;
 
         for(int i = 0; i < len; i++)
         {
             RaycastHit res = results[i];
             
-            //ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½orï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½Ìê‡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½Ìƒï¿½ï¿½Uï¿½ï¿½ï¿½gï¿½ï¿½
-            if (res.transform == transformï¿½@|| res.transform == Target.transform) continue;
+            //ƒŠƒUƒ‹ƒg‚ª©•ªorƒ^[ƒQƒbƒg‚Ìê‡–³‹‚µ‚ÄŸ‚ÌƒŠƒUƒ‹ƒg‚Ö
+            if (res.transform == transform@|| res.transform == Target.transform) continue;
 
-            //ï¿½eï¿½ï¿½kï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½orï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½É“ï¿½ï¿½ï¿½ï¿½é‚©
+            //e‚ğ‘k‚Á‚Ä©•ªorƒ^[ƒQƒbƒg‚É“–‚½‚é‚©
             Transform p = res.transform;
             while (p != null && !p.Equals(Target.transform) && !p.Equals(this.transform)) {
                 //Debug.Log($"p = {p} : parent = {p.parent}  {p.parent == Target.transform}");
@@ -264,28 +263,28 @@ public class EnemyCore : Enemy
         }
         _targetFound = !blocked;
 
-        //ï¿½ï¿½ï¿½Jï¿½ppublicï¿½Ïï¿½ï¿½ÌXï¿½V
+        //ŒöŠJ—ppublic•Ï”‚ÌXV
         targetFound = _targetFound;
         targetDist = _targetDist;
     }
 
 
     /// <summary>
-    /// EnemyCoreï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ÌÚ‹ßï¿½ï¿½ï¿½
-    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Å‚ï¿½targetDistï¿½ï¿½80ï¿½Èï¿½Ìï¿½ï¿½Ä‚Î‚ï¿½ï¿½
+    /// EnemyCore‚ÌƒfƒtƒHƒ‹ƒg‚ÌˆÚ“®ˆ—‚Ì“à‚ÌÚ‹ßˆ—
+    /// ƒfƒtƒHƒ‹ƒg‚Å‚ÍtargetDist‚ª80ˆÈã‚ÌŒÄ‚Î‚ê‚é
     /// </summary>
     public void DefaultApproachMove()
     {
         Debug.Log("mimimi");
         if(navAgent == null)
         {
-            Debug.LogError("[EnemyCore.DefaultApproachMove] > navAgentï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½@ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ú‹ßï¿½ï¿½ï¿½ï¿½ğ—˜—pï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½navAgentï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            Debug.LogError("[EnemyCore.DefaultApproachMove] > navAgent‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ@ƒfƒtƒHƒ‹ƒgÚ‹ßˆ—‚ğ—˜—p‚·‚éê‡‚ÍnavAgent‚ğƒZƒbƒg‚µ‚Ä‚­‚¾‚³‚¢");
             DefaultStayMove();
             return;
         }
         if(Target == null)
         {
-            Debug.LogError("[EnemyCore.DefaultApproachMove] > Targetï¿½ï¿½nullï¿½Å‚ï¿½");
+            Debug.LogError("[EnemyCore.DefaultApproachMove] > Target‚ªnull‚Å‚·");
             DefaultStayMove();
             return;
         }
@@ -301,30 +300,30 @@ public class EnemyCore : Enemy
     }
 
     /// <summary>
-    /// EnemyCoreï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½Ìí“¬ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Å‚ï¿½targetDistï¿½ï¿½30ï¿½Èï¿½80ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Ä‚Î‚ï¿½ï¿½
+    /// EnemyCore‚ÌƒfƒtƒHƒ‹ƒg‚ÌˆÚ“®ˆ—‚Ì“à‚Ìí“¬‹@“®ˆ—
+    /// ƒfƒtƒHƒ‹ƒg‚Å‚ÍtargetDist‚ª30ˆÈã80–¢–‚ÌŒÄ‚Î‚ê‚é
     /// </summary>
     public void DefaultBattleMove()
     {
         if(navAgent == null)
         {
-            Debug.LogError("[EnemyCore.DefaultBattleMove] > navAgentï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½@ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½í“¬ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ—˜—pï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½navAgentï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            Debug.LogError("[EnemyCore.DefaultBattleMove] > navAgent‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ@ƒfƒtƒHƒ‹ƒgí“¬‹@“®ˆ—‚ğ—˜—p‚·‚éê‡‚ÍnavAgent‚ğƒZƒbƒg‚µ‚Ä‚­‚¾‚³‚¢");
             DefaultStayMove();
             return;
         }
         if (Target == null)
         {
-            Debug.LogError("[EnemyCore.DefaultBattleMove] > Targetï¿½ï¿½nullï¿½Å‚ï¿½");
+            Debug.LogError("[EnemyCore.DefaultBattleMove] > Target‚ªnull‚Å‚·");
             DefaultStayMove();
             return;
         }
 
-        //ï¿½Eï¿½ï¿½ï¿½orï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½çŒ©ï¿½Äƒ^ï¿½[ï¿½Qï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½Ç‚ï¿½ï¿½ï¿½É‚ï¿½ï¿½é‚©ï¿½æ“¾
+        //‰E‰ñ‚èor¶‰ñ‚è‚ğŒˆ’è
+        //©•ª‚©‚çŒ©‚Äƒ^[ƒQƒbƒg‚ª¶‰E‚Ç‚¿‚ç‚É‚¢‚é‚©æ“¾
         Vector3 tPosOnLocSpc = transform.InverseTransformPoint(Target.transform.position);
 
        
-        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //ˆÚ“®•ûŒü‚ğŒˆ’è
         if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid)
         {
             if(tPosOnLocSpc.x > 0)
@@ -337,19 +336,19 @@ public class EnemyCore : Enemy
 
 
     /// <summary>
-    /// EnemyCoreï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ÌŒï¿½Şï¿½ï¿½ï¿½
-    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Å‚ï¿½targetDistï¿½ï¿½30ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Ä‚Î‚ï¿½ï¿½
+    /// EnemyCore‚ÌƒfƒtƒHƒ‹ƒg‚ÌˆÚ“®ˆ—‚Ì“à‚ÌŒã‘Şˆ—
+    /// ƒfƒtƒHƒ‹ƒg‚Å‚ÍtargetDist‚ª30–¢–‚ÌŒÄ‚Î‚ê‚é
     /// </summary>
     public void DefaultRetreatMove()
     {
         if(navAgent == null) {
-            Debug.LogError("[EnemyCore.DefaultRetreatMove] > navAgentï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½@ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½Şï¿½ï¿½ï¿½ï¿½ğ—˜—pï¿½ï¿½ï¿½ï¿½ê‡ï¿½ï¿½navAgentï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            Debug.LogError("[EnemyCore.DefaultRetreatMove] > navAgent‚ªƒZƒbƒg‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ@ƒfƒtƒHƒ‹ƒgŒã‘Şˆ—‚ğ—˜—p‚·‚éê‡‚ÍnavAgent‚ğƒZƒbƒg‚µ‚Ä‚­‚¾‚³‚¢");
             DefaultStayMove();
             return;
         }
         if (Target == null)
         {
-            Debug.LogError("[EnemyCore.DefaultRetreatMove] > Targetï¿½ï¿½nullï¿½Å‚ï¿½");
+            Debug.LogError("[EnemyCore.DefaultRetreatMove] > Target‚ªnull‚Å‚·");
             DefaultStayMove();
             return;
         }
@@ -362,8 +361,8 @@ public class EnemyCore : Enemy
 
 
     /// <summary>
-    /// EnemyCoreï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ï¿½Ì‘Ò‹@ï¿½ï¿½ï¿½ï¿½
-    /// ï¿½ï¿½ï¿½Ìƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½sï¿½\ï¿½iï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½jï¿½Èï¿½ï¿½É‚ï¿½ï¿½Ä‚Î‚ï¿½ï¿½
+    /// EnemyCore‚ÌƒfƒtƒHƒ‹ƒg‚ÌˆÚ“®ˆ—‚Ì‚¤‚¿‚Ì‘Ò‹@ˆ—
+    /// ‘¼‚ÌƒfƒtƒHƒ‹ƒgˆÚ“®ˆ—‚ªÀs•s”\iƒGƒ‰[“™j‚È‚É‚àŒÄ‚Î‚ê‚é
     /// </summary>
     public void DefaultStayMove()
     {
@@ -377,7 +376,7 @@ public class EnemyCore : Enemy
     {
         if(Target == null)
         {
-            Debug.LogError("[EnemyCore.DefaultAlign] > Targetï¿½ï¿½nullï¿½Å‚ï¿½");
+            Debug.LogError("[EnemyCore.DefaultAlign] > Target‚ªnull‚Å‚·");
             return;
         }
 
@@ -392,12 +391,12 @@ public class EnemyCore : Enemy
     }
 
     /// <summary>
-    /// ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ì”ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½@armorPointï¿½ï¿½0ï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½ï¿½InvokeDestroy()ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½
+    /// ƒfƒtƒHƒ‹ƒg‚Ì”íƒ_ƒ[ƒWˆ—@armorPoint‚ª0‚É‚È‚Á‚½InvokeDestroy()‚ğÀs‚·‚é
     /// </summary>
-    /// <param name="damage">ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Ì’l</param>
-    /// <param name="hitPosition">ï¿½Uï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½êŠ</param>
-    /// <param name="source">ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g</param>
-    /// <param name="damageType">ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½Ìƒ^ï¿½Cï¿½v</param>
+    /// <param name="damage">ƒ_ƒ[ƒW‚Ì’l</param>
+    /// <param name="hitPosition">UŒ‚‚Ì“–‚½‚Á‚½êŠ</param>
+    /// <param name="source">UŒ‚‚ğs‚Á‚½ƒIƒuƒWƒFƒNƒg</param>
+    /// <param name="damageType">ƒ_ƒ[ƒW‚Ìƒ^ƒCƒv</param>
     public void DefaultDamage(int damage, Vector3 hitPosition, GameObject source, string damageType)
     {
         armorPoint -= damage;
@@ -413,7 +412,7 @@ public class EnemyCore : Enemy
     }
 
     /// <summary>
-    /// ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½Destroyï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½^ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ç‚¸ï¿½ï¿½ï¿½ï¿½useDefaultFuncForEmptyPhaseï¿½ï¿½trueï¿½Ìê‡DefaultDestroyï¿½ï¿½ï¿½ï¿½ï¿½s
+    /// “o˜^‚³‚ê‚Ä‚¢‚éDestroyˆ—‚ğÀs ˆ—‚ª“o˜^‚³‚ê‚Ä‚¨‚ç‚¸‚©‚ÂuseDefaultFuncForEmptyPhase‚ªtrue‚Ìê‡DefaultDestroy‚ğÀs
     /// </summary>
     public void InvokeDestroy()
     {
