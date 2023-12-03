@@ -41,8 +41,12 @@ public class EnemyCore : Enemy
     [Space]
     [Header("-----TargetFindPhase-----")]
     [Space]
-    public bool targetFound;
+    public bool targetFound;            //外部参照用
     private bool _targetFound;
+    public Vector3 lastFoundPosition;   //外部参照用
+    private Vector3 _lastFoundPosition;
+    public float targetDist;            //外部参照用
+    private float _targetDist;          
     [SerializeField] private float findRange;
     [SerializeField, Tooltip("ターゲットが目視出来ているかを判断する処理　設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる")] 
     private UnityEvent TargetFindPhaseFunction;
@@ -51,8 +55,6 @@ public class EnemyCore : Enemy
     [Header("-----MovePhase-----")]
     [Space]
     [SerializeField] private NavMeshAgent navAgent;
-    public float targetDist;
-    private float _targetDist;
     [SerializeField, Tooltip("距離に応じて実行する処理(実行距離はMovePhaseFunctionsRangeで指定。配列長が合わない場合idx=0の処理を常に実行)　配列が空の場合デフォルトの行動パターンが設定される")]
     private UnityEvent[] MovePhaseFunctions;
     [SerializeField, Tooltip("インデックスの対応するMovePhaseFunctionの実行距離(targetDistが値以下の場合対応する処理を実行。-1で距離∞。値の小さい物が優先される)")]
@@ -65,22 +67,21 @@ public class EnemyCore : Enemy
     [Header("-----AlignPhase-----")]
     [Space]
     [SerializeField] private GroundedSensor gs;
-    public bool grounding;
-    public GameObject[] groundingObj;
-    public GameObject[] horizontalAlignObj;
-    public GameObject[] elevasionAlignObj;
+    [Tooltip("姿勢を地形に沿わせるか　gs及びnavAgantが必要")]public bool grounding;
+    [Tooltip("地形に沿わせるオブジェクト（子を含む）")] public GameObject[] groundingObj;
+    [Tooltip("水平照準を行うオブジェクト（子を含む）")] public GameObject[] horizontalAlignObj;
+    [Tooltip("垂直照準を行うオブジェクト（子を含む）")] public GameObject[] elevasionAlignObj;
+    private Quaternion[] groundingInitRot;
     private Vector3[] hAliObjInitVec;
     private Vector3[] eAliObjInitVec;
+    private Vector3 initNavAng;
     private Vector3 Alignment;
     private Vector3 AlignTarget;
     private Vector3 AimDiffByGrounding;
     public Vector3 alignDiff;
     private Vector3 _alignDiff;
-    /// <summary>
-    /// ターゲットが目視出来ているかを判断する処理
-    /// 設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる
-    /// </summary>
-    [SerializeField] private UnityEvent AlignPhaseFunction;
+    [SerializeField, Tooltip("姿勢を地形に沿わせたり、水平照準、府仰角照準を行う処理。")]
+    private UnityEvent AlignPhaseFunction;
 
     [Space]
     [Header("-----AttackPhase-----")]
@@ -132,11 +133,25 @@ public class EnemyCore : Enemy
         }
 
         //Align系初期化
+        groundingInitRot = new Quaternion[groundingObj.Length];
         hAliObjInitVec = new Vector3[horizontalAlignObj.Length];
         eAliObjInitVec = new Vector3[elevasionAlignObj.Length];
 
-        Alignment = transform.forward;
-        AlignTarget = transform.forward;
+        for (int i = 0; i < groundingInitRot.Length; i++) groundingInitRot[i] = groundingObj[i].transform.rotation;
+        for (int i = 0; i < hAliObjInitVec.Length; i++) hAliObjInitVec[i] = horizontalAlignObj[i].transform.eulerAngles;
+        for (int i = 0; i < eAliObjInitVec.Length; i++) eAliObjInitVec[i] = elevasionAlignObj[i].transform.eulerAngles;
+
+        if(navAgent != null)
+        {
+            initNavAng = navAgent.transform.eulerAngles;
+            Alignment = navAgent.transform.forward;
+            AlignTarget = navAgent.transform.forward;
+        }
+        else
+        {
+            Debug.Log("[EnemyCore.DefaultAlign] > navMeshがnullです");
+        }
+        
 
 
         
@@ -216,6 +231,7 @@ public class EnemyCore : Enemy
     /// <summary>
     /// EnemyCoreのデフォルトのターゲット認識処理
     /// ターゲットの位置までレイを飛ばし、途中に視界を遮る物が無いかを調べTargetFoundに反映する
+    /// (自身とターゲット間に20個以上のコライダーが存在する場合正常に動作しない可能性がある)
     /// </summary>
     public void DefaultTargetFind()
     {
@@ -258,14 +274,22 @@ public class EnemyCore : Enemy
             if (p.Equals(Target.transform) || p.Equals(this.transform)) {
                 continue;
             } else {
-                blocked = true; break;
+                blocked = true; 
+                break;
             }
         }
+        //結果を格納
         _targetFound = !blocked;
+        if (_targetFound)
+        {
+            _lastFoundPosition = Target.transform.position;
+            lastFoundPosition = _lastFoundPosition;
+        }
 
         //公開用public変数の更新
         targetFound = _targetFound;
         targetDist = _targetDist;
+
     }
 
 
@@ -275,7 +299,6 @@ public class EnemyCore : Enemy
     /// </summary>
     public void DefaultApproachMove()
     {
-        Debug.Log("mimimi");
         if(navAgent == null)
         {
             Debug.LogError("[EnemyCore.DefaultApproachMove] > navAgentがセットされていません　デフォルト接近処理を利用する場合はnavAgentをセットしてください");
@@ -379,6 +402,67 @@ public class EnemyCore : Enemy
             Debug.LogError("[EnemyCore.DefaultAlign] > Targetがnullです");
             return;
         }
+
+        //grounding
+        if (grounding)
+        {
+            if (gs == null)
+            {
+                Debug.LogWarning("[EnemyCore.DefaultAlign] > gsがnullです groundingは実行できません");
+            }
+            else
+            {
+                Vector3 gNormal;
+                if(navAgent == null)
+                {
+                    Debug.LogWarning("[EnemyCore.DefaultAlign] > navMeshがnullです groundingは実行できません");
+                }
+                if(gs.isGrounded(out gNormal))
+                {
+                    //向く方向を決定
+                    Transform nTransform = new GameObject().transform;
+                    nTransform.eulerAngles = navAgent.transform.eulerAngles;
+
+
+                    Vector3 oldForward = -nTransform.forward;
+                    Vector3 oldUp = nTransform.up;
+                    Vector3 newRight = Vector3.Cross(oldForward, gNormal).normalized;
+                    Vector3 newForward = Vector3.Cross(newRight, gNormal).normalized;
+
+                    //navAgent.transformとのギャップ
+                    Debug.DrawRay(transform.position, navAgent.transform.up, Color.gray);
+                    Debug.DrawRay(transform.position, navAgent.transform.forward, Color.gray);
+                    Debug.DrawRay(transform.position, navAgent.transform.right, Color.gray);
+
+                    Debug.DrawRay(transform.position, gNormal, Color.green);
+                    Debug.DrawRay(transform.position, newRight, Color.red);
+                    Debug.DrawRay(transform.position, newForward, Color.blue);
+
+                    //回転を生成
+                    Transform targetRotTf = new GameObject().transform;
+                    targetRotTf.LookAt(targetRotTf.position + newForward);
+                    Transform targetRotTf2 = new GameObject().transform;
+                    targetRotTf2.rotation = targetRotTf.rotation;
+
+                    float angDiff = Vector3.Angle(targetRotTf.up, gNormal);
+                    targetRotTf.rotation *= Quaternion.AngleAxis(angDiff, targetRotTf.forward);
+                    targetRotTf2.rotation *= Quaternion.AngleAxis(-angDiff, targetRotTf.forward);
+
+                    if (Vector3.Angle(targetRotTf.up, gNormal) > Vector3.Angle(targetRotTf2.up, gNormal)) 
+                        targetRotTf.rotation = targetRotTf2.rotation;
+
+                    Quaternion diffRot = Quaternion.Inverse(nTransform.rotation) * targetRotTf.rotation;
+
+
+                    
+                    for(int i = 0; i < groundingObj.Length; i++)
+                    {
+                        groundingObj[i].transform.rotation *= diffRot;
+                    }
+                }
+            }
+        }
+
 
 
     }

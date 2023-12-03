@@ -14326,6 +14326,7 @@ MonoBehaviour:
   ps1: {fileID: 7529408714353337805}
   ps2: {fileID: 4570883289834502608}
   ps3: {fileID: 1140868249038717250}
+  HitInitPref: {fileID: 3447697211720482215, guid: 16f751f366a69d44d88271a3efc397a0, type: 3}
 --- !u!96 &4833261063614731687
 TrailRenderer:
   serializedVersion: 2
