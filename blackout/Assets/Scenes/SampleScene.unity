@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18165898, g: 0.22731541, b: 0.3074168, a: 1}
+  m_IndirectSpecularColor: {r: 0.1816586, g: 0.2273147, b: 0.30741575, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3335,7 +3335,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537667858}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -139.9, y: 2.3, z: 54.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5415,8 +5415,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805559036}
   m_LocalRotation: {x: 0.5192129, y: -0, z: -0, w: 0.85464495}
-  m_LocalPosition: {x: 30.350006, y: -2.7, z: 0.8}
-  m_LocalScale: {x: 20, y: 80.187, z: 20}
+  m_LocalPosition: {x: 50.3, y: -6.4, z: 7.2}
+  m_LocalScale: {x: 59.76587, y: 80.187, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 970191234}
@@ -6512,7 +6512,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 80
+  field of view: 0.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -11445,6 +11445,8 @@ MonoBehaviour:
   DestroyFunction:
     m_PersistentCalls:
       m_Calls: []
+  deb1: {fileID: 0}
+  deb2: {fileID: 0}
 --- !u!4 &1962649843
 Transform:
   m_ObjectHideFlags: 0
@@ -11452,7 +11454,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962649841}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -142.9, y: 0.9, z: 62.1}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
@@ -13268,7 +13270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!137 &3606239761286999942
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

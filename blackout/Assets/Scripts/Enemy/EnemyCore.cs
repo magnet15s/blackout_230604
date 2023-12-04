@@ -381,7 +381,8 @@ public class EnemyCore : Enemy
         }
 
     }
-
+    public Transform deb1;
+    public Transform deb2;
 
     /// <summary>
     /// EnemyCoreのデフォルトの移動処理のうちの待機処理
@@ -439,12 +440,15 @@ public class EnemyCore : Enemy
                     Debug.DrawRay(transform.position, newForward, Color.blue);
 
                     //回転を生成
-                    Transform targetRotTf = new GameObject().transform;
+                    Quaternion groundingRot = Quaternion.LookRotation(newForward, gNormal);
+                    Quaternion diffRot = Quaternion.Inverse(navAgent.transform.rotation) * groundingRot;
+
+                    /*Transform targetRotTf = new GameObject().transform;
                     targetRotTf.LookAt(targetRotTf.position + newForward);
                     Transform targetRotTf2 = new GameObject().transform;
                     targetRotTf2.rotation = targetRotTf.rotation;
-
-                    float angDiff = Vector3.Angle(targetRotTf.up, gNormal);
+*/
+                    /*float angDiff = Vector3.Angle(targetRotTf.up, gNormal);
                     targetRotTf.rotation *= Quaternion.AngleAxis(angDiff, targetRotTf.forward);
                     targetRotTf2.rotation *= Quaternion.AngleAxis(-angDiff, targetRotTf.forward);
 
@@ -452,12 +456,12 @@ public class EnemyCore : Enemy
                         targetRotTf.rotation = targetRotTf2.rotation;
 
                     Quaternion diffRot = Quaternion.Inverse(nTransform.rotation) * targetRotTf.rotation;
-
+                    */
 
                     
                     for(int i = 0; i < groundingObj.Length; i++)
                     {
-                        groundingObj[i].transform.rotation *= diffRot;
+                        groundingObj[i].transform.rotation = groundingInitRot[i] * diffRot * navAgent.transform.rotation;
                     }
                 }
             }
