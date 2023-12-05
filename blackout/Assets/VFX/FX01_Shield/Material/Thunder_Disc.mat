@@ -79,6 +79,6 @@ Material:
     - Vector2_1D7D0B5B: {r: 0, g: 0, b: 0, a: 0}
     - Vector2_386C1F19: {r: 0.16, g: 0.27, b: 0, a: 0}
     - Vector2_99D6DBF5: {r: 2, g: 0.8, b: 0, a: 0}
-    - Vector2_AED470EE: {r: 120, g: 1.05, b: 0, a: 0}
+    - Vector2_AED470EE: {r: 1, g: 1.05, b: 0, a: 0}
     - Vector2_FDA845B1: {r: 0.5, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
