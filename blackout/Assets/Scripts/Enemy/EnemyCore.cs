@@ -442,32 +442,21 @@ public class EnemyCore : Enemy
                     //‰ñ“]‚ð¶¬
                     Quaternion groundingRot = Quaternion.LookRotation(newForward, gNormal);
                     Quaternion diffRot = Quaternion.Inverse(navAgent.transform.rotation) * groundingRot;
-                    Quaternion yRot = Quaternion.AngleAxis(navAgent.transform.eulerAngles.y, Vector3.up);
-                    deb1.rotation = diffRot;
-                    deb2.rotation = yRot * diffRot;
-
-                    /*Transform targetRotTf = new GameObject().transform;
-                    targetRotTf.LookAt(targetRotTf.position + newForward);
-                    Transform targetRotTf2 = new GameObject().transform;
-                    targetRotTf2.rotation = targetRotTf.rotation;
-*/
-                    /*float angDiff = Vector3.Angle(targetRotTf.up, gNormal);
-                    targetRotTf.rotation *= Quaternion.AngleAxis(angDiff, targetRotTf.forward);
-                    targetRotTf2.rotation *= Quaternion.AngleAxis(-angDiff, targetRotTf.forward);
-
-                    if (Vector3.Angle(targetRotTf.up, gNormal) > Vector3.Angle(targetRotTf2.up, gNormal)) 
-                        targetRotTf.rotation = targetRotTf2.rotation;
-
-                    Quaternion diffRot = Quaternion.Inverse(nTransform.rotation) * targetRotTf.rotation;
-                    */
-
                     
+                    Transform tr = new GameObject().transform;
                     for(int i = 0; i < groundingObj.Length; i++)
                     {
-                        groundingObj[i].transform.rotation = (groundingInitRot[i] * diffRot);
-                        groundingObj[i].transform.RotateAround(groundingObj[i].transform.position, Vector3.up, navAgent.transform.eulerAngles.y);
+                        tr.rotation = (groundingInitRot[i] * Quaternion.Lerp(diffRot, Quaternion.identity, 0.3f));
+                        tr.RotateAround(groundingObj[i].transform.position, Vector3.up, navAgent.transform.eulerAngles.y);
+                        groundingObj[i].transform.rotation = Quaternion.Lerp(groundingObj[i].transform.rotation, tr.rotation, Time.deltaTime * 20);
                     }
                 }
+
+                //horizontal align
+
+                //elevation align
+
+
             }
         }
 
