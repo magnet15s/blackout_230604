@@ -442,6 +442,9 @@ public class EnemyCore : Enemy
                     //âÒì]Çê∂ê¨
                     Quaternion groundingRot = Quaternion.LookRotation(newForward, gNormal);
                     Quaternion diffRot = Quaternion.Inverse(navAgent.transform.rotation) * groundingRot;
+                    Quaternion yRot = Quaternion.AngleAxis(navAgent.transform.eulerAngles.y, Vector3.up);
+                    deb1.rotation = diffRot;
+                    deb2.rotation = yRot * diffRot;
 
                     /*Transform targetRotTf = new GameObject().transform;
                     targetRotTf.LookAt(targetRotTf.position + newForward);
@@ -461,7 +464,8 @@ public class EnemyCore : Enemy
                     
                     for(int i = 0; i < groundingObj.Length; i++)
                     {
-                        groundingObj[i].transform.rotation = groundingInitRot[i] * diffRot * navAgent.transform.rotation;
+                        groundingObj[i].transform.rotation = (groundingInitRot[i] * diffRot);
+                        groundingObj[i].transform.RotateAround(groundingObj[i].transform.position, Vector3.up, navAgent.transform.eulerAngles.y);
                     }
                 }
             }
