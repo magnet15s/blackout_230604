@@ -453,6 +453,11 @@ public class EnemyCore : Enemy
                 }
 
                 //horizontal align
+                if(targetFound) {
+                    for(int i = 0; i < horizontalAlignObj.Length; i++) {
+                        
+                    }
+                }
 
                 //elevation align
 
