@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.1816586, g: 0.2273147, b: 0.30741575, a: 1}
+  m_IndirectSpecularColor: {r: 0.18165898, g: 0.22731541, b: 0.3074168, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11574,8 +11574,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   navAgent: {fileID: 1962649845}
-  MovePhaseFunctions: []
-  MovePhaseFunctionsRange: []
+  MovePhaseFunctions:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1962649842}
+        m_TargetAssemblyTypeName: EnemyCore, Assembly-CSharp
+        m_MethodName: DefaultStayMove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  MovePhaseFunctionsRange:
+  - -1
   MoveStayFunctions:
     m_PersistentCalls:
       m_Calls: []
@@ -11586,8 +11601,9 @@ MonoBehaviour:
   horizontalAlignObj:
   - {fileID: 2096452172}
   - {fileID: 1534026574}
-  elevasionAlignObj: []
-  alignDiff: {x: 0, y: 0, z: 0}
+  elevasionAlignObj:
+  - {fileID: 21600106}
+  alignmentSpeed: 10
   AlignPhaseFunction:
     m_PersistentCalls:
       m_Calls: []
@@ -14735,7 +14751,7 @@ GameObject:
   - component: {fileID: 8820758830711129846}
   - component: {fileID: 8820758830711129847}
   - component: {fileID: 8820758830711129848}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: robobo
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -14786,10 +14802,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8788128814252431016}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6832795820599130791, guid: 6a9cb804b569d9a4b9572da04b3b2626, type: 3}
 --- !u!114 &8820758830711129848

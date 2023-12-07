@@ -72,14 +72,7 @@ public class EnemyCore : Enemy
     [Tooltip("水平照準を行うオブジェクト（子を含む）")] public GameObject[] horizontalAlignObj;
     [Tooltip("垂直照準を行うオブジェクト（子を含む）")] public GameObject[] elevasionAlignObj;
     private Quaternion[] groundingInitRot;
-    private Vector3[] hAliObjInitVec;
-    private Vector3[] eAliObjInitVec;
-    private Vector3 initNavAng;
-    private Vector3 Alignment;
-    private Vector3 AlignTarget;
-    private Vector3 AimDiffByGrounding;
-    public Vector3 alignDiff;
-    private Vector3 _alignDiff;
+    public float alignmentSpeed;
     [SerializeField, Tooltip("姿勢を地形に沿わせたり、水平照準、府仰角照準を行う処理。")]
     private UnityEvent AlignPhaseFunction;
 
@@ -87,6 +80,7 @@ public class EnemyCore : Enemy
     [Header("-----AttackPhase-----")]
     [Space]
     [SerializeField] private UnityEvent AttackPhaseFunction;
+    private Weapon defWep;
 
     [Space]
     [Header("-----Other-----")]
@@ -101,9 +95,10 @@ public class EnemyCore : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        defWep = transform.AddComponent<Weapon.Conc>();
 
         //MovePhaseの実行順序整理
-        if(MovePhaseFunctions.Length != MovePhaseFunctionsRange.Length)
+        if (MovePhaseFunctions.Length != MovePhaseFunctionsRange.Length)
         {
             MovePhaseFunctionsRange = new float[1] { -1 };
             MoveFuncOrder = new int[1] { 0 };
@@ -134,18 +129,11 @@ public class EnemyCore : Enemy
 
         //Align系初期化
         groundingInitRot = new Quaternion[groundingObj.Length];
-        hAliObjInitVec = new Vector3[horizontalAlignObj.Length];
-        eAliObjInitVec = new Vector3[elevasionAlignObj.Length];
 
         for (int i = 0; i < groundingInitRot.Length; i++) groundingInitRot[i] = groundingObj[i].transform.rotation;
-        for (int i = 0; i < hAliObjInitVec.Length; i++) hAliObjInitVec[i] = horizontalAlignObj[i].transform.eulerAngles;
-        for (int i = 0; i < eAliObjInitVec.Length; i++) eAliObjInitVec[i] = elevasionAlignObj[i].transform.eulerAngles;
 
         if(navAgent != null)
         {
-            initNavAng = navAgent.transform.eulerAngles;
-            Alignment = navAgent.transform.forward;
-            AlignTarget = navAgent.transform.forward;
         }
         else
         {
@@ -455,12 +443,24 @@ public class EnemyCore : Enemy
                 //horizontal align
                 if(targetFound) {
                     for(int i = 0; i < horizontalAlignObj.Length; i++) {
-                        
+                        Transform objt = horizontalAlignObj[i].transform;
+                        Vector3 tp = objt.InverseTransformPoint(Target.transform.position);
+                        tp.y = 0;
+                        objt.rotation = Quaternion.Lerp(objt.rotation, Quaternion.LookRotation(objt.TransformPoint(tp) - objt.position, objt.up), Time.deltaTime * alignmentSpeed);
                     }
                 }
 
-                //elevation align
-
+                //elevasion align
+                if (targetFound)
+                {
+                    for (int i = 0; i < elevasionAlignObj.Length; i++)
+                    {
+                        Transform objt = elevasionAlignObj[i].transform;
+                        Vector3 tp = objt.InverseTransformPoint(Target.transform.position);
+                        tp.x = 0;
+                        objt.rotation = Quaternion.Lerp(objt.rotation ,Quaternion.LookRotation(objt.TransformPoint(tp) - objt.position, objt.up), Time.deltaTime * alignmentSpeed);
+                    }
+                }
 
             }
         }
@@ -470,10 +470,19 @@ public class EnemyCore : Enemy
     }
 
 
-
+    private float fireItv;
     public void DefaultAttack()
     {
-
+        if (targetFound)
+        {
+            fireItv += Time.deltaTime;
+            if(fireItv > 1)
+            {
+                fireItv = 0;
+                LiveBullet.BulletInstantiate(defWep, transform.position + transform.forward * 2, (Target.transform.position - (transform.position + transform.forward * 2)).normalized * 200, 10);
+            }
+        
+        }
     }
 
     /// <summary>
