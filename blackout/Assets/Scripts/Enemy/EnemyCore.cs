@@ -436,7 +436,7 @@ public class EnemyCore : Enemy
                     {
                         tr.rotation = (groundingInitRot[i] * Quaternion.Lerp(diffRot, Quaternion.identity, 0.3f));
                         tr.RotateAround(groundingObj[i].transform.position, Vector3.up, navAgent.transform.eulerAngles.y);
-                        groundingObj[i].transform.rotation = Quaternion.Lerp(groundingObj[i].transform.rotation, tr.rotation, Time.deltaTime * 20);
+                        groundingObj[i].transform.rotation = Quaternion.Lerp(groundingObj[i].transform.rotation, tr.rotation, Time.deltaTime * 40);
                     }
                 }
 
