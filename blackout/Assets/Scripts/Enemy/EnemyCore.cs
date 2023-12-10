@@ -47,7 +47,7 @@ public class EnemyCore : Enemy
     private Vector3 _lastFoundPosition;
     public float targetDist;            //外部参照用
     private float _targetDist;          
-    [SerializeField] private float findRange;
+    [SerializeField] private float findRange = 200;
     [SerializeField, Tooltip("ターゲットが目視出来ているかを判断する処理　設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる")] 
     private UnityEvent TargetFindPhaseFunction;
 
@@ -69,10 +69,18 @@ public class EnemyCore : Enemy
     [SerializeField] private GroundedSensor gs;
     [Tooltip("姿勢を地形に沿わせるか　gs及びnavAgantが必要")]public bool grounding;
     [Tooltip("地形に沿わせるオブジェクト（子を含む）")] public GameObject[] groundingObj;
-    [Tooltip("水平照準を行うオブジェクト（子を含む）")] public GameObject[] horizontalAlignObj;
-    [Tooltip("垂直照準を行うオブジェクト（子を含む）")] public GameObject[] elevasionAlignObj;
+    [Tooltip("水平照準（y軸回転）を行うオブジェクト（子を含む）（再生途中で追加しないこと）")] public GameObject[] horizontalAlignObj;
+    public float leftAlignLimit = 180;
+    public float rightAlignLimit = 180;
+    private float[] hInitY;
+    [Tooltip("垂直照準（x軸回転）を行うオブジェクト（子を含む）（再生途中で追加しないこと）")] public GameObject[] elevasionAlignObj;
+    public float elevasionLimit = 30;
+    public float depressionLimit = 30;
+    private float[] eInitX;
     private Quaternion[] groundingInitRot;
-    public float alignmentSpeed;
+    private Quaternion[] hInitAli;
+    private Quaternion[] eInitAli;
+    public float alignmentSpeed = 100;
     [SerializeField, Tooltip("姿勢を地形に沿わせたり、水平照準、府仰角照準を行う処理。")]
     private UnityEvent AlignPhaseFunction;
 
@@ -129,10 +137,21 @@ public class EnemyCore : Enemy
 
         //Align系初期化
         groundingInitRot = new Quaternion[groundingObj.Length];
+        hInitAli = new Quaternion[horizontalAlignObj.Length];
+        eInitAli = new Quaternion[elevasionAlignObj.Length];
 
         for (int i = 0; i < groundingInitRot.Length; i++) groundingInitRot[i] = groundingObj[i].transform.rotation;
+        for (int i = 0; i < hInitAli.Length; i++) hInitAli[i] = Quaternion.Inverse(horizontalAlignObj[i].transform.parent.rotation) * horizontalAlignObj[i].transform.rotation;
+        for (int i = 0; i < eInitAli.Length; i++) eInitAli[i] = Quaternion.Inverse(elevasionAlignObj[i].transform.parent.rotation) * elevasionAlignObj[i].transform.rotation ;
 
-        if(navAgent != null)
+        hInitY = new float[hInitAli.Length];
+        eInitX = new float[eInitAli.Length];
+
+        for(int i = 0; i < hInitY.Length; i++) hInitY[i] = horizontalAlignObj[i].transform.localEulerAngles.y;
+        for(int i = 0; i < eInitX.Length; i++) eInitX[i] = elevasionAlignObj[i].transform.localEulerAngles.x;
+
+
+        if (navAgent != null)
         {
         }
         else
@@ -409,12 +428,11 @@ public class EnemyCore : Enemy
                 if(gs.isGrounded(out gNormal))
                 {
                     //向く方向を決定
-                    Transform nTransform = new GameObject().transform;
-                    nTransform.eulerAngles = navAgent.transform.eulerAngles;
+                    
 
 
-                    Vector3 oldForward = -nTransform.forward;
-                    Vector3 oldUp = nTransform.up;
+                    Vector3 oldForward = -navAgent.transform.forward;
+                    Vector3 oldUp = navAgent.transform.up;
                     Vector3 newRight = Vector3.Cross(oldForward, gNormal).normalized;
                     Vector3 newForward = Vector3.Cross(newRight, gNormal).normalized;
 
@@ -429,24 +447,38 @@ public class EnemyCore : Enemy
 
                     //回転を生成
                     Quaternion groundingRot = Quaternion.LookRotation(newForward, gNormal);
-                    Quaternion diffRot = Quaternion.Inverse(navAgent.transform.rotation) * groundingRot;
+                    //Quaternion diffRot = Quaternion.Inverse(navAgent.transform.rotation) * groundingRot;
                     
-                    Transform tr = new GameObject().transform;
                     for(int i = 0; i < groundingObj.Length; i++)
                     {
-                        tr.rotation = (groundingInitRot[i] * Quaternion.Lerp(diffRot, Quaternion.identity, 0.3f));
-                        tr.RotateAround(groundingObj[i].transform.position, Vector3.up, navAgent.transform.eulerAngles.y);
-                        groundingObj[i].transform.rotation = Quaternion.Lerp(groundingObj[i].transform.rotation, tr.rotation, Time.deltaTime * 40);
+                        Quaternion or = groundingObj[i].transform.rotation;
+                        groundingObj[i].transform.rotation = Quaternion.Lerp(or, groundingRot, Time.deltaTime * 10);
+
                     }
                 }
 
                 //horizontal align
                 if(targetFound) {
                     for(int i = 0; i < horizontalAlignObj.Length; i++) {
-                        Transform objt = horizontalAlignObj[i].transform;
-                        Vector3 tp = objt.InverseTransformPoint(Target.transform.position);
-                        tp.y = 0;
-                        objt.rotation = Quaternion.Lerp(objt.rotation, Quaternion.LookRotation(objt.TransformPoint(tp) - objt.position, objt.up), Time.deltaTime * alignmentSpeed);
+                        Transform hObj = horizontalAlignObj[i].transform;
+                        Vector3 oldAng = hObj.localEulerAngles;
+
+                        //計算の為一旦初期回転分を解消
+                        hObj.rotation *= Quaternion.Inverse(hInitAli[i]);
+                        Vector3 objFw = hObj.forward;
+                        Vector3 td = hObj.InverseTransformPoint(Target.transform.position).normalized;
+                        td.y = 0;
+                        float diffAng = Mathf.Min(Vector3.Angle(objFw, hObj.TransformDirection(td)), alignmentSpeed * Time.deltaTime);
+
+                        if (td.x < 0)
+                        {
+                            hObj.localEulerAngles = new Vector3(oldAng.x, oldAng.y - diffAng, oldAng.z);
+                        }
+                        else
+                        {
+                            hObj.localEulerAngles = new Vector3(oldAng.x, oldAng.y + diffAng, oldAng.z);
+                        }
+
                     }
                 }
 
@@ -455,10 +487,46 @@ public class EnemyCore : Enemy
                 {
                     for (int i = 0; i < elevasionAlignObj.Length; i++)
                     {
-                        Transform objt = elevasionAlignObj[i].transform;
-                        Vector3 tp = objt.InverseTransformPoint(Target.transform.position);
-                        tp.x = 0;
-                        objt.rotation = Quaternion.Lerp(objt.rotation ,Quaternion.LookRotation(objt.TransformPoint(tp) - objt.position, objt.up), Time.deltaTime * alignmentSpeed);
+                        Transform eObj = elevasionAlignObj[i].transform;
+                        Vector3 oldAng = eObj.localEulerAngles;
+
+                        //計算の為一旦初期回転分を解消
+                        eObj.rotation *= Quaternion.Inverse(eInitAli[i]);
+                        Vector3 objFw = eObj.forward;
+                        Vector3 td = eObj.InverseTransformPoint(Target.transform.position).normalized;
+                        td.x = 0;
+                        float diffAng = Mathf.Min(Vector3.Angle(objFw, eObj.TransformDirection(td)), alignmentSpeed * Time.deltaTime);
+                        Quaternion diffRot = Quaternion.Euler(diffAng, 0, 0);
+                        Debug.DrawRay(eObj.position, objFw, Color.red);
+                        Debug.DrawRay(eObj.position, eObj.TransformDirection(td) * 3, Color.cyan);
+                        if (td.y < 0)
+                        {
+                            Debug.Log($"{(Quaternion.Inverse(eObj.parent.rotation) * eObj.rotation).eulerAngles.x}");
+                            if(true/*!(eObj.eulerAngles.x < depressionLimit && (eObj.rotation * diffRot).eulerAngles.x >= depressionLimit)*/)
+                            {
+                                eObj.localEulerAngles = oldAng;
+                                eObj.rotation *= diffRot;
+                            }
+                            else
+                            {
+                                eObj.localEulerAngles = oldAng;
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("upppppp"+(Quaternion.Inverse(eObj.parent.rotation) * eObj.rotation).eulerAngles.x);
+
+                            if (true/*!(eObj.eulerAngles.x > 360 - elevasionLimit && (eObj.rotation * Quaternion.Inverse(diffRot)).eulerAngles.x <= 360 - elevasionLimit)*/)
+                            {
+                                eObj.localEulerAngles = oldAng;
+                                eObj.rotation *= Quaternion.Inverse(diffRot);
+                            }
+                            else
+                            {
+                                eObj.localEulerAngles = oldAng;
+                            }
+                        }
+
                     }
                 }
 
