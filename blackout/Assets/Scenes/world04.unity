@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 37f66999f012ab143a58481b445e76ae, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 251009789d7bbb141ac4dcd70456ed37, type: 2}
 --- !u!1001 &124791721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,6 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 238880567468895155, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
+      propertyPath: EMPPrefab
+      value: 
+      objectReference: {fileID: 7570686515587909836, guid: 2b05a08293e718c4793443125ffc4ed3, type: 3}
+    - target: {fileID: 238880567468895155, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
+      propertyPath: SmokePrefab
+      value: 
+      objectReference: {fileID: 1871353872299674572, guid: 2b38a99a946f16840910c7e3bd18f3ad, type: 3}
     - target: {fileID: 4266153364100937709, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -197,6 +205,10 @@ PrefabInstance:
     - target: {fileID: 5925111163261638629, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -779.9001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5925111163740731377, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
+      propertyPath: field of view
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5925111163740731382, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_LocalPosition.x
@@ -593,13 +605,13 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: d0dc93c8b08bc4a40a239573ba2e5bd2, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeDistance: 800
+  m_TreeBillboardDistance: 100
   m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_TreeMaximumFullLODCount: 15
+  m_DetailObjectDistance: 100
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_HeightmapPixelError: 40
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2

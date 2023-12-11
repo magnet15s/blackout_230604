@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         weaponmove = 10,
         weaponairmove = 11,
     }
-
+    public GameObject EMPPrefab;
+    public GameObject SmokePrefab;
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
@@ -331,7 +332,14 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     // Update is called once per frame
     void Update() {
-
+        if (Input.GetKey(KeyCode.Alpha1)) {
+            GameObject EMP=Instantiate(EMPPrefab);
+            EMP.transform.position = this.transform.position;
+        }
+        if (Input.GetKey(KeyCode.Alpha2)) {
+            GameObject SMOKE = Instantiate(SmokePrefab);
+            SMOKE.transform.position = this.transform.position;
+        }
         if ((wepMoveLiveTime -= Time.deltaTime) < 0) {
             wepMoveLiveTime = 0;
             wepMove = null;

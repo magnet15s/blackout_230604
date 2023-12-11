@@ -1982,7 +1982,7 @@ Canvas:
   m_GameObject: {fileID: 5925111162217395366}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 5925111163740731377}
   m_PlaneDistance: 0.5
   m_PixelPerfect: 0
@@ -4935,7 +4935,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5925111163740731379}
   m_LocalRotation: {x: 0.028797507, y: 0.011191798, z: -0.00032244987, w: 0.99952257}
-  m_LocalPosition: {x: -147.90309, y: 40.97758, z: 103.16245}
+  m_LocalPosition: {x: -111.90309, y: 51.97758, z: -288.83755}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5630,6 +5630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f83b982c4c2924d9b931078775f4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EMPPrefab: {fileID: 7570686515587909836, guid: 2b05a08293e718c4793443125ffc4ed3, type: 3}
+  SmokePrefab: {fileID: 1871353872299674572, guid: 2b38a99a946f16840910c7e3bd18f3ad, type: 3}
   anim: {fileID: 238880567468895154}
   cc: {fileID: 238880567468895153}
   gs: {fileID: 238880567468895158}
@@ -5643,8 +5645,8 @@ MonoBehaviour:
   weapons:
   - {fileID: 5925111162523092121}
   - {fileID: 5925111163649307597}
+  gravity: 9.8
   inAirCnt: 0
-  selectWep: {fileID: 0}
   selWepIdx: 0
   maxArmorPoint: 500
   armorPoint: 500
@@ -5656,6 +5658,8 @@ MonoBehaviour:
   touchDownTime: 0.8
   jumpTime: 1.5
   jumpChargeTime: 0.3
+  evasionMoveAllTime: 0.7
+  evasionMoveSpeed: 30
   turningSpeed: 170
   dashTurningFactor: 0.3
   viewRotetionFactor: {x: 0.5, y: -0.5}
