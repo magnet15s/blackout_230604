@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 111000013880791114}
   - component: {fileID: 7923050350476576918}
   - component: {fileID: 2995859452830445447}
+  - component: {fileID: 7671084851833348680}
   m_Layer: 0
   m_Name: Structure_v2
   m_TagString: Untagged
@@ -401,6 +402,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   breakEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
+--- !u!208 &7671084851833348680
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012258327032}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5610001, y: 1.7490001, z: 2.006}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1000012713935280
 GameObject:
   m_ObjectHideFlags: 0
