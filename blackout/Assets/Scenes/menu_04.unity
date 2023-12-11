@@ -271,8 +271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe2395dde6efca4cb8d1ddf78e1929d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  file: {fileID: 0}
+  file: {fileID: 4900000, guid: 05be0cd92c7ba704d91219cd4344908a, type: 3}
   text: {fileID: 288498635}
+  image: {fileID: 1162654390}
+  sprite: {fileID: 21300000, guid: 224b60476df06194ea592daa753b38b9, type: 3}
 --- !u!1 &573092750
 GameObject:
   m_ObjectHideFlags: 0
@@ -538,7 +540,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 710944351}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 288498637}
+        m_TargetAssemblyTypeName: text_load, Assembly-CSharp
+        m_MethodName: OnButtonClickSyuutugeki
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &710944351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,6 +1324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1987705655}
   - component: {fileID: 1987705654}
+  - component: {fileID: 1987705656}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1394,3 +1409,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1987705656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987705653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}

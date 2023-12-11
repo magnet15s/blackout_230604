@@ -198,6 +198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: playerPref
       objectReference: {fileID: 0}
+    - target: {fileID: 5315693238989046209, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5925111162287112965, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -782.10004

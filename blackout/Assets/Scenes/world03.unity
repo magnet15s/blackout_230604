@@ -734,6 +734,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5315693238989046209, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5419487948053046246, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -888,15 +892,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5925111163740731382, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -147.90309
+      value: -183.90309
       objectReference: {fileID: 0}
     - target: {fileID: 5925111163740731382, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 40.97758
+      value: 90.77758
       objectReference: {fileID: 0}
     - target: {fileID: 5925111163740731382, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 103.162445
+      value: 495.16245
       objectReference: {fileID: 0}
     - target: {fileID: 5925111163740731386, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_Antialiasing
