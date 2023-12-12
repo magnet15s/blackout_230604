@@ -76,8 +76,8 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _Width: 0.001
-    - _Xtpl: 1.2870743
-    - _Ytpl: 0.5334412
+    - _Xtpl: 1.2599999
+    - _Ytpl: 0.13999978
     m_Colors:
     - _BackColor: {r: 0, g: 0, b: 0, a: 0}
     - _MeshColor: {r: 1, g: 1, b: 1, a: 1}
