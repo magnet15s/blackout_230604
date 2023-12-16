@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class M01_t1 : MissionEventNode
         o2.transform.SetParent(o.transform);
         o2.transform.localPosition = new Vector3(0,1,0);
 
+        parmitNext?.Invoke(this, EventArgs.Empty);
     }
 
     // Start is called before the first frame update

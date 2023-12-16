@@ -11,7 +11,14 @@ public class EnemyDestroyEFlag : MissionEventFlag
     void Update()
     {
         if (isActive) {
-            
+            Enemy.EnemyDestroy += catchDestroy;
+        }
+    }
+
+    private void catchDestroy(Enemy e) {
+        if(!ignited) {
+            ignited = true;
+            targetEventNode.EventFire();
         }
     }
 

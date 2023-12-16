@@ -35,6 +35,11 @@ public class mission_select : MonoBehaviour
         _loadingUI.SetActive(true);
         StartCoroutine(LoadScene());
     }
+    public void OnClickM01() {
+        mission_number = 101;
+        _loadingUI.SetActive(true);
+        StartCoroutine(LoadScene());
+    }
     public void OnButtonClickRe() {
         Initiate.Fade("menu_02", Color.black, 3f);
     }

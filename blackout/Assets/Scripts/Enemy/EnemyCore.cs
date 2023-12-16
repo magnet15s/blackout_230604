@@ -24,9 +24,11 @@ public class DamageEventArgs : EventArgs
 
 public class EnemyCore : Enemy
 {
-    [Space(30)]
+    [Space(10)]
+    [Tooltip("trueの間各フェーズを繰り返す")]public bool alive　= true;
+    [Space(20)]
     [SerializeField] private bool useDefaultFuncForEmptyPhase;
-    [Space(30)]
+    [Space(20)]
     [Header("-----TargetSetPhase-----")]
     [Space]
     public GameObject Target;
@@ -48,6 +50,7 @@ public class EnemyCore : Enemy
     public float targetDist;            //外部参照用
     private float _targetDist;          
     [SerializeField] private float findRange = 200;
+    public bool targetShare = false;
     [SerializeField, Tooltip("ターゲットが目視出来ているかを判断する処理　設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる")] 
     private UnityEvent TargetFindPhaseFunction;
 
@@ -168,52 +171,44 @@ public class EnemyCore : Enemy
     // Update is called once per frame
     void Update()
     {
-        //ターゲットの設定
-        if (TargetSetPhaseFunction.GetPersistentEventCount() >= 1) { TargetSetPhaseFunction?.Invoke(); }
-        else if(useDefaultFuncForEmptyPhase) 
-            DefaultTargetSet();
+        if (alive) {
 
-        //ターゲットの捜索
-        if (TargetFindPhaseFunction.GetPersistentEventCount() >= 1) { TargetFindPhaseFunction?.Invoke(); }
-        else  if(useDefaultFuncForEmptyPhase) 
-            DefaultTargetFind();
+            //ターゲットの設定
+            if (TargetSetPhaseFunction.GetPersistentEventCount() >= 1) { TargetSetPhaseFunction?.Invoke(); } else if (useDefaultFuncForEmptyPhase)
+                DefaultTargetSet();
 
-        //移動
-        if(MovePhaseFunctions.Length >= 1) { 
-            foreach(int i in MoveFuncOrder)
-            {
-                if (MovePhaseFunctionsRange[i] > targetDist || MovePhaseFunctionsRange[i] == -1)
-                {
-                    if (MovePhaseFunctions[i].GetPersistentEventCount() >= 1) MovePhaseFunctions[i].Invoke();
-                    else DefaultStayMove();
-                    break;
+            //ターゲットの捜索
+            if (TargetFindPhaseFunction.GetPersistentEventCount() >= 1) { TargetFindPhaseFunction?.Invoke(); } else if (useDefaultFuncForEmptyPhase)
+                DefaultTargetFind();
+
+            //移動
+            if (MovePhaseFunctions.Length >= 1) {
+                foreach (int i in MoveFuncOrder) {
+                    if (MovePhaseFunctionsRange[i] > targetDist || MovePhaseFunctionsRange[i] == -1) {
+                        if (MovePhaseFunctions[i].GetPersistentEventCount() >= 1) MovePhaseFunctions[i].Invoke();
+                        else DefaultStayMove();
+                        break;
+                    } else DefaultStayMove();
                 }
-                else DefaultStayMove();
+            } else if (useDefaultFuncForEmptyPhase) {
+                if (targetFound || (referenceSheredTarget && Enemy.sharedTargetPosition != null)) {
+                    if (targetDist < 30) DefaultRetreatMove();
+                    else if (targetDist < 80) DefaultBattleMove();
+                    else DefaultApproachMove();
+                } else DefaultStayMove();
+
             }
+
+            //照準
+            if (AlignPhaseFunction.GetPersistentEventCount() >= 1) { AlignPhaseFunction.Invoke(); } else if (useDefaultFuncForEmptyPhase)
+                DefaultAlign();
+
+            //攻撃
+            if (AttackPhaseFunction.GetPersistentEventCount() >= 1) { AttackPhaseFunction.Invoke(); } else if (useDefaultFuncForEmptyPhase)
+                DefaultAttack();
+
+
         }
-        else if(useDefaultFuncForEmptyPhase)
-        {
-            if (targetFound || (referenceSheredTarget && Enemy.sharedTargetPosition != null))
-            {
-                if (targetDist < 30) DefaultRetreatMove();
-                else if (targetDist < 80) DefaultBattleMove();
-                else DefaultApproachMove();
-            }
-            else DefaultStayMove();
-            
-        }
-
-        //照準
-        if (AlignPhaseFunction.GetPersistentEventCount() >= 1) { AlignPhaseFunction.Invoke(); }
-        else if (useDefaultFuncForEmptyPhase)
-            DefaultAlign();
-
-        //攻撃
-        if (AttackPhaseFunction.GetPersistentEventCount() >= 1) { AttackPhaseFunction.Invoke(); }
-        else if (useDefaultFuncForEmptyPhase)
-            DefaultAttack();
-
-        
     }
 
     public override void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType)
@@ -234,6 +229,54 @@ public class EnemyCore : Enemy
             Target = Enemy.sharedTarget;
         }
     }
+
+    /// <summary>
+    /// 任意の座標まで視線が通るかを返す
+    /// </summary>
+    /// <param name="point">座標（ワールド空間）</param>
+    /// <param name="ignoreObject">視線を遮らないオブジェクト</param>
+    /// <returns></returns>
+    public bool VisibleThisToPoint(Vector3 targetPoint, float range, Transform[] ignoreObject) {
+        Vector3 posDiff = targetPoint - transform.position;
+        if (posDiff.magnitude > range) {
+            return false;
+        }
+        Ray ray = new Ray(transform.position, posDiff);
+        RaycastHit[] results = new RaycastHit[20];
+        int len = Physics.RaycastNonAlloc(ray, results, targetDist);
+        //リザルトに視界を塞ぐ物があるか調べる
+        bool blocked = false;
+        for (int i = 0; i < len; i++) {
+            RaycastHit res = results[i];
+
+            //リザルトがignoreListに当たるか
+            bool isIgnoreObj = false;
+            foreach (Transform io in ignoreObject) {
+                if (io.Equals(res.transform)) {
+                    isIgnoreObj = true; break;
+                }
+            }
+            if (isIgnoreObj) continue;
+
+            //親を遡ってignoreOnjectに当たるか
+            Transform p = res.transform;
+            while(!(p.parent == null)) {
+                foreach(Transform io in ignoreObject) {
+                    if (io.Equals(p.parent)) { isIgnoreObj = true; break; }
+                }
+                if (isIgnoreObj) break;
+                else p = p.parent;
+            }
+
+            if (isIgnoreObj) continue;
+            else {
+                blocked = true;
+                break;
+            }
+        }
+        return !blocked;
+    }
+
 
     /// <summary>
     /// EnemyCoreのデフォルトのターゲット認識処理
@@ -257,7 +300,6 @@ public class EnemyCore : Enemy
             return;
         }
         Ray ray = new Ray(transform.position, posDiff);
-
         RaycastHit[] results = new RaycastHit[20];
         int len = Physics.RaycastNonAlloc(ray, results, targetDist);
         //リザルトに視界を塞ぐ物があるか調べる
@@ -291,6 +333,11 @@ public class EnemyCore : Enemy
         {
             _lastFoundPosition = Target.transform.position;
             lastFoundPosition = _lastFoundPosition;
+            if (targetShare) {
+                Enemy.sharedTargetPosition = lastFoundPosition;
+                Enemy.targetReporter = this;
+            }
+
         }
 
         //公開用public変数の更新
@@ -320,10 +367,15 @@ public class EnemyCore : Enemy
         }
 
         if (navAgent.pathStatus != NavMeshPathStatus.PathInvalid) {
-            if(Target != null && targetFound) {
+            if(targetFound) {
                 navAgent.destination = Target.transform.position;
             } else if(referenceSheredTarget && Enemy.sharedTargetPosition != null) {
-                navAgent.destination = (Vector3)sharedTargetPosition;
+                if(!VisibleThisToPoint((Vector3)Enemy.sharedTargetPosition, findRange, new Transform[] { this.transform, Target.transform }))
+                    navAgent.destination = (Vector3)sharedTargetPosition;
+            }else if(lastFoundPosition != new Vector3(0,0,0)) {
+                if (!VisibleThisToPoint(Target.transform.position, findRange, new Transform[]{ this.transform, Target.transform })) {
+                    navAgent.destination = lastFoundPosition;
+                }
             }
         }
 
@@ -501,7 +553,7 @@ public class EnemyCore : Enemy
                         Debug.DrawRay(eObj.position, eObj.TransformDirection(td) * 3, Color.cyan);
                         if (td.y < 0)
                         {
-                            Debug.Log($"{(Quaternion.Inverse(eObj.parent.rotation) * eObj.rotation).eulerAngles.x}");
+                            //Debug.Log($"{(Quaternion.Inverse(eObj.parent.rotation) * eObj.rotation).eulerAngles.x}");
                             if(true/*!(eObj.eulerAngles.x < depressionLimit && (eObj.rotation * diffRot).eulerAngles.x >= depressionLimit)*/)
                             {
                                 eObj.localEulerAngles = oldAng;
@@ -514,7 +566,7 @@ public class EnemyCore : Enemy
                         }
                         else
                         {
-                            Debug.Log("upppppp"+(Quaternion.Inverse(eObj.parent.rotation) * eObj.rotation).eulerAngles.x);
+                            //Debug.Log("upppppp"+(Quaternion.Inverse(eObj.parent.rotation) * eObj.rotation).eulerAngles.x);
 
                             if (true/*!(eObj.eulerAngles.x > 360 - elevasionLimit && (eObj.rotation * Quaternion.Inverse(diffRot)).eulerAngles.x <= 360 - elevasionLimit)*/)
                             {
@@ -526,15 +578,10 @@ public class EnemyCore : Enemy
                                 eObj.localEulerAngles = oldAng;
                             }
                         }
-
                     }
                 }
-
             }
         }
-
-
-
     }
 
 
@@ -571,7 +618,14 @@ public class EnemyCore : Enemy
 
     public void DefaultDestroy()
     {
-
+        if (alive) {
+            if(navAgent != null) {
+                navAgent.destination = transform.position;
+            }
+            alive = false;
+            OnEnemyDestroy(this);
+        }
+        
     }
 
     /// <summary>
