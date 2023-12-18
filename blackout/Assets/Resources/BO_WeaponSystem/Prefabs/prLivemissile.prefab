@@ -14317,14 +14317,13 @@ MonoBehaviour:
   target: {fileID: 0}
   time: 2
   lifeTime: 3
-  limitAcceleration: 1
+  limitAcceleration: 0
   maxAcceleration: 50
-  minInitVelocity: {x: -20, y: -20, z: 0}
+  minInitVelocity: {x: -20, y: 0, z: 0}
   maxInitVelocity: {x: 20, y: 30, z: 0}
   weapon_name: 
-  Homingdelay: 20
   shooter: {fileID: 0}
-  damage: 24
+  damage: 20
   generatedTime: 0
   age: 0
   tr: {fileID: 4833261063614731687}
@@ -14332,6 +14331,7 @@ MonoBehaviour:
   ps1: {fileID: 7529408714353337805}
   ps2: {fileID: 4570883289834502608}
   ps3: {fileID: 681147916712326479}
+  ps4: {fileID: 1000011797152326, guid: 1e420cdd22960f641b1b699b4ebd8fa4, type: 3}
 --- !u!96 &4833261063614731687
 TrailRenderer:
   serializedVersion: 2
