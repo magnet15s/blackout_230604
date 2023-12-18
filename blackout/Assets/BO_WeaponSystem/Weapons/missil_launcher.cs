@@ -12,7 +12,7 @@ public class missil_launcher : Weapon
     public override WeaponUser sender { get; set; }
 
     public override string weaponName { get; set; } = "E11_GB missile launcher";
-    public override int? remainAmmo { get; set; } = 120;
+    public override int? remainAmmo { get; set; } = 2000;
     public override string remainAmmoType { get; set; } = "AMMO";
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "EMPTY AMMO";

@@ -92,7 +92,14 @@ public class A53_31 : Weapon
                     fire();
                     trigger = false;
                 }
-                
+                if (Input.GetMouseButtonDown(0)) {
+                    GetComponent<AudioSource>().Play();
+                }
+
+                if (Input.GetMouseButtonUp(0)) {
+                    GetComponent<AudioSource>().Stop();
+                }
+
             }
 
             if(fireIntCnt > 0)

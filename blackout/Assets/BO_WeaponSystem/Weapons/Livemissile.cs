@@ -45,6 +45,7 @@ public class Livemissile : MonoBehaviour
     public ParticleSystem ps1;
     public ParticleSystem ps2;
     public ParticleSystem ps3;
+    public GameObject ps4;
 
     public static bool GET_PREFAB = false;
     public static GameObject PR_LIVEBULLET;
@@ -115,28 +116,28 @@ public class Livemissile : MonoBehaviour
     }*/
 
     public void OnTriggerEnter(Collider other) {
+        if (age > 0.15) {
+            hit = true;
+            GameObject EMP = Instantiate(ps4);
+            EMP.transform.position = this.transform.position;
+        }
         if (!other.CompareTag("IgnoreCollision"))
         {
             return;
         }
         if (!hit) {
-            if (age > 0.15) {
-                hit = true;
-            }
+            
 
                 DamageReceiver dr;
-            if (other.gameObject.tag=="Player") {
-                Debug.Log("hit!");
-                dr = other.GetComponent<DamageReceiver>();
-                Debug.Log("dr:"+dr);
-                Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
-                dr.Damage(damage, hitPos, gameObject, "Livemissile");
-                shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
-                /*if ((dr = other.GetComponent<DamageReceiver>()) != null) {
-                Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
-                    dr.Damage(damage, hitPos, shooter.gameObject, "Livemissile");
-                    shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
-                }*/
+            Debug.Log("hit!");
+            
+            dr = other.GetComponent<DamageReceiver>();
+            Debug.Log("dr:" + dr);
+            Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
+            dr.Damage(damage, hitPos, gameObject, "Livemissile");
+            shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
+            if (other.gameObject.tag!="Player") {
+                
             }
             
             
@@ -179,6 +180,7 @@ public class Livemissile : MonoBehaviour
 
         if (destroyReady) {
             Destroy(this.gameObject);
+            
         }
 
         if (hit) {
@@ -192,24 +194,27 @@ public class Livemissile : MonoBehaviour
         {
             Destroy(this.gameObject);
         }*/
-        if (age > 1 && !psDestroyed)
+        if (age > 2 && !psDestroyed)
         {
             Destroy(ps1.gameObject);
             Destroy(ps2.gameObject);
-            psDestroyed= true;
+            
+            psDestroyed = true;
         }
         if (age > 2 && ps3 != null) {
             Destroy(ps3.gameObject);
+            
             ps3 = null;
         }
         if(age > 5)
         {
+            
             Destroy(this.gameObject);
         }
     }
     IEnumerator Timer() {
         yield return new WaitForSeconds(lifeTime);
-
+        
         Destroy(gameObject);
     }
 

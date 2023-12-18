@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerOption
   - IgnoreCollision
+  - structure
   layers:
   - Default
   - TransparentFX
