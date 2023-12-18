@@ -49,7 +49,7 @@ public class GroundedSensor : MonoBehaviour
     public bool isGrounded()
     {
         if (sleep > 0) return sensorAns;
-        ray = new Ray(transform.position + sensorOriginOffset, -transform.up);
+        ray = new Ray(transform.position + sensorOriginOffset, new Vector3(0,-1,0));
         RaycastHit result;
         return Physics.Raycast(ray, out result, sensorRange);
     }
@@ -62,7 +62,7 @@ public class GroundedSensor : MonoBehaviour
     /// <returns></returns>
     public bool isGrounded(out Vector3 normal) {
         
-        ray = new Ray(transform.position + sensorOriginOffset, -transform.up);
+        ray = new Ray(transform.position + sensorOriginOffset, new Vector3(0, -1, 0));
         RaycastHit result;
         bool ret = Physics.Raycast(ray, out result, sensorRange);
         if(ret) normal = result.normal;

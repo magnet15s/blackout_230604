@@ -33,6 +33,8 @@ public class text_load : MonoBehaviour {
         }
         else if (mission_select.mission_number == 5) {
             file = Resources.Load("missions/mission05") as TextAsset;
+        }else if (mission_select.mission_number == 101) {
+            file = Resources.Load("missions/Mission_01") as TextAsset;
         }
         
         

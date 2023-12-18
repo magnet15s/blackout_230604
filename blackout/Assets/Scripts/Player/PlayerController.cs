@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEditor;
 //using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -395,11 +396,14 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             }
         }
         if (jumpCharge) {
+            if (jumpChargeCnt <= 0) OnJumpChargeStarted?.Invoke();
             jumpChargeCnt += Time.deltaTime;
             if (jumpChargeCnt > jumpChargeTime) {
                 jump = true;
                 jumpChargeCnt = 0;
                 jumpContext = false;
+                //外部参照イベント
+                OnJumped?.Invoke();
             }
         }
 
@@ -418,6 +422,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
+
+        aligning = Mathf.Min(Mathf.Max(laRotVol / turningSpeed * Time.deltaTime, vaRotVol / turningSpeed * Time.deltaTime), 1);
 
 
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
@@ -483,6 +489,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                         //ダッシュ開始時の方向を保存
                         movement = moveAngleContext.normalized * dashSpeed;
                         dashAngle = movement.normalized;
+                        //外部参照イベント
+                        OnDashed?.Invoke();
                     }
                     //ダッシュ中
                     else {
@@ -492,6 +500,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                             //ダッシュ開始フレーム以外は前フレームの方向に基づいて方向を決定
                             movement = Vector3.Normalize(dashAngle + moveAngleContext * Time.deltaTime * 2) * dashSpeed;
                             dashAngle = movement.normalized;
+                            
                         }
                     }
                 }
@@ -504,6 +513,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 }
                 if(evasionMoveTime <= 0)
                     movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
+                
             }
 
             //着地の瞬間
@@ -519,6 +529,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 else {
                     inAir = false;
                     touchDownCnt = touchDownTime;
+                    //外部参照イベント
+                    OnTouchDowned?.Invoke();
                 }
             }
             if (touchDownCnt > 0) {//着地後硬直
@@ -540,6 +552,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 movement = wepMove(movement, true, transform);
             } else wepMoving = false;
 
+
+            //外部参照値決定 
+            if (inAir || evasionMoveTime > 0) {
+                moving = 0;
+            }else moving = MathF.Min(new Vector2(movement.x, movement.z).magnitude / speed, 1);
 
         } else {//空中に居る場合
             if (!inAir) {
@@ -589,6 +606,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 wepMove(movement, false, transform);
             } else wepMoving = false;
 
+            //外部参照値決定
+            moving = 0;
         }
 
 
@@ -643,6 +662,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         turningSpeed /= dashTurningFactor;
         inertiaAngle = dashAngle;
         dashAngle = Vector3.zero;
+        //外部参照イベント
+        OnDashCanceled?.Invoke();
     }
     /// <summary>
     /// ローカル空間ベクトルをワールド空間ベクトルに変換
@@ -707,6 +728,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         PlayerActionState pas =
             inAir && wepMoving ? PlayerActionState.weaponairmove : 
             wepMoving ? PlayerActionState.weaponmove :
+
             inAir && lastMovement.y <= 0 ? PlayerActionState.jump :
             inAir ? PlayerActionState.falling :
             touchDownCnt > 0 ? PlayerActionState.touchdown :
@@ -722,6 +744,21 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         return pas;
     }
 
+    //すてーと取得
+
+    public float moving { get; private set; } = 0;
+    public bool dashing { get { return dash && dashCTcnt <= 0 && evasionMoveTime <= 0 && !wepMoving; }}
+    public float aligning { get; private set; } = 0;
+    public bool airing { get { return inAir; } }
+
+    public delegate void PlayerStateHandler();
+    public PlayerStateHandler OnJumpChargeStarted;
+    public PlayerStateHandler OnJumped;
+    public PlayerStateHandler OnEvasionMoved;
+    public PlayerStateHandler OnDashed;
+    public PlayerStateHandler OnDashCanceled;
+    public PlayerStateHandler OnTouchDowned;
+    public PlayerStateHandler OnAired;
 
 
 }

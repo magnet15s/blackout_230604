@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 //using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LiveBullet : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class LiveBullet : MonoBehaviour
     public ParticleSystem ps1;
     public ParticleSystem ps2;
     public ParticleSystem ps3;
+
+    [SerializeField] GameObject HitInitPref;
 
     public static bool GET_PREFAB = false;
     public static GameObject PR_LIVEBULLET;
@@ -89,13 +92,36 @@ public class LiveBullet : MonoBehaviour
             return;
         }
         if (!hit) {
-            hit = true;
+
+            RaycastHit[] results = new RaycastHit[10];
+            int lMask = 1 << 6 | 1; //Layer6 : PlayerBody, Layer1 : Dafault
+            int length = Physics.RaycastNonAlloc(new Ray(transform.position, transform.forward), results, (np - transform.position).magnitude, lMask);
+
+            float minDist = (np - transform.position).magnitude + 100;
+            int colIdx = -1;
+            for(int i = 0; i < length; i++)
+            {
+                if (results[i].collider == cc) continue;
+                if (minDist > (results[i].transform.position - transform.position).magnitude)
+                {
+                    minDist = results[i].transform.position.magnitude;
+                    colIdx = i;
+                }
+
+            }
+            if (colIdx != -1) hit = true;
+            else return;
+
             DamageReceiver dr;
             if ((dr = other.GetComponent<DamageReceiver>()) != null) {
-                Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
+                Vector3 hitPos = results[colIdx].point;
                 dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
                 shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject );
             }
+
+            if(HitInitPref != null)Instantiate(HitInitPref, results[colIdx].point, transform.rotation, null);
+            else Instantiate(new GameObject(), results[colIdx].point, transform.rotation, null);
+
         }
        
 
@@ -115,6 +141,7 @@ public class LiveBullet : MonoBehaviour
             ps1.gameObject.transform.position = initialPosition;
             ps2.gameObject.transform.position = initialPosition;
         }
+
         if(age < 2) {
             ps3.gameObject.transform.position = initialPosition;
         }

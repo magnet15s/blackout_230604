@@ -42,7 +42,7 @@ public class Radar : MonoBehaviour
 
     void RemoveEnemy(Enemy enemy)
     {
-        Debug.Log("");
+        //Debug.Log("");
         Transform e;
         if(enemies.TryGetValue(enemy, out e))
         {
