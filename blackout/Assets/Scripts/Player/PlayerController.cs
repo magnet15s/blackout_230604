@@ -423,7 +423,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
 
-        aligning = Mathf.Min(Mathf.Max(laRotVol / turningSpeed * Time.deltaTime, vaRotVol / turningSpeed * Time.deltaTime), 1);
+        aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
 
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
@@ -460,6 +460,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 evasionMoveTime = evasionMoveAllTime;
                 evasionMoveAngle = moveAngleContext.normalized;
                 evasionMoveContext = false;
+                OnEvasionMoved?.Invoke();
             }
             if(evasionMoveTime > 0) {
                 movement = evasionMoveAngle * Mathf.Max(evasionMoveSpeed * (float)(evasionMoveTime / evasionMoveAllTime),evasionMoveSpeed * 0.1f);
@@ -569,6 +570,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                     inAirCnt = -jumpTime;
                 } else inAirCnt = 0;
                 inAir = true;
+                OnAired?.Invoke();
                 lastMovement.y = 0;
             } else {
                 if (inAirCnt < 1.8) inAirCnt += Time.deltaTime;

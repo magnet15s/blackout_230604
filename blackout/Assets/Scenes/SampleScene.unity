@@ -3370,8 +3370,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537667858}
-  m_LocalRotation: {x: 0.08527724, y: 0.8175104, z: -0.12548374, w: 0.55557036}
-  m_LocalPosition: {x: -197.82986, y: 23.35763, z: 167.74089}
+  m_LocalRotation: {x: 0.0852773, y: 0.8175104, z: -0.12548381, w: 0.5555703}
+  m_LocalPosition: {x: -197.82983, y: 23.357624, z: 167.74088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7744,6 +7744,52 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af3fedf8dbeb1774da24225204db7b5e, type: 3}
+--- !u!1 &1255479468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1255479469}
+  - component: {fileID: 1255479470}
+  m_Layer: 2
+  m_Name: PlayerStateRistner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1255479469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255479468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450651621419850}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1255479470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255479468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 925937c424650ae42846103755b70a3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pc: {fileID: 5866666019961221425}
+  active: 1
 --- !u!1 &1257692552
 GameObject:
   m_ObjectHideFlags: 0
@@ -10966,8 +11012,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730781288}
-  m_LocalRotation: {x: 0.08527724, y: 0.8175104, z: -0.12548374, w: 0.55557036}
-  m_LocalPosition: {x: -197.82986, y: 23.35763, z: 167.74089}
+  m_LocalRotation: {x: 0.0852773, y: 0.8175104, z: -0.12548381, w: 0.5555703}
+  m_LocalPosition: {x: -197.82983, y: 23.357624, z: 167.74088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12164,6 +12210,7 @@ MonoBehaviour:
   maxArmorPoint: 200
   armorPoint: 200
   onRadarDist: 300
+  alive: 1
   useDefaultFuncForEmptyPhase: 1
   Target: {fileID: 919132147886404080}
   referenceSheredTarget: 1
@@ -12174,6 +12221,7 @@ MonoBehaviour:
   lastFoundPosition: {x: 0, y: 0, z: 0}
   targetDist: 0
   findRange: 300
+  targetShare: 0
   TargetFindPhaseFunction:
     m_PersistentCalls:
       m_Calls: []
@@ -13602,6 +13650,7 @@ Transform:
   - {fileID: 586725630}
   - {fileID: 6110038814043996469}
   - {fileID: 700344416}
+  - {fileID: 1255479469}
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
