@@ -115,34 +115,7 @@ public class Livemissile : MonoBehaviour
         return new Vector3();
     }*/
 
-    public void OnTriggerEnter(Collider other) {
-        if (age > 0.15) {
-            hit = true;
-            GameObject EMP = Instantiate(ps4);
-            EMP.transform.position = this.transform.position;
-        }
-        if (!other.CompareTag("IgnoreCollision"))
-        {
-            return;
-        }
-        if (!hit) {
-            
-
-                DamageReceiver dr;
-            Debug.Log("hit!");
-            
-            dr = other.GetComponent<DamageReceiver>();
-            Debug.Log("dr:" + dr);
-            Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
-            dr.Damage(damage, hitPos, gameObject, "Livemissile");
-            shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
-            if (other.gameObject.tag!="Player") {
-                
-            }
-            
-            
-        }
-    }
+    
 
     void Start()
     {
@@ -216,6 +189,35 @@ public class Livemissile : MonoBehaviour
         yield return new WaitForSeconds(lifeTime);
         
         Destroy(gameObject);
+    }
+
+    public void OnTriggerEnter(Collider other) {
+        if (age > 0.15) {
+            hit = true;
+            GameObject EMP = Instantiate(ps4);
+            EMP.transform.position = this.transform.position;
+            DamageReceiver dr;
+            Debug.Log("hit!");
+
+            dr = other.GetComponent<DamageReceiver>();
+            Debug.Log("dr:" + dr);
+            Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
+            dr.Damage(damage, hitPos, gameObject, "Livemissile");
+            shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
+        }
+        if (!other.CompareTag("IgnoreCollision")) {
+            return;
+        }
+        if (!hit) {
+
+
+            
+            if (other.gameObject.tag != "Player") {
+
+            }
+
+
+        }
     }
 
 }

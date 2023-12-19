@@ -12,7 +12,7 @@ public class missil_launcher : Weapon
     public override WeaponUser sender { get; set; }
 
     public override string weaponName { get; set; } = "E11_GB missile launcher";
-    public override int? remainAmmo { get; set; } = 2000;
+    public override int? remainAmmo { get; set; } = 100;
     public override string remainAmmoType { get; set; } = "AMMO";
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "EMPTY AMMO";
@@ -33,7 +33,7 @@ public class missil_launcher : Weapon
     private float verticalAiming = 0.5f;
 
     [SerializeField] private float fireInterval = 0.3f;
-    private float fireIntCnt = 0;
+    private float fireIntCnt = 0.2f;
 
     private int remainMaxAmmo;
     [SerializeField] private float autoReloadInterval = 0.3f;
@@ -58,7 +58,7 @@ public class missil_launcher : Weapon
     void Update() {
 
         if (TrackingIcon.closestIconToCenter != null) {
-            Target = TrackingIcon.closestIconToCenter.trackingTarget;
+            Target = TrackingIcon.Icons[0].trackingTarget;
         }
         if(sender != null) {
             if (!senderInitialized) {
@@ -96,7 +96,7 @@ public class missil_launcher : Weapon
             if (ready)
             {
                 
-                if (trigger == true && remainAmmo > 0 /*&& fireIntCnt == 0*/)
+                if (trigger == true && remainAmmo > 0  && fireIntCnt <= 0)
                 {
                     Debug.Log(trigger);
                     fireIntCnt = fireInterval;
@@ -127,7 +127,7 @@ public class missil_launcher : Weapon
     private void fire()
     {
             remainAmmo--;
-            Debug.Log($"BANG!! {remainAmmo}");
+            //Debug.Log($"BANG!! {remainAmmo}");
             Livemissile homing;
             homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<Livemissile>();
             homing.Target = Target.transform;
@@ -137,7 +137,7 @@ public class missil_launcher : Weapon
     }
 
     public override void Ready() {
-        Debug.Log($"Ready{this}");
+        //Debug.Log($"Ready{this}");
         ready = true;
     }
     public override void PutAway() {
