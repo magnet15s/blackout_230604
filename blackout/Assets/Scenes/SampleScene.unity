@@ -3356,7 +3356,7 @@ MonoBehaviour:
     GateFit: 2
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
-    m_BlendHint: 0
+    m_BlendHint: 0https://github.com/magnet15s/blackout_230604/pull/43/conflict?name=blackout%252FAssets%252FScenes%252FSampleScene.unity&ancestor_oid=6c69383842d7f040b278ca0f110647a026f42d44&base_oid=e827f309103b54103be3657a0e30d47f8d282d18&head_oid=28b3f66465115bfce7b66b0bfe433a0676e9deb5
     m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
@@ -4114,7 +4114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 95
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!154 &631827149
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -5058,7 +5058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 95
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!154 &741611528
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -6640,7 +6640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.028797507, y: 0.011191798, z: -0.00032244987, w: 0.99952257}
-  m_LocalPosition: {x: -183.2031, y: 40.97758, z: 175.36246}
+  m_LocalPosition: {x: 194.9969, y: 40.97758, z: 203.36246}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8003,7 +8003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 95
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!154 &1304372448
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -11012,8 +11012,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730781288}
-  m_LocalRotation: {x: 0.0852773, y: 0.8175104, z: -0.12548381, w: 0.5555703}
-  m_LocalPosition: {x: -197.82983, y: 23.357624, z: 167.74088}
+  m_LocalRotation: {x: 0.08527711, y: 0.8175106, z: -0.12548362, w: 0.55557007}
+  m_LocalPosition: {x: -197.8298, y: 23.357615, z: 167.74086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13643,7 +13643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132147886404080}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -183.2, y: 40, z: 175}
+  m_LocalPosition: {x: 195, y: 40, z: 203}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:

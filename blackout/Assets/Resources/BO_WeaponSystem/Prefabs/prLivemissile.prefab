@@ -14331,7 +14331,7 @@ MonoBehaviour:
   ps1: {fileID: 7529408714353337805}
   ps2: {fileID: 4570883289834502608}
   ps3: {fileID: 681147916712326479}
-  ps4: {fileID: 1000011797152326, guid: 1e420cdd22960f641b1b699b4ebd8fa4, type: 3}
+  ps4: {fileID: 1000013462590818, guid: 9263801063f2c8844b8a8314c8b2a6ff, type: 3}
 --- !u!96 &4833261063614731687
 TrailRenderer:
   serializedVersion: 2
