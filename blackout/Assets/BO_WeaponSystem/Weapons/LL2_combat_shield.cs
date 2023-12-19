@@ -23,6 +23,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     [SerializeField] GameObject connectShield;
     [SerializeField] GameObject leftShield;
     [SerializeField] GameObject rightShield;
+    public AudioClip sound1;
+    public AudioClip sound2;
+    AudioSource audioSource;
 
     private readonly string ANIM_MOTION_LAYER = "close_combat";
     private readonly string ANIM_MOTION_PARAM = "CC_motion_number";
@@ -58,6 +61,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     // Start is called before the first frame update
     void Start() {
         HUDWeaponImage = HUDImage;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -108,6 +112,9 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                             dr.transform.GetComponent<DamageReceiver>().Damage(damage, dr.point, gameObject, "ArmStrike");
                             
                             sender.ThrowHitResponse(lastAttackIsRight ? rightShield : leftShield, dr.transform.gameObject);
+
+                            //damageî≠ê∂
+                            audioSource.PlayOneShot(sound2);
                         }
 
 
@@ -212,12 +219,14 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                     attacking = true;
                     attackHitChecked = false;
                     lastAttackIsRight = true;
+                    audioSource.PlayOneShot(sound1);
                 }
                 else
                 {
                     attackTime = 0;
                     attackHitChecked = false;
                     lastAttackIsRight = !lastAttackIsRight;
+                    audioSource.PlayOneShot(sound1);
                 }
                 
             }

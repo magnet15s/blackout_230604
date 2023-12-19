@@ -8,6 +8,11 @@ public class TestPlayerStateRistner : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] PlayerController pc;
     public bool active = true;
+    public AudioClip sound1;
+    public AudioClip sound2;
+    public AudioClip sound3;
+    public AudioClip sound4;
+    AudioSource audioSource;
     void Start()
     {
         //各イベント発火時に実行させるコールバック関数を登録
@@ -18,6 +23,7 @@ public class TestPlayerStateRistner : MonoBehaviour
         pc.OnDashCanceled += odc;
         pc.OnTouchDowned += otd;
         pc.OnAired += oa;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,12 +40,15 @@ public class TestPlayerStateRistner : MonoBehaviour
 
     void oj() {
         Debug.Log("OnJump");
+        audioSource.PlayOneShot(sound2);
     }
     void oem() {
         Debug.Log("OnEvaseionMove");
+        //audioSource.PlayOneShot(sound3);
     }
     void od() {
         Debug.Log("OnDash");
+        //audioSource.PlayOneShot(sound4);
     }
     void odc() {
         Debug.Log("OnDashCharge");
@@ -47,6 +56,8 @@ public class TestPlayerStateRistner : MonoBehaviour
 
     void otd() {
         Debug.Log("OnTouchDown");
+        audioSource.PlayOneShot(sound1);
+
     }
     void oa() {
         Debug.Log("OnAir");   
