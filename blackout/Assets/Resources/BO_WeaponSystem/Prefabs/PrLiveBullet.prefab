@@ -14326,7 +14326,7 @@ MonoBehaviour:
   ps1: {fileID: 7529408714353337805}
   ps2: {fileID: 4570883289834502608}
   ps3: {fileID: 1140868249038717250}
-  HitInitPref: {fileID: 3447697211720482215, guid: 16f751f366a69d44d88271a3efc397a0, type: 3}
+  HitInitPref: {fileID: 1000013462590818, guid: 9263801063f2c8844b8a8314c8b2a6ff, type: 3}
 --- !u!96 &4833261063614731687
 TrailRenderer:
   serializedVersion: 2
@@ -14378,7 +14378,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.55844116
+        value: 1
         inSlope: 0.66765356
         outSlope: 0.66765356
         tangentMode: 0
@@ -14386,8 +14386,8 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.20465054
       - serializedVersion: 3
-        time: 0.51494324
-        value: 0.20292664
+        time: 0.50111866
+        value: 0.95292383
         inSlope: -0.22605367
         outSlope: -0.22605367
         tangentMode: 0
