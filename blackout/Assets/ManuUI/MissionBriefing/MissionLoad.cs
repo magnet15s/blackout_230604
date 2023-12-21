@@ -1,19 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MissionLoad : MonoBehaviour
 {
+    public AudioClip sound1;
+    AudioSource audioSource;
     public static readonly Dictionary<int, string> MISSION_ID = new Dictionary<int, string>() {
         {101, "Mission_01" }
     };
-
+    public void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
     [SerializeField] private GameObject _loadingUI;
     [SerializeField] private Slider _slider;
     // Start is called before the first frame update
     public void OnSortie() {
+        audioSource.PlayOneShot(sound1);
         _loadingUI.SetActive(true);
         StartCoroutine(LoadScene());
     }
