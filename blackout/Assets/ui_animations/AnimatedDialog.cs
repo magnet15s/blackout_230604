@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// ダイアログのアニメーション
@@ -17,10 +18,14 @@ public class AnimatedDialog : MonoBehaviour {
 
     // ダイアログは開いているかどうか
     public bool IsOpen => gameObject.activeSelf;
-
+    public AudioClip sound1;
+    public AudioClip sound2;
+    AudioSource audioSource;
     // アニメーション中かどうか
     public bool IsTransition { get; private set; }
-
+    void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
     // ダイアログを開く
     public void Open() {
         // 不正操作防止
@@ -30,6 +35,7 @@ public class AnimatedDialog : MonoBehaviour {
         //gameObject.SetActive(true);
 
         // IsOpenフラグをセット
+        audioSource.PlayOneShot(sound1);
         _animator.SetBool(ParamIsOpen, true);
 
         // アニメーション待機
@@ -42,6 +48,7 @@ public class AnimatedDialog : MonoBehaviour {
         //if (!IsOpen || IsTransition) return;
 
         // IsOpenフラグをクリア
+        audioSource.PlayOneShot(sound2);
         _animator.SetBool(ParamIsOpen, false);
 
         // アニメーション待機し、終わったらパネル自体を非アクティブにする
