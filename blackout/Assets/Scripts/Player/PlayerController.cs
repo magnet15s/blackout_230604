@@ -594,8 +594,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                     float overMagn = lastMovement.magnitude - maxAirAxelSpeed;
                     //if (overMagn > 0) targetMovement += targetMovement.normalized * (overMagn * Mathf.Max(0, Vector3.Dot(lastMovement.normalized, targetMovement.normalized)));
 
-                    Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized * (airAcceleration * Time.deltaTime)}");
-                    lastMovement += (targetMovement - lastMovement).normalized * (airAcceleration * Time.deltaTime); //詰めるところ
+                    Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized}");
+                    lastMovement += (targetMovement - lastMovement).normalized; //詰めるところ
                     lastMovement = localVec2worldVec(lastMovement);
                 }
                 //落下速度計算
@@ -607,6 +607,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 lastMovement.z = wallBoundVector.z;
                 //Debug.Log("はねかえり");
             } else if (lastMovement.magnitude * 0.99 > lastActualMovement.magnitude) {
+                Debug.Log("eeeeee");
                 Vector2 horLMDiff = new Vector2(lastMovement.x, lastMovement.z) - new Vector2(lastActualMovement.x, lastActualMovement.z);
                 if (horLMDiff.magnitude * 0.1f < horLMDiff.normalized.magnitude) horLMDiff.Normalize();
                 else horLMDiff *= 0.1f;
@@ -619,11 +620,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             } else {
                 //Debug.Log("Notつっかえ");
             }
-            Vector2 lmVec;
+            //↓空中最高速をダッシュスピード以上にいかないようにするやつ（空中移動実装につきコメントアウト）
+            /*Vector2 lmVec;
             if (( lmVec = new Vector2(lastMovement.x, lastMovement.z) ).magnitude > dashSpeed)
             {
                 lastMovement = lastMovement.normalized * dashSpeed;
-            }
+            }*/
             movement = worldVec2localVec(lastMovement);
 
             if (wepMove != null) {
