@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private bool dashItrContext = false;
     private float dashItrCnt = 0;
     private bool jumpContext = false;
+    private bool jButtonContext = false;
     private float jumpChargeCnt = 0;
     private bool evasionMoveContext = false;
     private Vector3 evasionMoveAngle;
@@ -110,6 +111,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     [SerializeField, Tooltip("ジャンプのおおよその上昇時間")] private float jumpTime = 2;
     [SerializeField] private float jumpChargeTime = 0.3f;
+    [SerializeField] private float fallSpeedFactor = 1;
+    [SerializeField] private float airAxelFallSpeed = 0.5f;
+    [SerializeField] private float airAcceleration = 10;
+    [SerializeField] private float maxAirAxelSpeed = 30;
     [Space]
     [SerializeField] private float evasionMoveAllTime = 0.7f;
     [SerializeField] private float evasionMoveSpeed = 30;
@@ -125,7 +130,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
-
+    
 
     //------------継承-------------
     public Animator getAnim() {
@@ -207,16 +212,15 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public void OnJump(InputAction.CallbackContext context) {//緊急回避もここで判定
         if (context.started) {
             jumpContext = true;
-
+            jButtonContext = true;
             if (GetPlayerActSt() == PlayerActionState.jumpcharge) {//ジャンプチャージ中にもう一度ジャンプを押すと緊急回避に派生
                 jumpChargeCnt = 0;
                 jumpContext = false;
                 evasionMoveContext = true;
                 return;
             }
-
         }
-
+        if (context.canceled) jButtonContext = false;
 
     }
 
@@ -573,9 +577,29 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 OnAired?.Invoke();
                 lastMovement.y = 0;
             } else {
-                if (inAirCnt < 1.8) inAirCnt += Time.deltaTime;
-                lastMovement.y = -(gravity * (float)Math.Pow(inAirCnt, 2) * Mathf.Sign(inAirCnt));
+                
+                if (inAirCnt < 4) inAirCnt += Time.deltaTime * fallSpeedFactor;
 
+                //空中でジャンプボタンを押している間はエアアクセル（ふわふわ降下）に変化
+                if (inAirCnt > airAxelFallSpeed && jButtonContext) {
+                    //落下速度を一定に
+                    inAirCnt = airAxelFallSpeed;        
+                    //空中移動入力の反映
+                    //入力方向*空中最大速度を目標のベクトルとし、現在ベクトル(lastMovement)との差を空中加速度分詰めていく
+                    lastMovement.y = 0;
+                    lastMovement = worldVec2localVec(lastMovement);
+                    Vector3 targetMovement = moveAngleContext.normalized * maxAirAxelSpeed;
+                    //現在ベクトルの大きさが空中最大速度を越えている場合、
+                    //現在ベクトルと目標ベクトルの角度差の小ささに応じて目標ベクトルの大きさを大きくする
+                    float overMagn = lastMovement.magnitude - maxAirAxelSpeed;
+                    //if (overMagn > 0) targetMovement += targetMovement.normalized * (overMagn * Mathf.Max(0, Vector3.Dot(lastMovement.normalized, targetMovement.normalized)));
+
+                    Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized * (airAcceleration * Time.deltaTime)}");
+                    lastMovement += (targetMovement - lastMovement).normalized * (airAcceleration * Time.deltaTime); //詰めるところ
+                    lastMovement = localVec2worldVec(lastMovement);
+                }
+                //落下速度計算
+                lastMovement.y = fallCalc(inAirCnt);
             }
             if (wallBound) {
                 wallBound = false;
@@ -667,6 +691,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //外部参照イベント
         OnDashCanceled?.Invoke();
     }
+
+    private float fallCalc(float fallDuration) {
+
+        return -(gravity * fallDuration);
+    }
+
     /// <summary>
     /// ローカル空間ベクトルをワールド空間ベクトルに変換
     /// </summary>
@@ -704,13 +734,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         anim.SetBool("touch_down", false);
     }
 
-    public void onLturn(InputAction.CallbackContext context) {
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + 1, 0);
-    }
-
-    public void onRturn(InputAction.CallbackContext context) {
-        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y - 1, 0);
-    }
+    
 
     /// <summary>
     /// テストの為初期に作ったアクション取得用メソッド。非推奨。GetPlayerActSt()を使う事
@@ -752,6 +776,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public bool dashing { get { return dash && dashCTcnt <= 0 && evasionMoveTime <= 0 && !wepMoving; }}
     public float aligning { get; private set; } = 0;
     public bool airing { get { return inAir; } }
+    public bool jumpCharging { get { return jumpChargeCnt > 0; }}
+
 
     public delegate void PlayerStateHandler();
     public PlayerStateHandler OnJumpChargeStarted;
