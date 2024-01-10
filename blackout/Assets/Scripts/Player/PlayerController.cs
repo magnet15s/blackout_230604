@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private GameObject damageFX;
 
     [Space]
+    [SerializeField] private Transform cockpit;
     [SerializeField] private Transform pilotEyePoint;
     [SerializeField] private PlayerCameraCood pcc;
     [Space]
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     private float levelAiming;
     private float verticalAiming;
-
+    private float initCockpitVAim;
 
     private Vector3 moveDirForAnim;
     [Space]
@@ -127,6 +128,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     public GameObject pilotCamera;
     public GameObject sightOrigin;
+
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
@@ -285,6 +287,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //Ž‹“_Šî“_Œˆ’è
         levelAiming = transform.eulerAngles.y;
         verticalAiming = transform.eulerAngles.x;
+        initCockpitVAim = cockpit.localEulerAngles.x;
 
         viewPoint = new Vector2(transform.eulerAngles.y, transform.eulerAngles.x);
 
@@ -426,6 +429,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
+        Debug.Log(verticalAiming);
 
         aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
