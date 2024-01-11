@@ -3741,7 +3741,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537667858}
-  m_LocalRotation: {x: -0.016897079, y: -0.021513283, z: -0.0003636477, w: 0.99962574}
+  m_LocalRotation: {x: -0.016897127, y: -0.021513222, z: -0.00036364773, w: 0.99962574}
   m_LocalPosition: {x: 203.86368, y: 41.066147, z: 184.77902}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6800,10 +6800,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05299646decf3694caf7c0642034df10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pc: {fileID: 0}
+  pc: {fileID: 5866666021749871764}
   damage: 200
   HUDImage: {fileID: 2100000, guid: 41d9a7044ff5a1e40ac144fbd9612836, type: 2}
-  wepChangeDelay: 0.4
   connectShield: {fileID: 5244898057617191812}
   leftShield: {fileID: 766991796103675987}
   rightShield: {fileID: 8934709929555188090}
@@ -12348,7 +12347,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730781288}
-  m_LocalRotation: {x: -0.016897079, y: -0.021513283, z: -0.0003636477, w: 0.99962574}
+  m_LocalRotation: {x: -0.016897127, y: -0.021513222, z: -0.00036364773, w: 0.99962574}
   m_LocalPosition: {x: 203.86368, y: 41.066147, z: 184.77902}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17561,6 +17560,7 @@ MonoBehaviour:
   hitResponse: {fileID: 758661336}
   statusView: {fileID: 778462484}
   damageFX: {fileID: 0}
+  cockpit: {fileID: 708827214}
   pilotEyePoint: {fileID: 1348107741}
   pcc: {fileID: 586725632}
   weapons:

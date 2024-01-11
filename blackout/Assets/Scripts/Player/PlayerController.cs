@@ -430,6 +430,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
         Debug.Log(verticalAiming);
+        //Vector3 oldVec = cockpit.localEulerAngles;
+        //cockpit.localEulerAngles = new Vector3(initCockpitVAim + -verticalAiming, oldVec.y, oldVec.z);
 
         aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
