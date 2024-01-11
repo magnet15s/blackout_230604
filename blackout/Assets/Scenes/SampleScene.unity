@@ -728,6 +728,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M7a4d (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3167190650173691206, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
 --- !u!1 &123562080
@@ -881,6 +885,10 @@ PrefabInstance:
     - target: {fileID: 3167190650173691206, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
       propertyPath: m_Name
       value: M7a4d (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167190650173691206, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
@@ -1100,6 +1108,10 @@ PrefabInstance:
     - target: {fileID: 3167190650173691206, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
       propertyPath: m_Name
       value: M7a4d (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167190650173691206, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
@@ -6371,7 +6383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05299646decf3694caf7c0642034df10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pc: {fileID: 0}
+  pc: {fileID: 5866666021749871764}
   damage: 200
   HUDImage: {fileID: 2100000, guid: 41d9a7044ff5a1e40ac144fbd9612836, type: 2}
   connectShield: {fileID: 5244898057617191812}
@@ -14360,6 +14372,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M7a4d
       objectReference: {fileID: 0}
+    - target: {fileID: 3167190650173691206, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
 --- !u!137 &219905592154749888
@@ -16581,6 +16597,7 @@ MonoBehaviour:
   hitResponse: {fileID: 758661336}
   statusView: {fileID: 778462484}
   damageFX: {fileID: 0}
+  cockpit: {fileID: 708827214}
   pilotEyePoint: {fileID: 1348107741}
   pcc: {fileID: 586725632}
   weapons:
@@ -16601,7 +16618,7 @@ MonoBehaviour:
   jumpTime: 2
   jumpChargeTime: 0.6
   fallSpeedFactor: 2
-  airAxelFallSpeed: 0.1
+  airAxelFallSpeed: 0
   airAcceleration: 30
   maxAirAxelSpeed: 30
   evasionMoveAllTime: 0.5

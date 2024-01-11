@@ -62,6 +62,8 @@ public class LL2_combat_shield : Weapon, ShieldRoot
     void Start() {
         HUDWeaponImage = HUDImage;
         audioSource = GetComponent<AudioSource>();
+        sender = pc;
+        aimingObj = sender.getAimingObj().transform;
     }
 
     // Update is called once per frame

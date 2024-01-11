@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private GameObject damageFX;
 
     [Space]
+    [SerializeField] private Transform cockpit;
     [SerializeField] private Transform pilotEyePoint;
     [SerializeField] private PlayerCameraCood pcc;
     [Space]
@@ -99,7 +100,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     private float levelAiming;
     private float verticalAiming;
-
+    private float initCockpitVAim;
 
     private Vector3 moveDirForAnim;
     [Space]
@@ -131,6 +132,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     public GameObject pilotCamera;
     public GameObject sightOrigin;
+
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
@@ -289,6 +291,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //視点基点決定
         levelAiming = transform.eulerAngles.y;
         verticalAiming = transform.eulerAngles.x;
+        initCockpitVAim = cockpit.localEulerAngles.x;
 
         viewPoint = new Vector2(transform.eulerAngles.y, transform.eulerAngles.x);
 
@@ -444,6 +447,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
+        Debug.Log(verticalAiming);
+        //Vector3 oldVec = cockpit.localEulerAngles;
+        //cockpit.localEulerAngles = new Vector3(initCockpitVAim + -verticalAiming, oldVec.y, oldVec.z);
 
         aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
@@ -612,8 +618,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                     float overMagn = lastMovement.magnitude - maxAirAxelSpeed;
                     //if (overMagn > 0) targetMovement += targetMovement.normalized * (overMagn * Mathf.Max(0, Vector3.Dot(lastMovement.normalized, targetMovement.normalized)));
 
-                    Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized * (airAcceleration * Time.deltaTime)}");
-                    lastMovement += (targetMovement - lastMovement).normalized * (airAcceleration * Time.deltaTime); //詰めるところ
+                    Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized}");
+                    lastMovement += (targetMovement - lastMovement).normalized; //詰めるところ
                     lastMovement = localVec2worldVec(lastMovement);
                 }
                 //落下速度計算
@@ -625,6 +631,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 lastMovement.z = wallBoundVector.z;
                 //Debug.Log("はねかえり");
             } else if (lastMovement.magnitude * 0.99 > lastActualMovement.magnitude) {
+                Debug.Log("eeeeee");
                 Vector2 horLMDiff = new Vector2(lastMovement.x, lastMovement.z) - new Vector2(lastActualMovement.x, lastActualMovement.z);
                 if (horLMDiff.magnitude * 0.1f < horLMDiff.normalized.magnitude) horLMDiff.Normalize();
                 else horLMDiff *= 0.1f;
@@ -637,11 +644,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             } else {
                 //Debug.Log("Notつっかえ");
             }
-            Vector2 lmVec;
+            //↓空中最高速をダッシュスピード以上にいかないようにするやつ（空中移動実装につきコメントアウト）
+            /*Vector2 lmVec;
             if (( lmVec = new Vector2(lastMovement.x, lastMovement.z) ).magnitude > dashSpeed)
             {
                 lastMovement = lastMovement.normalized * dashSpeed;
-            }
+            }*/
             movement = worldVec2localVec(lastMovement);
 
             if (wepMove != null) {
