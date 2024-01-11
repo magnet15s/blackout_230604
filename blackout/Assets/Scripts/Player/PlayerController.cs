@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         weaponmove = 10,
         weaponairmove = 11,
     }
+    [SerializeField] private AudioSource audio;
+    [SerializeField] private AudioSource audio2;
+    [SerializeField] private AudioSource audio3;
+    [SerializeField] private AudioSource audio4;
     public GameObject EMPPrefab;
     public GameObject SmokePrefab;
     [SerializeField] private Animator anim;
@@ -340,6 +344,20 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     // Update is called once per frame
     void Update() {
+        audio.pitch = this.moving;
+        audio2.pitch = this.aligning;
+        /*if (this.dashing==false) {
+            audio3.mute=true;
+        }
+        else {
+            audio3.mute=false;
+        }
+        if (this.jumpCharging) {
+            audio4.mute = true;
+        }
+        else {
+            audio4.mute = false;
+        }*/
         if (Input.GetKey(KeyCode.Alpha1)) {
             GameObject EMP=Instantiate(EMPPrefab);
             EMP.transform.position = this.transform.position;

@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 1871353872299674572, guid: 2b38a99a946f16840910c7e3bd18f3ad, type: 3}
     - target: {fileID: 4266153364100937709, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4266153364100937709, guid: cff8a291adc39e24baea04ba488f4a69, type: 3}
       propertyPath: m_LocalScale.x
@@ -448,7 +448,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2359833089908854780, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2359833089908854780, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
       propertyPath: m_LocalPosition.x
@@ -636,6 +636,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57f85e4102d78946b718a9b8aba7b38, type: 3}
+--- !u!1001 &663139933
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6090480988924684886, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_Name
+      value: Posemenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 201.59589
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 39.998573
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 203.87317
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9993051
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.03564296
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.010897528
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00038869027
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684887, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
 --- !u!1 &749496536
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +740,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &815702297
 GameObject:
@@ -876,7 +933,7 @@ Transform:
   m_Children:
   - {fileID: 815702301}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1650323751
 MonoBehaviour:
