@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class zakostructure : MonoBehaviour
         
     }
     public void thisDestory() {
+        MessageWindow.instance.function("敵\nオラの倉庫がぁ～！",1f);
+
         Destroy(this.gameObject);
         GameObject effect = Instantiate(breakEffect) as GameObject;
         //エフェクトが発生する場所を決定する(敵オブジェクトの場所)
