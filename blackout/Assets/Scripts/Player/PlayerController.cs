@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     [Space]
     [SerializeField] private Transform cockpit;
+    [SerializeField] private Transform cockpitParent;
     [SerializeField] private Transform pilotEyePoint;
     [SerializeField] private PlayerCameraCood pcc;
     [Space]
@@ -100,7 +101,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     private float levelAiming;
     private float verticalAiming;
+    private float initCockpitLAim;
     private float initCockpitVAim;
+
+    
 
     private Vector3 moveDirForAnim;
     [Space]
@@ -291,6 +295,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //視点基点決定
         levelAiming = transform.eulerAngles.y;
         verticalAiming = transform.eulerAngles.x;
+        initCockpitLAim = cockpit.localEulerAngles.y;
         initCockpitVAim = cockpit.localEulerAngles.x;
 
         viewPoint = new Vector2(transform.eulerAngles.y, transform.eulerAngles.x);
@@ -444,12 +449,12 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         if (Mathf.Abs(laRotVol) > turningSpeed * Time.deltaTime) laRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(laRotVol);
         levelAiming += laRotVol;
 
+
         float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
-        Debug.Log(verticalAiming);
         //Vector3 oldVec = cockpit.localEulerAngles;
-        //cockpit.localEulerAngles = new Vector3(initCockpitVAim + -verticalAiming, oldVec.y, oldVec.z);
+        //cockpit.localEulerAngles = new Vector3(initCockpitVAim + verticalAiming, initCockpitLAim + levelAiming, oldVec.z);
 
         aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
@@ -457,6 +462,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
         sightOrigin.transform.localEulerAngles = new Vector3(verticalAiming, 0, 0);
 
+        Vector3 cockpitLookPoint = sightOrigin.transform.position;
+        //cockpitLookPoint.
         //camera
         pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
 
@@ -631,7 +638,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 lastMovement.z = wallBoundVector.z;
                 //Debug.Log("はねかえり");
             } else if (lastMovement.magnitude * 0.99 > lastActualMovement.magnitude) {
-                Debug.Log("eeeeee");
+                //Debug.Log("eeeeee");
                 Vector2 horLMDiff = new Vector2(lastMovement.x, lastMovement.z) - new Vector2(lastActualMovement.x, lastActualMovement.z);
                 if (horLMDiff.magnitude * 0.1f < horLMDiff.normalized.magnitude) horLMDiff.Normalize();
                 else horLMDiff *= 0.1f;
@@ -689,6 +696,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //sightOriginの位置をpilotCameraに合わせる
         pilotCamera.transform.position = pilotEyePoint.position;
         sightOrigin.transform.position = pilotCamera.transform.position;
+        cockpit.position = cockpitParent.position;
 
         //実移動量計算用
         lastTimeDelta = Time.deltaTime;
