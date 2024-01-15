@@ -12,6 +12,7 @@ public class TestPlayerStateRistner : MonoBehaviour
     public AudioClip sound2;
     public AudioClip sound3;
     public AudioClip sound4;
+    public AudioClip sound5;
     AudioSource audioSource;
     void Start()
     {
@@ -44,7 +45,7 @@ public class TestPlayerStateRistner : MonoBehaviour
     }
     void oem() {
         Debug.Log("OnEvaseionMove");
-        //audioSource.PlayOneShot(sound3);
+        audioSource.PlayOneShot(sound5);
     }
     void od() {
         Debug.Log("OnDash");
