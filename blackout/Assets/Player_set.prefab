@@ -1243,7 +1243,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7a90966c4799bbc489ae957d9766b0d2, type: 2}
+  - {fileID: 2100000, guid: 2079c06517fa41d4f9103e21e608694c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4432,7 +4432,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578450885769}
-  m_LocalRotation: {x: -0.016897153, y: -0.021513248, z: -0.00036364875, w: 0.99962574}
+  m_LocalRotation: {x: -0.016897129, y: -0.021513278, z: -0.00036364872, w: 0.99962574}
   m_LocalPosition: {x: 2.8878942, y: 2.6443481, z: -23.936363}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
@@ -4465,7 +4465,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 0.00001
+  field of view: 43.38
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
