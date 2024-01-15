@@ -3462,6 +3462,7 @@ MonoBehaviour:
   sound2: {fileID: 8300000, guid: 43e232f18fb0f2e4690587620782e26f, type: 3}
   sound3: {fileID: 8300000, guid: 52a7132851b4c084a8f0fdc0f2828033, type: 3}
   sound4: {fileID: 8300000, guid: f636ea03c4b03a547a84f6e46a9d6999, type: 3}
+  sound5: {fileID: 8300000, guid: f98bf46044be6b24eb46c7359272ef64, type: 3}
 --- !u!82 &3688251577953027150
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4431,7 +4432,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578450885769}
-  m_LocalRotation: {x: -0.016897151, y: -0.02151325, z: -0.00036364875, w: 0.99962574}
+  m_LocalRotation: {x: -0.016897153, y: -0.021513248, z: -0.00036364875, w: 0.99962574}
   m_LocalPosition: {x: 2.8878942, y: 2.6443481, z: -23.936363}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
@@ -4464,7 +4465,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 43.38
+  field of view: 0.00001
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
