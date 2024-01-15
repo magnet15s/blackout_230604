@@ -462,8 +462,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
         sightOrigin.transform.localEulerAngles = new Vector3(verticalAiming, 0, 0);
 
-        Vector3 cockpitLookPoint = sightOrigin.transform.position;
-        //cockpitLookPoint.
+        //Vector3 cockpitLookPoint = sightOrigin.transform.position;
+        
         //camera
         pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
 
@@ -612,7 +612,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 if (inAirCnt < 4) inAirCnt += Time.deltaTime * fallSpeedFactor;
 
                 //空中でジャンプボタンを押している間はエアアクセル（ふわふわ降下）に変化
-                if (inAirCnt > airAxelFallSpeed && jButtonContext) {
+                if (inAirCnt > airAxelFallSpeed && jButtonContext && false) {//一旦空中機動実装を後回しにするためfalse
                     //落下速度を一定に
                     inAirCnt = airAxelFallSpeed;        
                     //空中移動入力の反映
