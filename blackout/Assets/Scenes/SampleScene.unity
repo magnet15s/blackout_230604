@@ -4768,7 +4768,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537667858}
-  m_LocalRotation: {x: -0.016897181, y: -0.021513278, z: -0.00036364983, w: 0.99962574}
+  m_LocalRotation: {x: -0.016897138, y: -0.021513222, z: -0.00036364797, w: 0.99962574}
   m_LocalPosition: {x: 203.86368, y: 41.066147, z: 184.77902}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9906,6 +9906,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3699015304206882500, guid: af3fedf8dbeb1774da24225204db7b5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 74131dfa5b710be4f874dfc42735e5a8, type: 2}
     - target: {fileID: 919132149155446097, guid: af3fedf8dbeb1774da24225204db7b5e, type: 3}
       propertyPath: m_Name
       value: tank_full (1)
@@ -17570,15 +17574,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.016897181
+      value: -0.016897138
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.021513278
+      value: -0.021513222
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00036364983
+      value: -0.00036364797
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885775, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: field of view
+      value: 43.38
       objectReference: {fileID: 0}
     - target: {fileID: 7081304503185459319, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Target
