@@ -18,7 +18,7 @@ public class zakostructure : MonoBehaviour
         
     }
     public void thisDestory() {
-        MessageWindow.instance.function("“G\nƒIƒ‰‚Ì‘qŒÉ‚ª‚Ÿ`I",1f);
+        //MessageWindow.instance.function("“G\nƒIƒ‰‚Ì‘qŒÉ‚ª‚Ÿ`I",1f);
 
         Destroy(this.gameObject);
         GameObject effect = Instantiate(breakEffect) as GameObject;
