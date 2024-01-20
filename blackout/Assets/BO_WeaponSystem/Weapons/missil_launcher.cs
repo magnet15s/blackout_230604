@@ -87,8 +87,8 @@ public class missil_launcher : Weapon
                 if(wcdCnt > 0) {
                     wcdCnt -= Time.deltaTime;
                     if (wcdCnt < 0) wcdCnt = 0;
+                    anim.SetLayerWeight(RAAnimLayerIdx, wcdCnt / wepChangeDelay);
                 }
-                if (anim.GetLayerWeight(RAAnimLayerIdx) != 0) anim.SetLayerWeight(RAAnimLayerIdx, wcdCnt / wepChangeDelay);
             }
             //------ª˜r’Ç]-------
             //------«ŽËŒ‚---------
