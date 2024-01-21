@@ -22,7 +22,7 @@ public class M01_first : MissionEventNode
         missionItems = new string[] {
             $"{viewControllerText}と照準系の\n同期を確認する",
             $"{moveButtonText}と移動系の\n同期を確認する",
-            $"{moveButtonText}で\nエアアクセルが\n起動する事を確認する"
+            $"{dashButtonText}で\nダッシュモータが\n起動する事を確認する"
         };
 
 

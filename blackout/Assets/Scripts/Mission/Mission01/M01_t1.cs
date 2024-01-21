@@ -8,8 +8,7 @@ public class M01_t1 : MissionEventNode
     [SerializeField] private string missionTitle = "駆動系テスト";
     private string[] messageText = new string[]{
         "[キース]\n駆動系、問題無し。",
-        "[オスカー]\nテスト項目を更新した。次のテストに移ってくれ。",
-        "[キース]\n了解。"
+        "[オスカー]\nテスト項目を更新した。次のテストに移ってくれ。"
     };
     private string jumpButtonText = "Space";
     private string airAxelButtonText = "Space";
@@ -40,11 +39,9 @@ public class M01_t1 : MissionEventNode
     IEnumerator Event() {
         message.function(messageText[0], 3.5f);
         yield return new WaitForSeconds(3.8f);
-        message.function(messageText[1], 4.7f);
+        message.function(messageText[1], 4f);
         mList.RemoveMissionItems();
         foreach (string s in missionItems) mList.AddMissionItem(s);
-        yield return new WaitForSeconds(5);
-        message.function(messageText[2], 2f);
         parmitNext?.Invoke(this, EventArgs.Empty);
 
 

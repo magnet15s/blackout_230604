@@ -608,7 +608,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             if (!inAir) {
 
                 if (jump) {
-                    gs.Sleep(jumpTime, false);
+                    gs.Sleep(0.5f, false);
                     jump = false;
                     jumped = true;  //GetPlayerActSt()を使用して他コンポーネントからジャンプを検知する時の為
                                     //1フレーム猶予を設ける(jumpedは次のフレームでfalseになる)
@@ -635,7 +635,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 else horLMDiff *= 0.1f;
                 lastMovement.x = lastActualMovement.x - (horLMDiff.x);
                 lastMovement.z = lastActualMovement.z - (horLMDiff.y);
-                if (lastActualMovement.y <= 0) {
+                if (lastActualMovement.y <= 0 && !jumped) {
                     gs.WakeUp();
                 }
             } else {

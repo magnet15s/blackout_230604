@@ -1261,7 +1261,7 @@ MonoBehaviour:
   missionTitle: "\u99C6\u52D5\u7CFB\u30C6\u30B9\u30C8"
   viewControllerText: "\u30DE\u30A6\u30B9"
   moveButtonText: W,A,S,D
-  dashButtonText: "\u5DE6Shift"
+  dashButtonText: "\u79FB\u52D5\uFF0B\u5DE6Shift"
   message: {fileID: 1975169822}
 --- !u!4 &1809491590
 Transform:
