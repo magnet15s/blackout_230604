@@ -82,12 +82,19 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     //武器制御
     [SerializeField] public Weapon selectWep { get; private set; }
     [SerializeField] private int selWepIdx;
-    private List<bool> WepActReqBools = new();
-    private List<WeaponConnectionToBone> wepConnectors = new();
-    [SerializeField] private WeaponConnectionToBone wepCRoot, wepCRightForearm, WepCLeftForearm;
+    public List<bool> wepSelectable = null;
 
-    //入力コンテキスト
-    private Vector3 moveAngleContext;
+    private List<WeaponConnectionToBone> wepConnectors = new();
+    [Header("Weapon Hardpoint")]
+    [SerializeField] private Transform rootBone, rightForArm, leftForArm, rightUpperLeg, leftUpperLeg;
+    public WeaponConnectionToBone wepCRoot { get; private set; }
+    public WeaponConnectionToBone wepCRightForearm { get; private set; }
+    public WeaponConnectionToBone wepCLeftForearm { get; private set; }
+    public WeaponConnectionToBone wepCRightULeg { get; private set; }
+    public WeaponConnectionToBone wepCLeftULeg { get; private set; }
+
+//入力コンテキスト
+private Vector3 moveAngleContext;
     private float moveMagnContext;
     private bool dashContext = false;
     private bool dashItrContext = false;
@@ -295,6 +302,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     //----------------Updateなど----------------
 
     void Awake() {
+        
+        //ハードポイント初期化
+
+
+
         //敵設定
         if (setEnemiesShareTarget) Enemy.sharedTarget = this.gameObject;
 

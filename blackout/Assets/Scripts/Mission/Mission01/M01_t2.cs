@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M01_t1 : MissionEventNode
+public class M01_t2 : MissionEventNode
 {
-    [SerializeField] private string missionTitle = "機動テスト";
+    [SerializeField] private string missionTitle = "火器管制テスト";
     private string[] messageText = new string[]{
-        "[キース]\n駆動系、問題無し。",
-        "[オスカー]\nテスト項目を更新した。次のテストに移ってくれ。"
+        "[キース]\n統合姿勢制御、良好。\n各部アブソーバー異常無し。",
+        "[オスカー]\n順調だな。次は火器管制系を検証する。\n安全装置は解除済みだ。各種項目のテストを開始してくれ。"
     };
-    private string jumpButtonText = "Space";
-    private string airAxelButtonText = "Space";
-    private string evationMoveButtonText = "ジャンプ準備中に\n再度Space";
+    private string weaponChangeButtonText = "R,Fキー";
+    private string fireButtonText = "左クリック";
+    private string subActionButtonText = "右クリック";
     private string[] missionItems;
 
     [SerializeField] MessageWindow message;
@@ -22,9 +22,8 @@ public class M01_t1 : MissionEventNode
 
     public override void EventFire() {
         missionItems = new string[] {
-            $"{jumpButtonText}でジャンプが\n発動する事を確認する",
-            $"空中で{airAxelButtonText}で\nエアアクセルが\n動作する事を確認する",
-            $"{evationMoveButtonText}で\n緊急回避機動が\n発動する事を確認する"
+            $"{weaponChangeButtonText}で\nHUD右下の選択武装が\n切り替わる事を確認する",
+            $"{fireButtonText}、{subActionButtonText}で\n選択中の武装アクションが\n起動することを確認する"
         };
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
