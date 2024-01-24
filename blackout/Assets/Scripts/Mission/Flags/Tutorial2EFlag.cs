@@ -37,7 +37,7 @@ public class Tutorial2EFlag : MissionEventFlag
             if(jumpTestCleared && airAxelTestCleared && evasionMoveTestCleared) {
                 if (!ignited) ignited = true;
                 Debug.Log("Test2 comp");
-                targetEventNode.EventFire();
+                targetEventNode?.EventFire();
                 isActive = false;
             }
         }

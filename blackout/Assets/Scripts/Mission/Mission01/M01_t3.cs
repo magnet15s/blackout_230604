@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M01_t2 : MissionEventNode
+public class M01_t3 : MissionEventNode
 {
     [SerializeField] private string missionTitle = "火器管制テスト";
     private string[] messageText = new string[]{
@@ -23,7 +23,7 @@ public class M01_t2 : MissionEventNode
     public override void EventFire() {
         missionItems = new string[] {
             $"{weaponChangeButtonText}で\nHUD右下の選択武装が\n切り替わる事を確認する",
-            $"{fireButtonText}、{subActionButtonText}で\n選択中の武装アクションが\n起動することを確認する\n[0/2]"
+            $"{fireButtonText},{subActionButtonText}で\n選択中の武装アクションが\n起動することを確認する\n[0/2]"
         };
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();

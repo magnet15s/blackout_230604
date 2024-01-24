@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEditor;
 using static Unity.Burst.Intrinsics.X86.Avx;
+using static UnityEditor.Progress;
 
 public class HUDMissionList : MonoBehaviour {
 
@@ -22,6 +23,12 @@ public class HUDMissionList : MonoBehaviour {
             isMissionCleared.Clear();
         }
     }
+
+    /// <summary>
+    /// ミッションを追加
+    /// </summary>
+    /// <param name="itemText"></param>
+    /// <returns></returns>
     public int AddMissionItem(string itemText) {
         RectTransform t;
         lastID++;
@@ -29,6 +36,12 @@ public class HUDMissionList : MonoBehaviour {
         return AddMissionItem(itemText, lastID);
     }
 
+    /// <summary>
+    /// ミッションを追加
+    /// </summary>
+    /// <param name="itemText"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public int AddMissionItem(string itemText, int id) {
         RectTransform t;
         if(missionItems.TryGetValue(id, out t)) {
@@ -67,6 +80,12 @@ public class HUDMissionList : MonoBehaviour {
 
         return id;
     }
+
+    /// <summary>
+    /// ミッションのテキスト更新
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="itemText"></param>
     public void UpdateMissionItemText(int id, string itemText) {
         RectTransform item;
         if(missionItems.TryGetValue(id, out item)) {
@@ -81,13 +100,45 @@ public class HUDMissionList : MonoBehaviour {
                 if (textIdx >= itemText.Length) break;
             }
             tmp.SetText(itemText);
+        } else {
+            Debug.LogWarning($"[HUDMissionList.MissionClear] > 指定したIDのmissionItemは存在していません（id:{id}）");
+
         }
     }
-    void Update() {
+    public void UpdateMissionItemTextNonCal(int id, string itemText) {
+        RectTransform item;
+        if (missionItems.TryGetValue(id, out item)) {
+            item.GetComponent<TextMeshProUGUI>().SetText(itemText);
+        } else {
+            Debug.LogWarning($"[HUDMissionList.MissionClear] > 指定したIDのmissionItemは存在していません（id:{id}）");
+
+        }
+    }
+
+        /// <summary>
+        /// ミッションのテキスト取得
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string getMissionItemText(int id) {
+        RectTransform item;
+        if (missionItems.TryGetValue(id, out item)) {
+            return item.GetComponent<TextMeshProUGUI>().text;
+        }else {
+            Debug.LogWarning($"[HUDMissionList.MissionClear] > 指定したIDのmissionItemは存在していません（id:{id}）");
+            return null;
+        }
+
+    }
+        void Update() {
         //if (lastID < 3) Debug.Log(AddMissionItem("aiueoおお\nkakikukeko\nhahahaあいう" + (lastID).ToString()));
         //else RemoveMissionItems();
     }
 
+    /// <summary>
+    /// ミッションをクリア済みにする
+    /// </summary>
+    /// <param name="id"></param>
     public void MissionClear(int id) {
         bool c;
         if(isMissionCleared.TryGetValue(id, out c)) {
@@ -102,6 +153,9 @@ public class HUDMissionList : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 全ミッションを消去
+    /// </summary>
     public void RemoveMissionItems() {
         foreach(KeyValuePair<int, RectTransform> item in missionItems) {
             Destroy(item.Value.gameObject);

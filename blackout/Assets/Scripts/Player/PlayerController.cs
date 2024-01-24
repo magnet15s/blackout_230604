@@ -846,6 +846,10 @@ private Vector3 moveAngleContext;
     public PlayerStateHandler OnTouchDowned;
     public PlayerStateHandler OnAired;
     public PlayerStateHandler OnAirAxeled;
+    public PlayerStateHandler OnWeaponChange;
+    public PlayerStateHandler OnWeaponMainAct;
+    public PlayerStateHandler OnWeaponSubAct;
+
 
 
 }
