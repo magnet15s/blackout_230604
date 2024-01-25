@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class missil_launcher : Weapon
 {
+    public AudioClip sound1;
+    public AudioClip sound2;
+    AudioSource audioSource;
     public GameObject prefab;
     Transform thisTransform;
 
@@ -52,14 +55,13 @@ public class missil_launcher : Weapon
     void Start() {
         HUDWeaponImage = HUDImage;
         thisTransform = transform;
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (TrackingIcon.closestIconToCenter != null) {
-            Target = TrackingIcon.Icons[0].trackingTarget;
-        }
+        
         if(sender != null) {
             if (!senderInitialized) {
                 anim = sender.getAnim();
@@ -121,11 +123,19 @@ public class missil_launcher : Weapon
 
     private void fire()
     {
+        if (TrackingIcon.closestIconToCenter != null) {
+            Target = TrackingIcon.Icons[0].trackingTarget;
             remainAmmo--;
             //Debug.Log($"BANG!! {remainAmmo}");
             Livemissile homing;
             homing = Instantiate(prefab, thisTransform.position, Quaternion.identity).GetComponent<Livemissile>();
             homing.Target = Target.transform;
+            audioSource.PlayOneShot(sound1);
+        }
+        else {
+            audioSource.PlayOneShot(sound2);
+        }
+        
         
         
         
