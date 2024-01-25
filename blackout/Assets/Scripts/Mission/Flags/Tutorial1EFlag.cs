@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tutorial2EFlag : MissionEventFlag
+public class Tutorial1EFlag : MissionEventFlag
 {
     // Start is called before the first frame update
     private bool moveTestCleared;
