@@ -72,15 +72,14 @@ public class A53_31 : Weapon
                 if((verticalAiming = AimingObj.transform.eulerAngles.x) > 90) {
                     verticalAiming -= 360;
                 }
-                anim.SetFloat("verticalAiming", (verticalAiming /0.8f / 180) + 0.5f);
+                anim.SetFloat("verticalAiming", (verticalAiming / 0.8f / 180) + 0.5f);
 
             } else {        //---•Ší‚ð‘I‘ð‚µ‚Ä‚¢‚È‚¢ŠÔ
-                //Debug.Log(anim.GetLayerWeight(RAAnimLayerIdx));
                 if(wcdCnt > 0) {
                     wcdCnt -= Time.deltaTime;
                     if (wcdCnt < 0) wcdCnt = 0;
+                    anim.SetLayerWeight(RAAnimLayerIdx, wcdCnt / wepChangeDelay);
                 }
-                if (anim.GetLayerWeight(RAAnimLayerIdx) != 0) anim.SetLayerWeight(RAAnimLayerIdx, wcdCnt / wepChangeDelay);
             }
             //------ª˜r’Ç]-------
             //------«ŽËŒ‚---------

@@ -22,16 +22,23 @@ public class WeaponConnectionToBone{
         lower_leg_left
     }
 
-    public WeaponConnectionToBone(BoneType boneType, GameObject bone) {
+    public WeaponConnectionToBone(BoneType boneType, Transform bone) {
         this.boneType = boneType;
         this.bone = bone;
+    }
+
+    public bool Connect(Transform connectObj) {
+        if(bone == null) {
+            Debug.LogError("bone is null");
+        }
+        return false;
     }
 
     public BoneType boneType { get; private set; }
 
     public List<GameObject> weapon;
-    public GameObject bone { get; private set; }
-    public Vector3 connectionOffset;
+    public Transform bone { get; private set; }
+    
 
     
 }

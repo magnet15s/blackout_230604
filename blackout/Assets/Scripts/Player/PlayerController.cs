@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEditor;
 //using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -48,6 +49,9 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [Space]
     [SerializeField] private Transform cockpit;
     [SerializeField] private Transform cockpitParent;
+    [SerializeField] private float cockpitVerticalAlignOffset;
+    [SerializeField] private float cockpitVerticalAlignFactor;
+    [SerializeField] private float cockpitVAlignFactorOnParentRot;
     [SerializeField] private Transform pilotEyePoint;
     [SerializeField] private PlayerCameraCood pcc;
     [Space]
@@ -78,12 +82,19 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     //武器制御
     [SerializeField] public Weapon selectWep { get; private set; }
     [SerializeField] private int selWepIdx;
-    private List<bool> WepActReqBools = new();
-    private List<WeaponConnectionToBone> wepConnectors = new();
-    [SerializeField] private WeaponConnectionToBone wepCRoot, wepCRightForearm, WepCLeftForearm;
+    public List<bool> wepSelectable = null;
 
-    //入力コンテキスト
-    private Vector3 moveAngleContext;
+    private List<WeaponConnectionToBone> wepConnectors = new();
+    [Header("Weapon Hardpoint")]
+    [SerializeField] private Transform rootBone, rightForArm, leftForArm, rightUpperLeg, leftUpperLeg;
+    public WeaponConnectionToBone wepCRoot { get; private set; }
+    public WeaponConnectionToBone wepCRightForearm { get; private set; }
+    public WeaponConnectionToBone wepCLeftForearm { get; private set; }
+    public WeaponConnectionToBone wepCRightULeg { get; private set; }
+    public WeaponConnectionToBone wepCLeftULeg { get; private set; }
+
+//入力コンテキスト
+private Vector3 moveAngleContext;
     private float moveMagnContext;
     private bool dashContext = false;
     private bool dashItrContext = false;
@@ -103,6 +114,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     private float verticalAiming;
     private float initCockpitLAim;
     private float initCockpitVAim;
+    private float initCockpitParentVAim;
 
     
 
@@ -129,6 +141,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private float evasionMoveSpeed = 30;
     [Space]
     [SerializeField] private float turningSpeed = 200;
+    [SerializeField] private float slowTurningZoneSize = 0.1f;
     [SerializeField] private float dashTurningFactor = 0.4f;
     [SerializeField] private Vector2 viewRotetionFactor = new Vector2(10, 10);
     [SerializeField] private float zoomInViewRotFactor = 0.5f;
@@ -289,14 +302,20 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     //----------------Updateなど----------------
 
     void Awake() {
+        
+        //ハードポイント初期化
+
+
+
         //敵設定
         if (setEnemiesShareTarget) Enemy.sharedTarget = this.gameObject;
 
         //視点基点決定
         levelAiming = transform.eulerAngles.y;
         verticalAiming = transform.eulerAngles.x;
-        initCockpitLAim = cockpit.localEulerAngles.y;
-        initCockpitVAim = cockpit.localEulerAngles.x;
+        initCockpitLAim = cockpit.eulerAngles.y;
+        initCockpitVAim = cockpit.eulerAngles.x;
+        initCockpitParentVAim = cockpitParent.eulerAngles.x;
 
         viewPoint = new Vector2(transform.eulerAngles.y, transform.eulerAngles.x);
 
@@ -453,16 +472,19 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
-        //Vector3 oldVec = cockpit.localEulerAngles;
-        //cockpit.localEulerAngles = new Vector3(initCockpitVAim + verticalAiming, initCockpitLAim + levelAiming, oldVec.z);
+        
 
         aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
 
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
         sightOrigin.transform.localEulerAngles = new Vector3(verticalAiming, 0, 0);
+        cockpit.rotation = Quaternion.Euler(
+            (-verticalAiming * cockpitVerticalAlignFactor) + (initCockpitParentVAim - cockpitParent.eulerAngles.x)*cockpitVAlignFactorOnParentRot + cockpitVerticalAlignOffset, 
+            cockpitParent.rotation.eulerAngles.y, 
+            cockpitParent.rotation.eulerAngles.z
+        );
 
-        //Vector3 cockpitLookPoint = sightOrigin.transform.position;
         
         //camera
         pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
@@ -598,7 +620,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
             if (!inAir) {
 
                 if (jump) {
-                    gs.Sleep(jumpTime, false);
+                    gs.Sleep(0.5f, false);
                     jump = false;
                     jumped = true;  //GetPlayerActSt()を使用して他コンポーネントからジャンプを検知する時の為
                                     //1フレーム猶予を設ける(jumpedは次のフレームでfalseになる)
@@ -608,48 +630,49 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
                 OnAired?.Invoke();
                 lastMovement.y = 0;
             } else {
-                
+
                 if (inAirCnt < 4) inAirCnt += Time.deltaTime * fallSpeedFactor;
-
-                //空中でジャンプボタンを押している間はエアアクセル（ふわふわ降下）に変化
-                if (inAirCnt > airAxelFallSpeed && jButtonContext && false) {//一旦空中機動実装を後回しにするためfalse
-                    //落下速度を一定に
-                    inAirCnt = airAxelFallSpeed;        
-                    //空中移動入力の反映
-                    //入力方向*空中最大速度を目標のベクトルとし、現在ベクトル(lastMovement)との差を空中加速度分詰めていく
-                    lastMovement.y = 0;
-                    lastMovement = worldVec2localVec(lastMovement);
-                    Vector3 targetMovement = moveAngleContext.normalized * maxAirAxelSpeed;
-                    //現在ベクトルの大きさが空中最大速度を越えている場合、
-                    //現在ベクトルと目標ベクトルの角度差の小ささに応じて目標ベクトルの大きさを大きくする
-                    float overMagn = lastMovement.magnitude - maxAirAxelSpeed;
-                    //if (overMagn > 0) targetMovement += targetMovement.normalized * (overMagn * Mathf.Max(0, Vector3.Dot(lastMovement.normalized, targetMovement.normalized)));
-
-                    Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized}");
-                    lastMovement += (targetMovement - lastMovement).normalized; //詰めるところ
-                    lastMovement = localVec2worldVec(lastMovement);
-                }
-                //落下速度計算
-                lastMovement.y = fallCalc(inAirCnt);
+            
             }
+            airAxeling = false;
+
             if (wallBound) {
                 wallBound = false;
                 lastMovement.x = wallBoundVector.x;
                 lastMovement.z = wallBoundVector.z;
                 //Debug.Log("はねかえり");
             } else if (lastMovement.magnitude * 0.99 > lastActualMovement.magnitude) {
-                //Debug.Log("eeeeee");
                 Vector2 horLMDiff = new Vector2(lastMovement.x, lastMovement.z) - new Vector2(lastActualMovement.x, lastActualMovement.z);
                 if (horLMDiff.magnitude * 0.1f < horLMDiff.normalized.magnitude) horLMDiff.Normalize();
                 else horLMDiff *= 0.1f;
                 lastMovement.x = lastActualMovement.x - (horLMDiff.x);
                 lastMovement.z = lastActualMovement.z - (horLMDiff.y);
-                if (lastActualMovement.y < 0) {
+                if (lastActualMovement.y <= 0 && !jumped) {
                     gs.WakeUp();
                 }
-                //Debug.Log("つっかえ " + lastActualMovement);
             } else {
-                //Debug.Log("Notつっかえ");
+                //空中でジャンプボタンを押している間はエアアクセル（ふわふわ降下）に変化
+                if (jButtonContext ) {
+                    airAxeling = true;
+                    OnAirAxeled?.Invoke();
+                    //落下速度を一定に
+                    if(inAirCnt > airAxelFallSpeed ) inAirCnt = airAxelFallSpeed;
+                    //空中移動入力の反映
+                    //入力方向*空中最大速度を目標のベクトルとし、現在ベクトル(lastMovement)との差を空中加速度分詰めていく
+                    lastMovement.y = 0;
+                    lastMovement = worldVec2localVec(lastMovement);
+                    Vector3 targetMovement = moveAngleContext.normalized * maxAirAxelSpeed;
+                    //現在ベクトルの大きさが空中最大速度を越えている場合、
+                    //現在ベクトルと目標ベクトルの角度差の小ささ（lastMovement・targetMovement）に応じて目標ベクトルの大きさを大きくする
+                    float overMagn = lastMovement.magnitude - maxAirAxelSpeed;
+                    if (overMagn > 0) targetMovement += targetMovement.normalized * (overMagn * Mathf.Max(0, Vector3.Dot(lastMovement.normalized, targetMovement.normalized)));
+
+                    //Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized}");
+                    lastMovement += (targetMovement - lastMovement).normalized * airAcceleration * moveAngleContext.magnitude; //詰めるところ
+                    lastMovement = localVec2worldVec(lastMovement);
+                }
+                //落下速度計算
+                lastMovement.y = fallCalc(inAirCnt);
             }
             //↓空中最高速をダッシュスピード以上にいかないようにするやつ（空中移動実装につきコメントアウト）
             /*Vector2 lmVec;
@@ -696,7 +719,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
         //sightOriginの位置をpilotCameraに合わせる
         pilotCamera.transform.position = pilotEyePoint.position;
         sightOrigin.transform.position = pilotCamera.transform.position;
-        cockpit.position = cockpitParent.position;
+        //cockpit.position = cockpitParent.position;
 
         //実移動量計算用
         lastTimeDelta = Time.deltaTime;
@@ -811,6 +834,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public float aligning { get; private set; } = 0;
     public bool airing { get { return inAir; } }
     public bool jumpCharging { get { return jumpChargeCnt > 0; }}
+    public bool airAxeling { get; private set; } = false;
 
 
     public delegate void PlayerStateHandler();
@@ -821,6 +845,11 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public PlayerStateHandler OnDashCanceled;
     public PlayerStateHandler OnTouchDowned;
     public PlayerStateHandler OnAired;
+    public PlayerStateHandler OnAirAxeled;
+    public PlayerStateHandler OnWeaponChange;
+    public PlayerStateHandler OnWeaponMainAct;
+    public PlayerStateHandler OnWeaponSubAct;
+
 
 
 }
