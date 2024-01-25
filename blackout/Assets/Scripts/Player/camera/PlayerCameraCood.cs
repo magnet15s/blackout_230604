@@ -9,7 +9,12 @@ public class PlayerCameraCood : CinemachineExtension
 
     private float neutRotZ = 0;
 
-    public bool zoom = false;
+    private int zoomOutCnt = 0;
+    private int zoomOutWaitFlame = 2;
+    private float zoomOutTime = 0;
+    private bool zoom = false;
+    
+    private string zoomDebug = "";
     [SerializeField, Range(1, 180)] private float zoomInFOV = 60;
     [SerializeField] private float zoomInOutTime = 0.1f;
     private float zoomOutFOV;
@@ -30,8 +35,14 @@ public class PlayerCameraCood : CinemachineExtension
 
         if (stage == CinemachineCore.Stage.Finalize)
         {
+            if (zoomOutCnt > 0) zoomOutCnt--;
+            else if (zoomOutTime <= 0) zoom = false;
+
+            if (zoomOutTime > 0) zoomOutTime -= Time.deltaTime;
+            else if (zoomOutCnt <= 0) zoom = false;
+
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, neutRotZ);
-            
+            Debug.Log(zoom  +"zoom");
             if (zoom)
             {
                 currentFOV = Mathf.SmoothDamp(
@@ -43,6 +54,7 @@ public class PlayerCameraCood : CinemachineExtension
                     deltaTime                    
                 );
                 state.Lens.FieldOfView = currentFOV;
+                Debug.Log(currentFOV);
             }
             else
             {
@@ -56,12 +68,23 @@ public class PlayerCameraCood : CinemachineExtension
                 );
                 state.Lens.FieldOfView = currentFOV;
             }
-            
-            
+            Debug.Log("z : " + zoomDebug);
+            zoomDebug = "";
+
+
         }
     }
+    public void Zoom()
+    {
+        zoom = true;
+        zoomOutCnt = zoomOutWaitFlame;
+    }
 
-
+    public void Zoom(float time)
+    {
+        zoom = true;
+        zoomOutTime = time;
+    }
     // Start is called before the first frame update
     void Start()
     {

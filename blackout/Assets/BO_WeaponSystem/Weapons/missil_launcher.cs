@@ -114,11 +114,6 @@ public class missil_launcher : Weapon
             if (fireIntCnt < 0) fireIntCnt = 0;
             //------ªŽËŒ‚---------
 
-            //------«ƒJƒƒ‰ƒY[ƒ€-
-            if (zoomCancCnt > 0) pcc.zoom = true;
-            else pcc.zoom = false;
-
-            zoomCancCnt -= Time.deltaTime;
             
 
         }
@@ -152,7 +147,7 @@ public class missil_launcher : Weapon
         }
     }
     public override void SubAction() {
-        zoomCancCnt = 0.05f;
+        pcc.Zoom();
 
         //Debug.Log($"SubAct{this}");
     }

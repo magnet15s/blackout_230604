@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class M01_t3 : MissionEventNode
 {
-    [SerializeField] private string missionTitle = "火器管制テスト";
+    /*[SerializeField] private string missionTitle = "火器管制テスト";
     private string[] messageText = new string[]{
         "[キース]\n統合姿勢制御、良好。\n各部アブソーバー異常無し。",
         "[オスカー]\n順調だな。次は火器管制系を検証する。\n安全装置は解除済みだ。各種項目のテストを開始してくれ。"
@@ -13,7 +13,7 @@ public class M01_t3 : MissionEventNode
     private string weaponChangeButtonText = "R,Fキー";
     private string fireButtonText = "左クリック";
     private string subActionButtonText = "右クリック";
-    private string[] missionItems;
+    private string[] missionItems;*/
 
     private MessageWindow message;
     private HUDMissionDisplay mDisp;
@@ -21,29 +21,25 @@ public class M01_t3 : MissionEventNode
 
 
     public override void EventFire() {
-        missionItems = new string[] {
+        /*missionItems = new string[] {
             $"{weaponChangeButtonText}で\nHUD右下の選択武装が\n切り替わる事を確認する",
             $"{fireButtonText},{subActionButtonText}で\n選択中の武装アクションが\n起動することを確認する\n[0/2]"
-        };
+        };*/
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
         message = MessageWindow.instance;
         StartCoroutine("Event");
         parmitNext?.Invoke(this, EventArgs.Empty);
+    // Start is called before the first frame update
     }
 
-    // Start is called before the first frame update
 
 
     // Update is called once per frame
     IEnumerator Event() {
-        message.function(messageText[0], 3.5f);
-        yield return new WaitForSeconds(3.8f);
-        message.function(messageText[1], 4f);
         mList.RemoveMissionItems();
-        foreach (string s in missionItems) mList.AddMissionItem(s);
         parmitNext?.Invoke(this, EventArgs.Empty);
-
+        yield break;
 
     }
 }

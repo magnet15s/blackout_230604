@@ -42,7 +42,6 @@ public class A53_31 : Weapon
     [Space]
     public Material HUDImage = null;
 
-    private float zoomCancCnt = 0;
 
     
     void Start() {
@@ -127,11 +126,7 @@ public class A53_31 : Weapon
                 }
             }
             //------ªŽ©“®‘•“U-----
-            //------«ƒJƒƒ‰ƒY[ƒ€-
-            if(zoomCancCnt > 0) pcc.zoom = true;
-            else pcc.zoom = false;
-
-            zoomCancCnt -= Time.deltaTime;
+            
             
 
         }
@@ -162,8 +157,7 @@ public class A53_31 : Weapon
         }
     }
     public override void SubAction() {
-        zoomCancCnt = 0.05f;
-
+        pcc.Zoom();
         //Debug.Log($"SubAct{this}");
     }
     public override void Reload() {
