@@ -11,28 +11,34 @@ public class Tutorial2EFlag : MissionEventFlag
     [SerializeField] private PlayerController pc;
 
     private HUDMissionList mList;
+    private bool subscribed = false;
 
     // Update is called once per frame
     private void Start() {
         mList = HUDMissionDisplay.mainDisplay.GetMissionList();
-        pc.OnJumped += () => {
-            jumpTestCleared = true;
-            mList.MissionClear(3);
-        };
         
-        pc.OnAirAxeled += () => { 
-            airAxelTestCleared = true;
-            mList.MissionClear(4);
-        };
-
-        pc.OnEvasionMoved += () => {
-            evasionMoveTestCleared = true;
-            mList.MissionClear(5);
-        };
     }
     void Update()
     {
         if (isActive) {
+            if(!subscribed)
+            {
+                subscribed = true;
+                pc.OnJumped += () => {
+                    jumpTestCleared = true;
+                    mList.MissionClear(3);
+                };
+
+                pc.OnAirAxeled += () => {
+                    airAxelTestCleared = true;
+                    mList.MissionClear(4);
+                };
+
+                pc.OnEvasionMoved += () => {
+                    evasionMoveTestCleared = true;
+                    mList.MissionClear(5);
+                };
+            }
             //全ミッション完了監視
             if(jumpTestCleared && airAxelTestCleared && evasionMoveTestCleared) {
                 if (!ignited) ignited = true;

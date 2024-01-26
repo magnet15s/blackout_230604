@@ -260,11 +260,13 @@ private Vector3 moveAngleContext;
 
     //•ŠíŠÖ˜A
     public void OnFire(InputAction.CallbackContext context) {
+        if (context.started) OnWeaponMainAct?.Invoke();
         if (context.started) fireContext = true;
         if (context.canceled) fireContext = false;
     }
 
     public void OnFocus(InputAction.CallbackContext context) {
+        if (context.started) OnWeaponSubAct?.Invoke();
         if (context.performed) focusContext = true;
         else if (context.canceled) focusContext = false;
     }
@@ -277,6 +279,7 @@ private Vector3 moveAngleContext;
     }
     public void WeaponsListUp(InputAction.CallbackContext context) {
         if (context.started && selWepIdx > 0) {
+            OnWeaponChange?.Invoke();
             selectWep.PutAway();
             selWepIdx--;
             selectWep = weapons[selWepIdx];
@@ -289,6 +292,7 @@ private Vector3 moveAngleContext;
     }
     public void WeaponsListDown(InputAction.CallbackContext context) {
         if (context.started && selWepIdx + 1 < weapons.Count) {
+            OnWeaponChange?.Invoke();
             selectWep.PutAway();
             selWepIdx++;
             selectWep = weapons[selWepIdx];

@@ -2710,7 +2710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef7157682b4831458a77c09ed71bfd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoom: 0
   zoomInFOV: 29.8
   zoomInOutTime: 0.1
 --- !u!114 &3688251577279686112
@@ -3576,7 +3575,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 3688251577138033042}
-  m_PlaneDistance: 0.08
+  m_PlaneDistance: 0.25
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -6880,7 +6879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ef7157682b4831458a77c09ed71bfd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoom: 0
   zoomInFOV: 60
   zoomInOutTime: 0.1
 --- !u!1 &5932481540691031983
