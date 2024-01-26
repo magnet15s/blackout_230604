@@ -382,14 +382,14 @@ private Vector3 moveAngleContext;
         else {
             audio4.mute = false;
         }*/
-        if (Input.GetKey(KeyCode.Alpha1)) {
+        /*if (Input.GetKey(KeyCode.Alpha1)) {
             GameObject EMP=Instantiate(EMPPrefab);
             EMP.transform.position = this.transform.position;
         }
         if (Input.GetKey(KeyCode.Alpha2)) {
             GameObject SMOKE = Instantiate(SmokePrefab);
             SMOKE.transform.position = this.transform.position;
-        }
+        }*/
         if ((wepMoveLiveTime -= Time.deltaTime) < 0) {
             wepMoveLiveTime = 0;
             wepMove = null;
