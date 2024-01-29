@@ -12,7 +12,7 @@ public class M01_t1 : MissionEventNode
     };
     private string jumpButtonText = "Space";
     private string airAxelButtonText = "Space";
-    private string evationMoveButtonText = "ジャンプ準備中に\n再度Space";
+    private string evationMoveButtonText = "Spaceを素早く\n二回押して";
     private string[] missionItems;
 
     [SerializeField] MessageWindow message;
@@ -24,7 +24,7 @@ public class M01_t1 : MissionEventNode
         missionItems = new string[] {
             $"{jumpButtonText}でジャンプが\n発動する事を確認する",
             $"空中で{airAxelButtonText}で\nエアアクセルが\n動作する事を確認する",
-            $"{evationMoveButtonText}で\n緊急回避機動が\n発動する事を確認する"
+            $"{evationMoveButtonText}\n緊急回避機動が\n発動する事を確認する"
         };
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
