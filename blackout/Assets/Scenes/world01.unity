@@ -182,6 +182,54 @@ PrefabInstance:
       propertyPath: near clip plane
       value: 0.005
       objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.8878942
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.6443532
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -23.936344
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.016897166
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.021513276
+      objectReference: {fileID: 0}
+    - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0003636495
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.8878942
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.6443532
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -23.936344
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.016897166
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.021513276
+      objectReference: {fileID: 0}
+    - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0003636495
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
 --- !u!1 &203844586
