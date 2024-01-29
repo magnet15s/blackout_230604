@@ -29,7 +29,6 @@ public class M01_t3 : MissionEventNode
         mList = mDisp.GetMissionList();
         message = MessageWindow.instance;
         StartCoroutine("Event");
-        parmitNext?.Invoke(this, EventArgs.Empty);
     // Start is called before the first frame update
     }
 
@@ -38,7 +37,7 @@ public class M01_t3 : MissionEventNode
     // Update is called once per frame
     IEnumerator Event() {
         mList.RemoveMissionItems();
-        parmitNext?.Invoke(this, EventArgs.Empty);
+        OnParmitNext();
         yield break;
 
     }

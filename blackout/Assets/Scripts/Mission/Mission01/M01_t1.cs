@@ -42,7 +42,7 @@ public class M01_t1 : MissionEventNode
         message.function(messageText[1], 4f);
         mList.RemoveMissionItems();
         foreach (string s in missionItems) mList.AddMissionItem(s);
-        parmitNext?.Invoke(this, EventArgs.Empty);
+        OnParmitNext();
 
 
     }
