@@ -23,50 +23,11 @@ public class Tutorial3EFlag : MissionEventFlag {
             if (!subscribed)
             {
                 subscribed = true;
-                pc.OnWeaponChange += () => {
-                    wepChTestCleared = true;
-                    mList.MissionClear(6);
-                };
+                pc.OnWeaponChange += owc;
 
-                pc.OnWeaponMainAct += () => {
-                    fireTestCleared = true;
-                    if (subActTestCleared)
-                    {
-                        mList.MissionClear(7);
-                        string text = mList.getMissionItemText(7);
-                        text = text.Substring(0, text.IndexOf("[1/2]"));
-                        text += "[2/2]";
-                        mList.UpdateMissionItemTextNonCal(7, text);
-                    }
-                    else
-                    {
-                        string text = mList.getMissionItemText(7);
-                        text = text.Substring(0, text.IndexOf("[0/2]"));
-                        text += "[1/2]";
-                        mList.UpdateMissionItemTextNonCal(7, text);
+                pc.OnWeaponMainAct += owma;
 
-                    }
-                };
-
-                pc.OnWeaponSubAct += () => {
-                    subActTestCleared = true;
-                    if (fireTestCleared)
-                    {
-                        mList.MissionClear(7);
-                        string text = mList.getMissionItemText(7);
-                        text = text.Substring(0, text.IndexOf("[1/2]"));
-                        text += "[2/2]";
-                        mList.UpdateMissionItemTextNonCal(7, text);
-                    }
-                    else
-                    {
-                        string text = mList.getMissionItemText(7);
-                        text = text.Substring(0, text.IndexOf("[0/2]"));
-                        text += "[1/2]";
-                        mList.UpdateMissionItemTextNonCal(7, text);
-
-                    }
-                };
+                pc.OnWeaponSubAct += owsa;
 
             }
             //全ミッション完了監視
@@ -76,5 +37,69 @@ public class Tutorial3EFlag : MissionEventFlag {
                 isActive = false;
             }
         }
+        else
+        {
+            if (subscribed)
+            {
+                subscribed = false;
+                pc.OnWeaponChange -= owc;
+                pc.OnWeaponMainAct -= owma;
+                pc.OnWeaponSubAct -= owsa;
+            }
+        }
+    }
+
+    private void owc()
+    {
+        wepChTestCleared = true;
+        mList.MissionClear(6);
+        pc.OnWeaponChange -= owc;
+    }
+
+    private void owma()
+    {
+        fireTestCleared = true;
+        if (subActTestCleared)
+        {
+            mList.MissionClear(7);
+            string text = mList.getMissionItemText(7);
+            text = text.Substring(0, text.IndexOf("[1/2]"));
+            text += "[2/2]";
+            mList.UpdateMissionItemTextNonCal(7, text);
+        }
+        else
+        {
+            string text = mList.getMissionItemText(7);
+            text = text.Substring(0, text.IndexOf("[0/2]"));
+            text += "[1/2]";
+            mList.UpdateMissionItemTextNonCal(7, text);
+
+        }
+        pc.OnWeaponMainAct -= owma;
+    }
+
+    private void owsa()
+    {
+        
+        subActTestCleared = true;
+        if (fireTestCleared)
+        {
+            mList.MissionClear(7);
+            string text = mList.getMissionItemText(7);
+            text = text.Substring(0, text.IndexOf("[1/2]"));
+            text += "[2/2]";
+            mList.UpdateMissionItemTextNonCal(7, text);
+        }
+        else
+        {
+            string text = mList.getMissionItemText(7);
+            text = text.Substring(0, text.IndexOf("[0/2]"));
+            text += "[1/2]";
+            mList.UpdateMissionItemTextNonCal(7, text);
+
+        }
+
+        pc.OnWeaponSubAct -= owsa;
+        
     }
 }

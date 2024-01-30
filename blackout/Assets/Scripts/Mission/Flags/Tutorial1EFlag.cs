@@ -49,8 +49,6 @@ public class Tutorial1EFlag : MissionEventFlag
             if(alignTestCleared && moveTestCleared && dashTestCleared) {
                 Debug.Log("Test1 comp");
                 OnFlagUp();
-                isActive = false;
-
             }
         }
     }

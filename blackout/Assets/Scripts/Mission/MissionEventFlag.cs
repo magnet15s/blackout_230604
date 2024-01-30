@@ -14,6 +14,7 @@ public abstract class MissionEventFlag : MonoBehaviour
     {
         Debug.Log("onflugup");
         ignited = true;
+        isActive = false;
         onFlagUp?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>
@@ -21,12 +22,5 @@ public abstract class MissionEventFlag : MonoBehaviour
     /// </summary>
     public bool ignited { get; private set; }
 
-
-
-
-/*
-    [SerializeField] protected MissionEventNode targetEventNode;
-
-    public MissionEventNode getTargetEventNode() { return targetEventNode; }*/
     
 }

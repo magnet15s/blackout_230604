@@ -7,26 +7,26 @@ using UnityEngine.Rendering;
 public abstract class MissionEventNode : MonoBehaviour
 {
 
-
-    
-    public EventHandler parmitNext;
-
-
     [Tooltip("このイベントノードが起動するためのイベントフラグ"), SerializeField]
-    private List<MissionEventFlag> TriggerFlags;
+    private List<MissionEventFlag> triggerFlags;
     [Tooltip("一つでもフラグが立てばイベントを実行するか"), SerializeField]
     private bool disjunctionTrigger = false;
     [Space]
 
     [Tooltip("次に起動させるイベントフラグ"), SerializeField]
-    private List<MissionEventFlag> NextFlags;
+    private List<MissionEventFlag> nextFlags;
+
+
+    public static List<MissionEventNode> nodeList = new();
 
     /// <summary>
     /// 継承時、base.Awake()を最初に実行すること
     /// </summary>
-    private void Awake()
+    protected virtual void Awake()
     {
-        foreach(MissionEventFlag ef in TriggerFlags)
+        nodeList.Add(this);
+
+        foreach(MissionEventFlag ef in triggerFlags)
         {
             ef.onFlagUp += TryEventFire;
             //Debug.Log(ef.gameObject.name);
@@ -40,7 +40,7 @@ public abstract class MissionEventNode : MonoBehaviour
         (o as MissionEventFlag).onFlagUp -= TryEventFire;
 
 
-        if (TriggerFlags == null || TriggerFlags.Count == 0)
+        if (triggerFlags == null || triggerFlags.Count == 0)
         {
             Debug.LogError($"[{gameObject.name}] > MissionEventNodeのトリガーが設定されていません");
             return;
@@ -50,11 +50,11 @@ public abstract class MissionEventNode : MonoBehaviour
 
         if (disjunctionTrigger)
         {
-            foreach (MissionEventFlag item in TriggerFlags) ign |= item.ignited;
+            foreach (MissionEventFlag item in triggerFlags) ign |= item.ignited;
         }
         else
         {
-            foreach (MissionEventFlag item in TriggerFlags) ign &= item.ignited;
+            foreach (MissionEventFlag item in triggerFlags) ign &= item.ignited;
         }
         if (ign) EventFire();
     }
@@ -68,7 +68,7 @@ public abstract class MissionEventNode : MonoBehaviour
     /// 次のフラグをアクティブ化
     /// </summary>
     protected virtual void ParmitNext() {
-        foreach(MissionEventFlag ef in NextFlags)
+        foreach(MissionEventFlag ef in nextFlags)
         {
             ef.isActive = true;
         }

@@ -461,10 +461,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80f63d907c87134f92599a476d005ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerFlags:
+  triggerFlags:
   - {fileID: 222245140}
   disjunctionTrigger: 0
-  NextFlags:
+  nextFlags:
   - {fileID: 2077490423}
   missionTitle: "\u99C6\u52D5\u7CFB\u30C6\u30B9\u30C8"
   message: {fileID: 1975169822}
@@ -662,10 +662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d521a1a4a50f64dacffbd70f110a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerFlags:
-  - {fileID: 802534771}
+  triggerFlags: []
   disjunctionTrigger: 0
-  NextFlags: []
+  nextFlags: []
 --- !u!114 &802534771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,10 +1471,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f675cdd7f6b71de48bbc1e9688e40df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerFlags:
+  triggerFlags:
   - {fileID: 1809491591}
   disjunctionTrigger: 0
-  NextFlags:
+  nextFlags:
   - {fileID: 222245140}
   missionTitle: "\u99C6\u52D5\u7CFB\u30C6\u30B9\u30C8"
   viewControllerText: "\u30DE\u30A6\u30B9"
@@ -1580,9 +1579,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d62197a3a90f0a41a82f2192fa45494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TriggerFlags:
+  triggerFlags:
   - {fileID: 2077490423}
   disjunctionTrigger: 0
-  NextFlags:
-  - {fileID: 2077490423}
+  nextFlags:
+  - {fileID: 802534771}
   missionTitle: "\u706B\u5668\u7BA1\u5236\u30C6\u30B9\u30C8"

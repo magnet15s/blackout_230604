@@ -24,20 +24,11 @@ public class Tutorial2EFlag : MissionEventFlag
             if(!subscribed)
             {
                 subscribed = true;
-                pc.OnJumped += () => {
-                    jumpTestCleared = true;
-                    mList.MissionClear(3);
-                };
+                pc.OnJumped += Oj;
 
-                pc.OnAirAxeled += () => {
-                    airAxelTestCleared = true;
-                    mList.MissionClear(4);
-                };
+                pc.OnAirAxeled += Oaa;
 
-                pc.OnEvasionMoved += () => {
-                    evasionMoveTestCleared = true;
-                    mList.MissionClear(5);
-                };
+                pc.OnEvasionMoved += Oem;
             }
             //全ミッション完了監視
             if(jumpTestCleared && airAxelTestCleared && evasionMoveTestCleared) {
@@ -46,5 +37,32 @@ public class Tutorial2EFlag : MissionEventFlag
                 isActive = false;
             }
         }
+        else
+        {
+            if(subscribed)
+            {
+                subscribed = false;
+                pc.OnJumped -= Oj;
+                pc.OnAirAxeled -= Oaa;
+                pc.OnEvasionMoved -= Oem;
+            }
+        }
+    }
+
+    void Oj()
+    {
+        jumpTestCleared = true;
+        mList.MissionClear(3);
+    }
+
+    void Oaa()
+    {
+        airAxelTestCleared = true;
+        mList.MissionClear(4);
+    }
+
+    void Oem() {
+        evasionMoveTestCleared = true;
+        mList.MissionClear(5);
     }
 }

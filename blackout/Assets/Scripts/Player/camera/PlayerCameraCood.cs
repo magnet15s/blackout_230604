@@ -54,7 +54,7 @@ public class PlayerCameraCood : CinemachineExtension
                     deltaTime                    
                 );
                 state.Lens.FieldOfView = currentFOV;
-                Debug.Log(currentFOV);
+                //Debug.Log(currentFOV);
             }
             else
             {

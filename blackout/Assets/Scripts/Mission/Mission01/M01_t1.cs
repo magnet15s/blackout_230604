@@ -20,6 +20,11 @@ public class M01_t1 : MissionEventNode
     private HUDMissionList mList;
 
 
+    protected override void Awake(){
+        base.Awake();
+        //処理
+    }
+
     public override void EventFire() {
         missionItems = new string[] {
             $"{jumpButtonText}でジャンプが\n発動する事を確認する",
@@ -31,6 +36,7 @@ public class M01_t1 : MissionEventNode
         StartCoroutine("Event");
     }
 
+    
     // Start is called before the first frame update
 
 
@@ -42,7 +48,6 @@ public class M01_t1 : MissionEventNode
         mList.RemoveMissionItems();
         foreach (string s in missionItems) mList.AddMissionItem(s);
         ParmitNext();
-
 
     }
 }
