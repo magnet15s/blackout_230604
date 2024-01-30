@@ -1,12 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class MissionEventFlag : MonoBehaviour
 {
     public bool isActive = false;
-    public bool ignited { get; protected set; }
+
+
+    public EventHandler onFlagUp;
+    protected virtual void OnFlagUp()
+    {
+        onFlagUp?.Invoke(this, EventArgs.Empty);
+        ignited = true;
+    }
+    /// <summary>
+    /// そのフラグがすでに発動しているか（OnFlagUp()でtrueに）
+    /// </summary>
+    public bool ignited { get; private set; }
+
+
+
+
+
     [SerializeField] protected MissionEventNode targetEventNode;
+
     public MissionEventNode getTargetEventNode() { return targetEventNode; }
     
 }
