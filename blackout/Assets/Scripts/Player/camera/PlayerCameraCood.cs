@@ -42,7 +42,7 @@ public class PlayerCameraCood : CinemachineExtension
             else if (zoomOutCnt <= 0) zoom = false;
 
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, neutRotZ);
-            Debug.Log(zoom  +"zoom");
+            //Debug.Log(zoom  +"zoom");
             if (zoom)
             {
                 currentFOV = Mathf.SmoothDamp(
@@ -68,7 +68,7 @@ public class PlayerCameraCood : CinemachineExtension
                 );
                 state.Lens.FieldOfView = currentFOV;
             }
-            Debug.Log("z : " + zoomDebug);
+            //Debug.Log("z : " + zoomDebug);
             zoomDebug = "";
 
 

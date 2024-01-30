@@ -37,7 +37,7 @@ public class M01_t3 : MissionEventNode
     // Update is called once per frame
     IEnumerator Event() {
         mList.RemoveMissionItems();
-        OnParmitNext();
+        ParmitNext();
         yield break;
 
     }

@@ -41,9 +41,8 @@ public class Tutorial2EFlag : MissionEventFlag
             }
             //全ミッション完了監視
             if(jumpTestCleared && airAxelTestCleared && evasionMoveTestCleared) {
-                if (!ignited) ignited = true;
                 Debug.Log("Test2 comp");
-                targetEventNode?.EventFire();
+                OnFlagUp();
                 isActive = false;
             }
         }

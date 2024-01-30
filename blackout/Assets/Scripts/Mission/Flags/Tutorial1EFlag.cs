@@ -47,9 +47,8 @@ public class Tutorial1EFlag : MissionEventFlag
 
             //全ミッション完了監視
             if(alignTestCleared && moveTestCleared && dashTestCleared) {
-                if (!ignited) ignited = true;
                 Debug.Log("Test1 comp");
-                targetEventNode.EventFire();
+                OnFlagUp();
                 isActive = false;
 
             }

@@ -21,17 +21,25 @@ public abstract class MissionEventNode : MonoBehaviour
     [Tooltip("次に起動させるイベントフラグ"), SerializeField]
     private List<MissionEventFlag> NextFlags;
 
+    /// <summary>
+    /// 継承時、base.Awake()を最初に実行すること
+    /// </summary>
     private void Awake()
     {
         foreach(MissionEventFlag ef in TriggerFlags)
         {
             ef.onFlagUp += TryEventFire;
+            //Debug.Log(ef.gameObject.name);
         }
     }
 
     
     private void TryEventFire(object o, EventArgs e)
     {
+        (o as MissionEventFlag).isActive = false;
+        (o as MissionEventFlag).onFlagUp -= TryEventFire;
+
+
         if (TriggerFlags == null || TriggerFlags.Count == 0)
         {
             Debug.LogError($"[{gameObject.name}] > MissionEventNodeのトリガーが設定されていません");
@@ -42,26 +50,19 @@ public abstract class MissionEventNode : MonoBehaviour
 
         if (disjunctionTrigger)
         {
-            foreach (MissionEventFlag ef in TriggerFlags) ign |= ef.ignited;
+            foreach (MissionEventFlag item in TriggerFlags) ign |= item.ignited;
         }
         else
         {
-            foreach (MissionEventFlag ef in TriggerFlags) ign &= ef.ignited;
+            foreach (MissionEventFlag item in TriggerFlags) ign &= item.ignited;
         }
         if (ign) EventFire();
     }
 
     /// <summary>
-    /// イベントを記述。override時、最初にbase.Awake()を実行すること
+    /// イベントを記述。
     /// </summary>
-    public virtual void EventFire()
-    {
-        foreach (MissionEventFlag ef in TriggerFlags)
-        {
-            ef.isActive = false;
-            ef.onFlagUp -= TryEventFire;
-        }
-    }
+    public abstract void EventFire();
 
     /// <summary>
     /// 次のフラグをアクティブ化

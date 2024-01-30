@@ -38,7 +38,7 @@ public class M01_first : MissionEventNode
         message.function(messageText[1], 4.7f);
         yield return new WaitForSeconds(5);
         message.function(messageText[2], 2f);
-        OnParmitNext();
+        ParmitNext();
     }
 
     // Start is called before the first frame update

@@ -12,8 +12,9 @@ public abstract class MissionEventFlag : MonoBehaviour
     public EventHandler onFlagUp;
     protected virtual void OnFlagUp()
     {
-        onFlagUp?.Invoke(this, EventArgs.Empty);
+        Debug.Log("onflugup");
         ignited = true;
+        onFlagUp?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>
     /// そのフラグがすでに発動しているか（OnFlagUp()でtrueに）
@@ -23,9 +24,9 @@ public abstract class MissionEventFlag : MonoBehaviour
 
 
 
-
+/*
     [SerializeField] protected MissionEventNode targetEventNode;
 
-    public MissionEventNode getTargetEventNode() { return targetEventNode; }
+    public MissionEventNode getTargetEventNode() { return targetEventNode; }*/
     
 }

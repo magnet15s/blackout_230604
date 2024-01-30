@@ -17,8 +17,7 @@ public class EnemyDestroyEFlag : MissionEventFlag
 
     private void catchDestroy(Enemy e) {
         if(!ignited) {
-            ignited = true;
-            targetEventNode.EventFire();
+            OnFlagUp();
         }
     }
 
