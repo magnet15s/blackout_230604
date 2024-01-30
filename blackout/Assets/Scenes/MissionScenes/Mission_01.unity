@@ -461,6 +461,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80f63d907c87134f92599a476d005ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerFlags:
+  - {fileID: 222245140}
+  disjunctionTrigger: 0
+  nextFlags:
+  - {fileID: 2077490423}
   missionTitle: "\u99C6\u52D5\u7CFB\u30C6\u30B9\u30C8"
   message: {fileID: 1975169822}
 --- !u!4 &222245139
@@ -491,7 +496,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  targetEventNode: {fileID: 222245138}
   pc: {fileID: 1613009245}
 --- !u!1001 &663139933
 PrefabInstance:
@@ -638,7 +642,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 802534767}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -658,6 +662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3d521a1a4a50f64dacffbd70f110a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerFlags: []
+  disjunctionTrigger: 0
+  nextFlags: []
 --- !u!114 &802534771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,7 +678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  targetEventNode: {fileID: 802534770}
   pc: {fileID: 1613009245}
 --- !u!1 &815702297
 GameObject:
@@ -842,7 +848,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3688251576440662649, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -314.89856
+      value: -314.8986
       objectReference: {fileID: 0}
     - target: {fileID: 3688251576440662649, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1130,31 +1136,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.651521
+      value: 11.651582
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -58.75386
+      value: -58.75387
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -80.63034
+      value: -80.63032
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.78537834
+      value: 0.78537875
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.013276019
+      value: -0.0132760415
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6187854
+      value: -0.61878484
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.010459933
+      value: -0.010459938
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885775, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: field of view
@@ -1210,31 +1216,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.651521
+      value: 11.651582
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -58.75386
+      value: -58.75387
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -80.63034
+      value: -80.63032
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.78537834
+      value: 0.78537875
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.013276019
+      value: -0.0132760415
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6187854
+      value: -0.61878484
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.010459933
+      value: -0.010459938
       objectReference: {fileID: 0}
     - target: {fileID: 6139268431942580352, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: itemSpacing
@@ -1409,7 +1415,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1789063176}
-  - component: {fileID: 1789063175}
   m_Layer: 0
   m_Name: MissionManage
   m_TagString: Untagged
@@ -1417,27 +1422,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1789063175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789063174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35652c51261825147b5d2a3da3fb7f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firstEventNode: {fileID: 1809491589}
-  eventFlags:
-  - {fileID: 222245140}
-  - {fileID: 2077490423}
-  - {fileID: 802534771}
-  eventPhase: -1
-  MoveSceneOnEndAllEvent: 0
-  nextScene: menu_02
-  initSetFirstEvent: 1
 --- !u!4 &1789063176
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,6 +1451,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1809491590}
   - component: {fileID: 1809491589}
+  - component: {fileID: 1809491591}
   m_Layer: 0
   m_Name: Mf
   m_TagString: Untagged
@@ -1486,6 +1471,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f675cdd7f6b71de48bbc1e9688e40df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerFlags:
+  - {fileID: 1809491591}
+  disjunctionTrigger: 0
+  nextFlags:
+  - {fileID: 222245140}
   missionTitle: "\u99C6\u52D5\u7CFB\u30C6\u30B9\u30C8"
   viewControllerText: "\u30DE\u30A6\u30B9"
   moveButtonText: W,A,S,D
@@ -1506,6 +1496,19 @@ Transform:
   m_Father: {fileID: 1789063176}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1809491591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809491588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57090e7476475a04f96cbe5ae349f360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
 --- !u!114 &1975169822 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4815876828443524212, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
@@ -1526,8 +1529,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2077490422}
-  - component: {fileID: 2077490423}
   - component: {fileID: 2077490424}
+  - component: {fileID: 2077490423}
   m_Layer: 0
   m_Name: M2
   m_TagString: Untagged
@@ -1563,7 +1566,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  targetEventNode: {fileID: 2077490424}
   pc: {fileID: 1613009245}
 --- !u!114 &2077490424
 MonoBehaviour:
@@ -1577,4 +1579,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d62197a3a90f0a41a82f2192fa45494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerFlags:
+  - {fileID: 2077490423}
+  disjunctionTrigger: 0
+  nextFlags:
+  - {fileID: 802534771}
   missionTitle: "\u706B\u5668\u7BA1\u5236\u30C6\u30B9\u30C8"

@@ -11,7 +11,7 @@ public class M01_t2 : MissionEventNode
         "[オスカー]\n順調だな。次は火器管制系を検証する。\n安全装置は解除済みだ。各種項目のテストを開始してくれ。"
     };
     private string weaponChangeButtonText = "R,Fキー";
-    private string fireButtonText = "左クリック";
+    private string weaponActionButtonsText = "左、右クリック";
     private string subActionButtonText = "右クリック";
     private string[] missionItems;
 
@@ -22,14 +22,13 @@ public class M01_t2 : MissionEventNode
 
     public override void EventFire() {
         missionItems = new string[] {
-            $"{weaponChangeButtonText}で\nHUD右下の選択武装が\n切り替わる事を確認する",
-            $"{fireButtonText}、{subActionButtonText}で\n選択中の武装アクションが\n起動することを確認する\n[0/2]"
+            $"{weaponChangeButtonText}で\nHUD右下の武装が\n切り替わる事を確認する",
+            $"{weaponActionButtonsText}で\n各装備アクションが\n起動することを確認する\n[0/2]"
         };
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
         message = MessageWindow.instance;
         StartCoroutine("Event");
-        parmitNext?.Invoke(this, EventArgs.Empty);
     }
 
     // Start is called before the first frame update
@@ -42,7 +41,7 @@ public class M01_t2 : MissionEventNode
         message.function(messageText[1], 4f);
         mList.RemoveMissionItems();
         foreach (string s in missionItems) mList.AddMissionItem(s);
-        parmitNext?.Invoke(this, EventArgs.Empty);
+        ParmitNext();
 
 
     }

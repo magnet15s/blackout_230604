@@ -24,7 +24,7 @@ public class MissionFlowSequencer : MonoBehaviour
      */
 
     // Start is called before the first frame update
-    void Start()
+    /*void Start()
     {
         if (initSetFirstEvent) {
             activeEvent = firstEventNode;
@@ -37,10 +37,10 @@ public class MissionFlowSequencer : MonoBehaviour
             activeEvent.EventFire();
         }
         
-    }
+    }*/
 
     // Update is called once per frame
-    private void EventNext(object o, EventArgs e) {
+    /*private void EventNext(object o, EventArgs e) {
         activeEvent.parmitNext -= EventNext;
         eventPhase++;
         if (eventPhase >= eventFlags.Length) {
@@ -50,9 +50,9 @@ public class MissionFlowSequencer : MonoBehaviour
         eventFlags[eventPhase].isActive = true;
         activeEvent = eventFlags[eventPhase].getTargetEventNode();
         activeEvent.parmitNext += EventNext;
-    }
+    }*/
 
-    private void SceneTransOnEndAllEvent() {
+    /*private void SceneTransOnEndAllEvent() {
         Initiate.Fade(nextScene, Color.black, 3f);
-    }
+    }*/
 }

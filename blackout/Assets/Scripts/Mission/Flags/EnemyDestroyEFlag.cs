@@ -5,21 +5,30 @@ using UnityEngine;
 public class EnemyDestroyEFlag : MissionEventFlag
 {
     // Start is called before the first frame update
-    
 
+    bool subscribed = false;
     // Update is called once per frame
     void Update()
     {
         if (isActive) {
-            Enemy.EnemyDestroy += catchDestroy;
+            if (!subscribed)
+            {
+                subscribed = true;
+                Enemy.EnemyDestroy += catchDestroy;
+            }
+        }
+        else
+        {
+            if (subscribed)
+            {
+                subscribed = false;
+                Enemy.EnemyDestroy -= catchDestroy;
+            }
         }
     }
 
     private void catchDestroy(Enemy e) {
-        if(!ignited) {
-            ignited = true;
-            targetEventNode.EventFire();
-        }
+        OnFlagUp();
     }
 
     
