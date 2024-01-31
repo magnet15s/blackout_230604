@@ -76,8 +76,8 @@ GameObject:
   - component: {fileID: 4696372676052141109}
   - component: {fileID: 273970508023807024}
   - component: {fileID: 2182734270430809937}
-  - component: {fileID: 5281399191311130988}
   - component: {fileID: 4194582376005141999}
+  - component: {fileID: 4093972973583036293}
   m_Layer: 0
   m_Name: M7a4d
   m_TagString: Untagged
@@ -224,9 +224,9 @@ MonoBehaviour:
   DestroyFunction:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5281399191311130988}
-        m_TargetAssemblyTypeName: ObjectActivator, Assembly-CSharp
-        m_MethodName: Activation
+      - m_Target: {fileID: 4093972973583036293}
+        m_TargetAssemblyTypeName: PrefabInstantiater, Assembly-CSharp
+        m_MethodName: OnInstantiate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -290,20 +290,6 @@ MonoBehaviour:
   layerMask: 0
   catchLayer: 0
   drawRay: 1
---- !u!114 &5281399191311130988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2476182269387788922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce410875306e6134ba0700357f62d4d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 7576542353385806485}
 --- !u!114 &4194582376005141999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +303,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deleySecond: 5
+--- !u!114 &4093972973583036293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476182269387788922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aedd260fbdbf8544941543be3fbc54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  prefab: {fileID: 5965744220788530632, guid: ec464302fa9e78246a8b590982acadd2, type: 3}
+  prefabPosition: {x: 0, y: 0, z: 0}
+  prefabEulerAngle: {x: -90, y: 0, z: 0}
+  prefabScale: {x: 1, y: 1, z: 1}
 --- !u!1 &2768431590462452228
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,10 +661,5 @@ PrefabInstance:
 --- !u!4 &7576542353385806481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5965744220788530636, guid: ec464302fa9e78246a8b590982acadd2, type: 3}
-  m_PrefabInstance: {fileID: 4318914530466056029}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7576542353385806485 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5965744220788530632, guid: ec464302fa9e78246a8b590982acadd2, type: 3}
   m_PrefabInstance: {fileID: 4318914530466056029}
   m_PrefabAsset: {fileID: 0}

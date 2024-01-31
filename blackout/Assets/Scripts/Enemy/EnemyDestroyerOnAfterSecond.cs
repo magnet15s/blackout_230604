@@ -17,7 +17,7 @@ public class EnemyDestroyerOnAfterSecond : MonoBehaviour
 
     IEnumerator Cor()
     {
-        yield return new WaitForSeconds(deleySecond);
+        yield return new WaitForSeconds(Mathf.Max(0.1f, deleySecond));
         Destroy(gameObject);
     }
 }
