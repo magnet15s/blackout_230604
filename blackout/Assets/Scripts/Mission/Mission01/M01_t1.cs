@@ -8,7 +8,7 @@ public class M01_t1 : MissionEventNode
     [SerializeField] private string missionTitle = "機動テスト";
     private string[] messageText = new string[]{
         "[キース]\n駆動系、問題無し。",
-        "[オスカー]\nテスト項目を更新した。次のテストに移ってくれ。"
+        "[オスカー少佐]\nテスト項目を更新した。次のテストに移ってくれ。"
     };
     private string jumpButtonText = "Space";
     private string airAxelButtonText = "Space";

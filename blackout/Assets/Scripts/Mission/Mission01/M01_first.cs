@@ -13,7 +13,7 @@ public class M01_first : MissionEventNode
     public string dashButtonText = "移動＋左Shift";
     private string[] messageText = new string[]{
         "[キース]\nコンソール異常無し。操縦系接続確認。HUD同期確認、異常無し。",
-        "[オスカー]\nテスト内容がHUD左側に表示されているはずだ。それを元に各項目のテストを遂行してくれ。",
+        "[オスカー少佐]\nテスト内容がHUD左側に表示されているはずだ。それを元に各項目のテストを遂行してくれ。",
         "[キース]\n了解。"
     };
     [SerializeField] MessageWindow message;

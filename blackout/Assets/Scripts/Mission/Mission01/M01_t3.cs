@@ -8,7 +8,7 @@ public class M01_t3 : MissionEventNode
     /*[SerializeField] private string missionTitle = "火器管制テスト";
     private string[] messageText = new string[]{
         "[キース]\n統合姿勢制御、良好。\n各部アブソーバー異常無し。",
-        "[オスカー]\n順調だな。次は火器管制系を検証する。\n安全装置は解除済みだ。各種項目のテストを開始してくれ。"
+        "[オスカー少佐]\n順調だな。次は火器管制系を検証する。\n安全装置は解除済みだ。各種項目のテストを開始してくれ。"
     };
     private string weaponChangeButtonText = "R,Fキー";
     private string fireButtonText = "左クリック";
