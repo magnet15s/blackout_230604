@@ -624,6 +624,7 @@ public class EnemyCore : Enemy
             }
             alive = false;
             OnEnemyDestroy(this);
+            
         }
         
     }
