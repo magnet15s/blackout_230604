@@ -7,8 +7,17 @@ public class M01_end : MissionEventNode {
 
     [SerializeField]MessageWindow mw;
     public override void EventFire() {
+
+        StartCoroutine("Event");
+    }
+
+    IEnumerator Event() {
         Debug.Log("Mission End");
-        mw.function("Mssion Complete!", 2);
-        ParmitNext();
+        yield return new WaitForSeconds(5);
+        mw.function("\nMssion Complete!", 3);
+        yield return new WaitForSeconds(2);
+        Initiate.Fade("menu_02", Color.black, 1.0f);
+        yield break;
+
     }
 }
