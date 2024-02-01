@@ -40,9 +40,13 @@ public class M01_t3 : MissionEventNode
         yield return new WaitForSeconds(2.3f);
         message.function(messageText[1], 2f);
         mList.RemoveMissionItems();
-        foreach (GameObject o in target) o.SetActive(true);
+        foreach (GameObject o in target) {
+            if(o) o.SetActive(true);
+        }
+
         yield return new WaitForSeconds(2.3f);
         foreach (GameObject o in target) {
+            if (!o) continue;
             TrackingIcon icon = Instantiate(trackingIcon, canvas).GetComponent<TrackingIcon>();
             icon.trackingTarget = o;
             icon.canvas = canvas.GetComponent<RectTransform>();
