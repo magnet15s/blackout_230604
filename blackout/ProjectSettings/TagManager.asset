@@ -8,6 +8,7 @@ TagManager:
   - IgnoreCollision
   - structure
   - flagcol
+  - Enemy
   layers:
   - Default
   - TransparentFX
