@@ -30,6 +30,7 @@ public class TestPlayerStateRistner : MonoBehaviour
         pc.OnDashCanceled += odc;
         pc.OnTouchDowned += otd;
         pc.OnAired += oa;
+        pc.OnAirAxeled += oaa;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -78,6 +79,10 @@ public class TestPlayerStateRistner : MonoBehaviour
     }
     void oa() {
         Debug.Log("OnAir");   
+    }
+
+    void oaa() {
+        Debug.Log("OnAirAxel");
     }
     /*
         public PlayerStateHandler OnJumpChargeStarted;

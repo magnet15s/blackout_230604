@@ -47,7 +47,7 @@ public class Radar : MonoBehaviour
         if(enemies.TryGetValue(enemy, out e))
         {
             this.enemies.Remove(enemy);
-            Destroy(e.gameObject);
+            if(e)Destroy(e.gameObject);
         }
         
     }
