@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static PlayerController;
+using static UnityEditor.PlayerSettings;
 
 public class TestPlayerStateRistner : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class TestPlayerStateRistner : MonoBehaviour
     public AudioClip sound4;
     public AudioClip sound5;
     AudioSource audioSource;
+    public ParticleSystem par1;
+    public ParticleSystem par2;
+    public ParticleSystem par3;
+    public GameObject tyakuchiPrefab;
+    public ParticleSystem par4;
     void Start()
     {
         //各イベント発火時に実行させるコールバック関数を登録
@@ -42,6 +48,11 @@ public class TestPlayerStateRistner : MonoBehaviour
     void oj() {
         Debug.Log("OnJump");
         audioSource.PlayOneShot(sound2);
+        par1.gameObject.SetActive(false);
+        par2.gameObject.SetActive(false);
+        par3.gameObject.SetActive(false);
+        par4.gameObject.SetActive(false);
+
     }
     void oem() {
         Debug.Log("OnEvaseionMove");
@@ -58,6 +69,11 @@ public class TestPlayerStateRistner : MonoBehaviour
     void otd() {
         Debug.Log("OnTouchDown");
         audioSource.PlayOneShot(sound1);
+        par1.gameObject.SetActive(true);
+        par2.gameObject.SetActive(true);
+        par3.gameObject.SetActive(true);
+        par4.gameObject.SetActive(true);
+        Instantiate(tyakuchiPrefab, this.transform.position, Quaternion.identity);
 
     }
     void oa() {
