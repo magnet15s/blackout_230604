@@ -19,8 +19,9 @@ public class Mission2flag_2 : MissionEventFlag {
         Debug.Log(startEnemy+","+nowEnemy);
         nowEnemy = GameObject.FindGameObjectsWithTag("Enemy").Length;
         string text = "‘S‚Ä‚Ì“G‚ÌŒ‚”j"+"["+(startEnemy-nowEnemy)+"/"+startEnemy+"]";
-        mList.UpdateMissionItemTextNonCal(2, text);
+        mList.UpdateMissionItemTextNonCal(1, text);
         if (nowEnemy == 0) {
+            mList.MissionClear(1);
             OnFlagUp();
         }
     }
