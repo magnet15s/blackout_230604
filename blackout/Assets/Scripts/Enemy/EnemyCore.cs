@@ -634,6 +634,7 @@ public class EnemyCore : Enemy
     /// </summary>
     public void InvokeDestroy()
     {
+        if (!alive) return;
         if (DestroyFunction.GetPersistentEventCount() >= 1)
         {
             DestroyFunction.Invoke();
