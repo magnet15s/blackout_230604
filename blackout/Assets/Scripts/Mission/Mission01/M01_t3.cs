@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class M01_t3 : MissionEventNode
 {
-    /*[SerializeField] private string missionTitle = "火器管制テスト";
+    [SerializeField] private string missionTitle = "火器管制テスト";
     private string[] messageText = new string[]{
-        "[キース]\n統合姿勢制御、良好。\n各部アブソーバー異常無し。",
-        "[オスカー少佐]\n順調だな。次は火器管制系を検証する。\n安全装置は解除済みだ。各種項目のテストを開始してくれ。"
+        "[キース]\n火器操作異常なし。",
+        "[オスカー少佐]\nよろしい。では実際に模擬目標の撃破をしてもらう",
+        "[オスカー少佐]\nHUD上に目標の位置を表示している。すべて撃破しろ"
     };
-    private string weaponChangeButtonText = "R,Fキー";
-    private string fireButtonText = "左クリック";
-    private string subActionButtonText = "右クリック";
-    private string[] missionItems;*/
+    [SerializeField] private GameObject trackingIcon;
+    [SerializeField] private List<GameObject> target;
+    [SerializeField] private Transform canvas;
+    [SerializeField] private Transform player;
+    private string[] missionItems;
+    
 
     private MessageWindow message;
     private HUDMissionDisplay mDisp;
@@ -21,10 +24,9 @@ public class M01_t3 : MissionEventNode
 
 
     public override void EventFire() {
-        /*missionItems = new string[] {
-            $"{weaponChangeButtonText}で\nHUD右下の選択武装が\n切り替わる事を確認する",
-            $"{fireButtonText},{subActionButtonText}で\n選択中の武装アクションが\n起動することを確認する\n[0/2]"
-        };*/
+        missionItems = new string[] {
+            $"模擬目標をすべて\n撃破する[0/3]"
+        };
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
         message = MessageWindow.instance;
@@ -32,11 +34,20 @@ public class M01_t3 : MissionEventNode
     // Start is called before the first frame update
     }
 
-
-
     // Update is called once per frame
     IEnumerator Event() {
+        message.function(messageText[0], 2f);
+        yield return new WaitForSeconds(2.3f);
+        message.function(messageText[1], 2f);
         mList.RemoveMissionItems();
+        foreach (GameObject o in target) o.SetActive(true);
+        yield return new WaitForSeconds(2.3f);
+        foreach (GameObject o in target) {
+            TrackingIcon icon = Instantiate(trackingIcon, canvas).GetComponent<TrackingIcon>();
+            icon.trackingTarget = o;
+            icon.canvas = canvas.GetComponent<RectTransform>();
+            icon.player = player.gameObject;
+        }
         ParmitNext();
         yield break;
 

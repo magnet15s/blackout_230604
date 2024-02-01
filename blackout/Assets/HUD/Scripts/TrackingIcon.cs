@@ -15,6 +15,8 @@ public class TrackingIcon : MonoBehaviour
     public float trackingUpdateInterval = 0.3f;
     private float TUICnt = 0;
     private Vector3 trackingPoint;
+    public Color iconColor = Color.white;
+    public bool overrideClosestIconToCenter = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,13 +34,13 @@ public class TrackingIcon : MonoBehaviour
             if(new Vector2(TrackingIcon.closestIconToCenter.rectTransform.localPosition.x, TrackingIcon.closestIconToCenter.rectTransform.localPosition.y).magnitude > 
                 new Vector2(rectTransform.localPosition.x, rectTransform.localPosition.y).magnitude)
             {
-                TrackingIcon.closestIconToCenter = this;
+               if(overrideClosestIconToCenter) TrackingIcon.closestIconToCenter = this;
             }
 
         }
         else
         {
-            TrackingIcon.closestIconToCenter = this;
+            if (overrideClosestIconToCenter) TrackingIcon.closestIconToCenter = this;
         }
 
         TUICnt -= Time.deltaTime;
@@ -56,13 +58,13 @@ public class TrackingIcon : MonoBehaviour
         }
         if(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward) >= 0)
         {
-            if (TrackingIcon.closestIconToCenter.Equals(this))
+            if (overrideClosestIconToCenter || (TrackingIcon.closestIconToCenter != null && TrackingIcon.closestIconToCenter.Equals(this)))
             {
-                image.color = Color.white;
+                image.color = iconColor;
             }
             else
             {
-                image.color = new Color(0.3f,0.3f,0.3f,1);
+                image.color = iconColor * 0.3f;
             }
 
         }
@@ -77,7 +79,7 @@ public class TrackingIcon : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (TrackingIcon.closestIconToCenter == this) closestIconToCenter = null;
+        if (closestIconToCenter != null && TrackingIcon.closestIconToCenter == this) closestIconToCenter = null;
         Icons.Remove(this);
         
     }

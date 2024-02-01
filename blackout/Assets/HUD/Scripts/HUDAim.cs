@@ -80,7 +80,7 @@ public class HUDAim : MonoBehaviour
                 if (!trackingEnemies.Exists(x => x.Equals(enemy)))
                 {
                     Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5,enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
-                    if (result.transform != null && result.transform.Equals(enemy.transform))
+                    if (result.transform && result.transform.Equals(enemy.transform))
                     {
                         trackingEnemies.Add(enemy);
                         TrackingIcon ti = Instantiate(trackingIcon, Canvas.transform).GetComponent<TrackingIcon>();
