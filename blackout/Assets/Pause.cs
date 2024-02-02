@@ -10,7 +10,12 @@ public class Pause : MonoBehaviour
     private bool stop = false;
     void Start()
     {
+        SceneManager.sceneLoaded += OnSceneExit;
         CursorSetActive(false);
+    }
+    void OnSceneExit(Scene s, LoadSceneMode l) {
+        CursorSetActive(true);
+        SceneManager.sceneLoaded -= OnSceneExit;
     }
 
     // Update is called once per frame
@@ -59,4 +64,5 @@ public class Pause : MonoBehaviour
         }
         Cursor.visible = b;
     }
+
 }
