@@ -105,6 +105,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                         );
                         List<RaycastHit> drList = new();
                         foreach(RaycastHit res in results) {
+                            if (CheckRootIsSender(res.transform)) continue;
                             DamageReceiver dr;
                             if((dr = res.transform.GetComponent<DamageReceiver>()) != null) {
                                 drList.Add(res);
@@ -184,6 +185,16 @@ public class LL2_combat_shield : Weapon, ShieldRoot
             }
         }
     }
+    private bool CheckRootIsSender(Transform t) {
+        if (t.parent == null) return false;
+        if (t == pc.transform)return true;
+        while (t.parent != null) {
+            t = t.parent;
+            if (t.parent == pc.transform) return true;
+        }
+        return false;
+    }
+
     public override void Ready() {
         Debug.Log($"Ready{this}");
         connectShield.SetActive(false);
