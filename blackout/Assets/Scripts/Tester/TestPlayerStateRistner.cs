@@ -19,6 +19,7 @@ public class TestPlayerStateRistner : MonoBehaviour
     public ParticleSystem par2;
     public ParticleSystem par3;
     public GameObject tyakuchiPrefab;
+    public GameObject airPrefab;
     public ParticleSystem par4;
     void Start()
     {
@@ -83,6 +84,7 @@ public class TestPlayerStateRistner : MonoBehaviour
 
     void oaa() {
         Debug.Log("OnAirAxel");
+        Instantiate(airPrefab, this.transform.position, Quaternion.identity);
     }
     /*
         public PlayerStateHandler OnJumpChargeStarted;

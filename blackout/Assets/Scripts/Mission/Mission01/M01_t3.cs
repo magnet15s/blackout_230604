@@ -36,9 +36,9 @@ public class M01_t3 : MissionEventNode
 
     // Update is called once per frame
     IEnumerator Event() {
-        message.function(messageText[0], 2f);
+        //message.function(messageText[0], 2f);
         yield return new WaitForSeconds(2.3f);
-        message.function(messageText[1], 2f);
+        //message.function(messageText[1], 2f);
         mList.RemoveMissionItems();
         foreach (GameObject o in target) {
             if(o) o.SetActive(true);

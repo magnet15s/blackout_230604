@@ -12,6 +12,8 @@ public class MessageWindow : MonoBehaviour {
 
     GameObject textWindow;
     TextMeshProUGUI text;
+    public AudioClip sound1;
+    AudioSource audioSource;
 
     private void Awake() {
         if (instance == null) {
@@ -27,6 +29,8 @@ public class MessageWindow : MonoBehaviour {
         textWindow = this.gameObject;
         text = textWindow.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         DisableTextWindow();
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     // このメソッドを呼び出してメッセージウィンドウを更新する
@@ -43,6 +47,7 @@ public class MessageWindow : MonoBehaviour {
     private IEnumerator UpdateMessageWindow(string str, float sec) {
         isRunning = true;
         text.text = str;
+        audioSource.PlayOneShot(sound1);
 
         EnableTextWindow();
 

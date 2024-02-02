@@ -17,7 +17,7 @@ public class text_load : MonoBehaviour {
         // テキストファイルの全文を取得
         if (mission_select.mission_number == 1) {
             file = Resources.Load("missions/mission01") as TextAsset;
-            sprite= Resources.Load<Sprite>("missions/image_005_0000");
+            sprite= Resources.Load<Sprite>("missions/image_018_0000");
         }
         else if(mission_select.mission_number == 2) {
             file = Resources.Load("missions/mission02") as TextAsset;
