@@ -10,7 +10,7 @@ public class MissionLoad : MonoBehaviour
     public AudioClip sound1;
     AudioSource audioSource;
     public static readonly Dictionary<int, string> MISSION_ID = new Dictionary<int, string>() {
-        {101, "Mission_01" }
+        {1, "Mission_01" },{2,"Mission_02"}
     };
     public void Start() {
         audioSource = GetComponent<AudioSource>();

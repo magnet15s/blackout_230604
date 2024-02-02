@@ -30,17 +30,14 @@ EditorBuildSettings:
     path: Assets/Scenes/world02.unity
     guid: 858fc14c93d9eb64d9f6eaf52a5712c7
   - enabled: 1
+    path: Assets/Scenes/MissionScenes/Mission_02.unity
+    guid: 8e7e883fea534184a86928792ac025c1
+  - enabled: 1
     path: Assets/Scenes/world03.unity
     guid: 5f42c017e5558f041afd8c85a01c2df6
   - enabled: 1
     path: Assets/Scenes/world04.unity
     guid: a4e6c159f8bd98b499ae01ddd732298b
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MissionScenes/Mission_01.unity
     guid: 10074caa107c37549b23a4eea6ddd908
