@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class TrackingIcon : MonoBehaviour
@@ -15,11 +17,18 @@ public class TrackingIcon : MonoBehaviour
     public float trackingUpdateInterval = 0.3f;
     private float TUICnt = 0;
     private Vector3 trackingPoint;
+    public Color iconColor = Color.white;
+    public bool overrideClosestIconToCenter = true;
+    public bool selfDestroyWithTarget = false;
+
+    [SerializeField] Vector2 trackBounsOnScreen = new Vector2(0.9f, 0.9f);
+
     // Start is called before the first frame update
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         trackingPoint = player.transform.position - trackingTarget.transform.position;
+        TrackTarget();
         Icons.Add(this);
     }
 
@@ -27,25 +36,25 @@ public class TrackingIcon : MonoBehaviour
     void Update()
     {
 
+        if (selfDestroyWithTarget && !trackingTarget) Destroy(this.gameObject);
+
         if(TrackingIcon.closestIconToCenter != null)
         {
             if(new Vector2(TrackingIcon.closestIconToCenter.rectTransform.localPosition.x, TrackingIcon.closestIconToCenter.rectTransform.localPosition.y).magnitude > 
                 new Vector2(rectTransform.localPosition.x, rectTransform.localPosition.y).magnitude)
             {
-                TrackingIcon.closestIconToCenter = this;
+               if(overrideClosestIconToCenter) TrackingIcon.closestIconToCenter = this;
             }
 
         }
         else
         {
-            TrackingIcon.closestIconToCenter = this;
+            if (overrideClosestIconToCenter) TrackingIcon.closestIconToCenter = this;
         }
+
 
         TUICnt -= Time.deltaTime;
         
-        Vector3 rlp = Camera.main.WorldToScreenPoint(player.transform.position + trackingPoint) - new Vector3(Screen.width / 2, Screen.height / 2, 0);
-
-        rectTransform.localPosition = new Vector3(rlp.x, rlp.y, 0); 
         //Debug.Log(rectTransform.localPosition);
         if (TUICnt < 0)
         {
@@ -54,21 +63,24 @@ public class TrackingIcon : MonoBehaviour
                 trackingPoint = player.transform.position - trackingTarget.transform.position;
 
         }
-        if(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward) >= 0)
+
+        TrackTarget();
+
+        if (Vector3.Dot(trackingPoint.normalized, player.transform.forward) < 0)
         {
-            if (TrackingIcon.closestIconToCenter.Equals(this))
+            if (!overrideClosestIconToCenter || (TrackingIcon.closestIconToCenter != null && TrackingIcon.closestIconToCenter.Equals(this)))
             {
-                image.color = Color.white;
+                image.color = iconColor;
             }
             else
             {
-                image.color = new Color(0.3f,0.3f,0.3f,1);
+                image.color = iconColor * 0.3f;
             }
 
         }
         else
         {
-            image.color = Color.black;
+            if(overrideClosestIconToCenter) image.color = Color.black;
         }
 
         //Debug.Log(Vector3.Dot((trackingTarget.transform.position - player.transform.position).normalized, player.transform.forward));
@@ -77,8 +89,26 @@ public class TrackingIcon : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (TrackingIcon.closestIconToCenter == this) closestIconToCenter = null;
+        if (closestIconToCenter != null && TrackingIcon.closestIconToCenter == this) closestIconToCenter = null;
         Icons.Remove(this);
         
     }
+
+    private void TrackTarget()
+    {
+        Vector3 rlp = Camera.main.WorldToScreenPoint(player.transform.position + trackingPoint) - new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        float sxLim = (Screen.width / 2) * trackBounsOnScreen.x;
+        float syLim = (Screen.height / 2) * trackBounsOnScreen.y;
+        if (Mathf.Abs(rlp.x) > sxLim) rlp.x = sxLim * Mathf.Sign(rlp.x);
+        if (Mathf.Abs(rlp.y) > syLim) rlp.y = syLim * Mathf.Sign(rlp.y);
+        if (Vector3.Dot((trackingPoint.normalized), player.transform.forward) > 0)
+        {
+            rlp.x = sxLim * -Mathf.Sign(rlp.x);
+            rlp.y = -rlp.y;
+        }
+        
+        rectTransform.localPosition = new Vector3(rlp.x, rlp.y, 0);
+    }
+
+    
 }

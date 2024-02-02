@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4785722268355469731
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2476182269387788922, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Name
+      value: M7a4b-exp(from_M7a4d)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -293.26993
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 69.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 26.202652
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: findRange
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: modelName
+      value: M7a4b-exp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: MovePhaseFunctionsRange.Array.data[1]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: MovePhaseFunctionsRange.Array.data[2]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 236037783648560534}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NoAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EnemyCore, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076903631747024407, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3145121115808851403, guid: eb8efd8237265f245bcdb1951ffdc87c, type: 3}
+    - target: {fileID: 7076903631747024407, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0d89a32228097be43b36b77ad0601884, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+--- !u!114 &236037783648560534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+  m_PrefabInstance: {fileID: 4785722268355469731}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf80c06d3d99bb4ea6c38041becb554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
