@@ -19896,8 +19896,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 47174cdba00aeb4488ea9cf5ecd8a490, type: 2}
-  m_Color: {r: 0.206, g: 0.206, b: 0.206, a: 1}
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -20740,7 +20740,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 5000
-  field of view: 0.00001
+  field of view: 79.96
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -23176,8 +23176,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578450885769}
-  m_LocalRotation: {x: -0.013276018, y: -0.6187854, z: -0.010459935, w: 0.7853783}
-  m_LocalPosition: {x: 11.651551, y: -58.75386, z: -80.63033}
+  m_LocalRotation: {x: -0.013276056, y: -0.61878467, z: -0.010459945, w: 0.7853788}
+  m_LocalPosition: {x: 11.651521, y: -58.75387, z: -80.630356}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23209,7 +23209,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 0.00001
+  field of view: 43.38
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -43568,8 +43568,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5898084427105977137}
-  m_LocalRotation: {x: -0.01689723, y: -0.021513276, z: -0.00036365088, w: 0.99962574}
-  m_LocalPosition: {x: 2.2236788, y: 2.0361483, z: -18.430986}
+  m_LocalRotation: {x: -0.016896842, y: -0.021513272, z: -0.00036364244, w: 0.99962574}
+  m_LocalPosition: {x: 2.2236788, y: 2.0361636, z: -18.430986}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
   m_Children:
