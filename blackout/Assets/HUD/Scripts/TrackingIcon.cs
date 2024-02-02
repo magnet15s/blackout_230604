@@ -66,7 +66,7 @@ public class TrackingIcon : MonoBehaviour
 
         TrackTarget();
 
-        if (Vector3.Dot(trackingPoint.normalized, player.transform.forward) >= 0)
+        if (Vector3.Dot(trackingPoint.normalized, player.transform.forward) < 0)
         {
             if (!overrideClosestIconToCenter || (TrackingIcon.closestIconToCenter != null && TrackingIcon.closestIconToCenter.Equals(this)))
             {
