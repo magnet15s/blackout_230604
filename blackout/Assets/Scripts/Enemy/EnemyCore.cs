@@ -621,6 +621,7 @@ public class EnemyCore : Enemy
         if (alive) {
             if(navAgent != null) {
                 navAgent.destination = transform.position;
+                navAgent.stoppingDistance = 100;
             }
             alive = false;
             OnEnemyDestroy(this);
