@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEditor;
 using static Unity.Burst.Intrinsics.X86.Avx;
-using static UnityEditor.Progress;
 
 public class HUDMissionList : MonoBehaviour {
 
