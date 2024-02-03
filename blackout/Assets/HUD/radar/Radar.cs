@@ -23,6 +23,7 @@ public class Radar : MonoBehaviour
     private float enemyIconInitialSize;
 
     [SerializeField] private Material groundMat;
+    [SerializeField] private Material mapMat;
 
     private GameObject enemyIcon;
 
@@ -35,6 +36,9 @@ public class Radar : MonoBehaviour
     [SerializeField] private Color enemyColor;
 
     private Dictionary<Enemy, Transform> enemies = new();
+
+    [SerializeField] Camera RadarCam;
+
     void AddEnemy(Enemy enemy)
     {
         this.enemies.Add(enemy, ((GameObject)Instantiate(enemyIcon, this.transform)).transform);
@@ -61,19 +65,23 @@ public class Radar : MonoBehaviour
         enemyIconInitialSize = enemyIcon.transform.localScale.x;
         world2radarSize = 0.001f * radarScale;
         groundMat.SetFloat("_Size", groundMeshPlaneSizeFct * world2radarSize * groundMeshSize);
-
+        
         foreach(Enemy e in Enemy.EnemiesList)
         {
             enemies.Add(e, ((GameObject)Instantiate(enemyIcon,this.transform)).transform);
         }
         Enemy.EnemySpawn += AddEnemy;
         Enemy.EnemyDestroy += RemoveEnemy;
+        SetDepthForMapMat();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        //SetDepthForMapMat();
+        transform.position = player.position + new Vector3(0, -50, 0);
+
         world2radarSize = 0.001f * radarScale;
         groundMat.SetFloat("_Size", groundMeshPlaneSizeFct * world2radarSize * groundMeshSize);
 
@@ -103,5 +111,10 @@ public class Radar : MonoBehaviour
         }
     }
 
+    private void SetDepthForMapMat()
+    {
+        RenderTexture dTex = RadarCam.targetTexture;
+        mapMat.SetTexture("_MainTex", dTex, 0);
+    }
     
 }
