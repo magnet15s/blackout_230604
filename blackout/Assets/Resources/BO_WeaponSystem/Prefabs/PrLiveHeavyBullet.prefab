@@ -14294,12 +14294,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1950922615870979800}
-  - component: {fileID: 5542730408891910611}
   - component: {fileID: 4833261063614731687}
   - component: {fileID: 7245590597144662255}
   - component: {fileID: 8107102272093938053}
+  - component: {fileID: 1613215545704591417}
   m_Layer: 0
-  m_Name: PrLiveBullet_baku
+  m_Name: PrLiveHeavyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14323,31 +14323,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5542730408891910611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6618401040682188846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c12cb05259cfb4f9d5839b1f4eefa6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialPosition: {x: 0, y: 0, z: 0}
-  initialVelocity: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  shooter: {fileID: 0}
-  damage: 0
-  generatedTime: 0
-  age: 0
-  tr: {fileID: 4833261063614731687}
-  cc: {fileID: 7245590597144662255}
-  ps1: {fileID: 7529408714353337805}
-  ps2: {fileID: 4570883289834502608}
-  ps3: {fileID: 1140868249038717250}
-  HitInitPref: {fileID: 1000013462590818, guid: 9263801063f2c8844b8a8314c8b2a6ff, type: 3}
 --- !u!96 &4833261063614731687
 TrailRenderer:
   serializedVersion: 2
@@ -14390,7 +14365,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -14400,21 +14375,21 @@ TrailRenderer:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: 0.66765356
-        outSlope: 0.66765356
+        inSlope: 2.3669763
+        outSlope: 2.3669763
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.20465054
+        outWeight: 0.25028747
       - serializedVersion: 3
         time: 0.50111866
-        value: 0.95292383
-        inSlope: -0.22605367
-        outSlope: -0.22605367
+        value: 1
+        inSlope: -1.1269865
+        outSlope: -1.1269865
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.40691367
-        outWeight: 0
+        outWeight: 0.36128289
       - serializedVersion: 3
         time: 1
         value: 0.09559631
@@ -14495,6 +14470,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1613215545704591417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6618401040682188846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a05e8fd13f1ae145ab906ee6396b486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialPosition: {x: 0, y: 0, z: 0}
+  initialVelocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  shooter: {fileID: 0}
+  damage: 0
+  generatedTime: 0
+  age: 0
+  tr: {fileID: 4833261063614731687}
+  cc: {fileID: 7245590597144662255}
+  ps1: {fileID: 7529408714353337805}
+  ps2: {fileID: 4570883289834502608}
+  ps3: {fileID: 1140868249038717250}
+  HitInitPref: {fileID: 1000013462590818, guid: 9263801063f2c8844b8a8314c8b2a6ff, type: 3}
 --- !u!1 &7529408714353337806
 GameObject:
   m_ObjectHideFlags: 0

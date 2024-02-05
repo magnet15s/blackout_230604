@@ -202,8 +202,10 @@ public class Livemissile : MonoBehaviour
             dr = other.GetComponent<DamageReceiver>();
             Debug.Log("dr:" + dr);
             Vector3 hitPos = other.ClosestPointOnBounds(transform.position);
-            dr.Damage(damage, hitPos, gameObject, "Livemissile");
-            shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject);
+            
+            //Debug.LogWarning($"{shooter == null}{shooter.sender == null}{other == null}");
+            if(dr != null) dr.Damage(damage, hitPos, gameObject, "Livemissile");
+            //.sender.ThrowHitResponse(this.gameObject, other.gameObject);
         }
         if (!other.CompareTag("IgnoreCollision")) {
             return;

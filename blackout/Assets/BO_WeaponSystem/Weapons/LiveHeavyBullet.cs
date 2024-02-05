@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LiveBullet : MonoBehaviour
+public class LiveHeavyBullet : MonoBehaviour
 {
     // Start is called before the first frame update
     public Vector3 initialPosition;
@@ -39,14 +39,14 @@ public class LiveBullet : MonoBehaviour
     protected bool hit = false;
     protected bool destroyReady = false;
 
-    public static LiveBullet BulletInstantiate(
+    public static LiveHeavyBullet HeavyBulletInstantiate(
         Weapon _shooter,
         Vector3 _initialPosition,
         Vector3 _initialVelocity, 
         int _damage 
     ){
         if (!GET_PREFAB) {
-            PR_LIVEBULLET = ((GameObject)Resources.Load("BO_WeaponSystem/Prefabs/PrLiveBullet")) ?? new GameObject { name = "Bullet Load Error" };
+            PR_LIVEBULLET = ((GameObject)Resources.Load("BO_WeaponSystem/Prefabs/PrLiveHeavyBullet")) ?? new GameObject { name = "Bullet Load Error" };
             GET_PREFAB = true;
         }
 
@@ -56,7 +56,7 @@ public class LiveBullet : MonoBehaviour
         bullet.transform.position = _initialPosition;
         bullet.transform.LookAt(_initialPosition + _initialVelocity);
 
-        LiveBullet bulletLB = bullet.GetComponent<LiveBullet>();
+        LiveHeavyBullet bulletLB = bullet.GetComponent<LiveHeavyBullet>();
 
         bulletLB.initialPosition = _initialPosition;
         bulletLB.initialVelocity = _initialVelocity;
