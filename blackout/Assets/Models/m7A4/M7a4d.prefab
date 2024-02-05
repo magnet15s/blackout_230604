@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98af667eef22ee849b3293dfae0f0175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deleySecond: 5
+  deleySecond: 1
 --- !u!114 &4093972973583036293
 MonoBehaviour:
   m_ObjectHideFlags: 0
