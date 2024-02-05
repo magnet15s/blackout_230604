@@ -33,8 +33,10 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     [SerializeField] private AudioSource audio2;
     [SerializeField] private AudioSource audio3;
     [SerializeField] private AudioSource audio4;
+    public AudioClip audioClip;
     public GameObject EMPPrefab;
     public GameObject SmokePrefab;
+    public bool EMPset = true;
     [SerializeField] private Animator anim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
@@ -386,11 +388,18 @@ private Vector3 moveAngleContext;
         else {
             audio4.mute = false;
         }*/
-        /*if (Input.GetKey(KeyCode.Alpha1)) {
-            GameObject EMP=Instantiate(EMPPrefab);
-            EMP.transform.position = this.transform.position;
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            if (EMPset == true) {
+                GameObject EMP = Instantiate(EMPPrefab);
+                EMP.transform.position = this.transform.position;
+                EMPset=false;
+            }
+            else {
+                audio4.PlayOneShot(audioClip);
+            }
         }
-        if (Input.GetKey(KeyCode.Alpha2)) {
+        
+        /*if (Input.GetKey(KeyCode.Alpha2)) {
             GameObject SMOKE = Instantiate(SmokePrefab);
             SMOKE.transform.position = this.transform.position;
         }*/
