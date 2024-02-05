@@ -781,7 +781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924d2147bf8e1a1488615c8541b2aa05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionSceneName: SampleScene
+  transitionSceneName: Mission_03
   fadeColor: {r: 0, g: 0, b: 0, a: 1}
   fadeTime: 3
 --- !u!1 &393017023
@@ -9943,6 +9943,12 @@ MonoBehaviour:
   sound3: {fileID: 8300000, guid: 52a7132851b4c084a8f0fdc0f2828033, type: 3}
   sound4: {fileID: 8300000, guid: f636ea03c4b03a547a84f6e46a9d6999, type: 3}
   sound5: {fileID: 8300000, guid: f98bf46044be6b24eb46c7359272ef64, type: 3}
+  par1: {fileID: 0}
+  par2: {fileID: 0}
+  par3: {fileID: 0}
+  tyakuchiPrefab: {fileID: 0}
+  airPrefab: {fileID: 0}
+  par4: {fileID: 0}
 --- !u!82 &3688251578171249183
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11267,8 +11273,10 @@ MonoBehaviour:
   audio2: {fileID: 7081304503135215144}
   audio3: {fileID: 7081304503135215146}
   audio4: {fileID: 0}
+  audioClip: {fileID: 0}
   EMPPrefab: {fileID: 0}
   SmokePrefab: {fileID: 0}
+  EMPset: 1
   anim: {fileID: 7081304503135215139}
   cc: {fileID: 7081304503135215141}
   gs: {fileID: 7081304503135215143}
