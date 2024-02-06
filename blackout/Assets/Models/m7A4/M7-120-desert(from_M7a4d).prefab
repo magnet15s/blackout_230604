@@ -1,0 +1,300 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &817177352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 817177353}
+  m_Layer: 0
+  m_Name: mgun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &817177353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817177352}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.0561, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8835431951801613327}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &1784215194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1784215195}
+  m_Layer: 0
+  m_Name: sgun2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1784215195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784215194}
+  m_LocalRotation: {x: -0.7132504, y: 0, z: 0, w: 0.7009094}
+  m_LocalPosition: {x: -0.0056, y: 0.0363, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8835431951801613327}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -91, y: 0, z: 0}
+--- !u!1 &1956263531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1956263532}
+  m_Layer: 0
+  m_Name: sgun1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1956263532
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956263531}
+  m_LocalRotation: {x: -0.7132504, y: 0, z: 0, w: 0.7009094}
+  m_LocalPosition: {x: 0.0051, y: 0.0326, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8835431951801613327}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -91, y: 0, z: 0}
+--- !u!1001 &5498649339819102610
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 273970508023807024, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Speed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2476182269387788922, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Name
+      value: M7-120-desert(from_M7a4d)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840975181596795440, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.3358479
+      objectReference: {fileID: 0}
+    - target: {fileID: 2840975181596795440, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -297.80008
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 49.314156
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960828730450806976, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: modelName
+      value: M7-120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: MovePhaseFunctionsRange.Array.data[1]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 355040449}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 355040448}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GunFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: GunFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AutoGun, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: AutoGun, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: AttackPhaseFunction.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7076903631747024407, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -3145121115808851403, guid: 6c823dba9bfb8b4458f0b921523f9ad8, type: 3}
+    - target: {fileID: 7076903631747024407, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ceee66d94459ffc4fb281a6b8d8a4836, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+--- !u!114 &964894433536038311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+  m_PrefabInstance: {fileID: 5498649339819102610}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931413810435343336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf80c06d3d99bb4ea6c38041becb554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7931413810435343336 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2476182269387788922, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+  m_PrefabInstance: {fileID: 5498649339819102610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &355040448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931413810435343336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2acc04e7bee0a8043ac5393908f219ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 964894433536038311}
+  firePosition:
+  - {fileID: 817177353}
+  gunName: Auto-Gun
+  firePerSec: 1
+  burstFireAmount: 1
+  fireInterval: 7
+  lookAndFireDeley: 1
+  initialVelocity: 300
+  fireRange: 200
+  damage: 30
+--- !u!114 &355040449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931413810435343336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a49087b5f134b043a21ecf8f15f151b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  core: {fileID: 964894433536038311}
+  firePosition:
+  - {fileID: 1956263532}
+  - {fileID: 1784215195}
+  gunName: Auto-Gun
+  firePerSec: 12
+  burstFireAmount: 6
+  fireInterval: 1.5
+  lookAndFireDeley: 1
+  initialVelocity: 150
+  fireRange: 150
+  damage: 10
+--- !u!4 &8835431951801613327 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3950469400622001565, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+  m_PrefabInstance: {fileID: 5498649339819102610}
+  m_PrefabAsset: {fileID: 0}

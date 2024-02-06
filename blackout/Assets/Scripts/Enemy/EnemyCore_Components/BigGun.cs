@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BigGun : AutoGun
 {
-    protected override void Percussion(Vector3 firePos) {
-        LiveHeavyBullet.HeavyBulletInstantiate(gun, firePos, (core.Target.transform.position - firePos).normalized * initialVelocity, damage);
+    protected override void Percussion(Transform firePos) {
+        LiveHeavyBullet.HeavyBulletInstantiate(gun, firePos.position, firePos.forward * initialVelocity, damage);
     }
 
 }

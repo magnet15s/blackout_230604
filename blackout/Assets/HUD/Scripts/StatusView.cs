@@ -29,7 +29,7 @@ public class StatusView : MonoBehaviour
     void CreateWepViewText()
     {
         string text = "";
-        for(int i = 0; i < pc.weapons.Count; i++)
+        for(int i = 0; i < wepTextViews.Count; i++)
         {
             wepTextViews[i].text = wepText(pc.weapons[i]);
         }
