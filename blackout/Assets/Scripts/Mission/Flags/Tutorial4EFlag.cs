@@ -5,47 +5,42 @@ using UnityEngine;
 public class Tutorial4EFlag : MissionEventFlag
 {
     // Start is called before the first frame update
-    private bool jumpTestCleared = false;
-    private bool airAxelTestCleared = false;
-    private bool evasionMoveTestCleared = false;
+    private int targetKillCount = 0;
+
     [SerializeField] private PlayerController pc;
 
     private bool subscribed = false;
     private HUDMissionList mList;
-
+    string text;
     // Update is called once per frame
     private void Start() {
         mList = HUDMissionDisplay.mainDisplay.GetMissionList();
         
     }
+    private void EnemyKillCount(Enemy e) {
+        targetKillCount++;
+        
+        if(targetKillCount >= 3) {
+            Enemy.EnemyDestroy -= EnemyKillCount;
+        }
+    }
+
+    private void ChangeMissionItem() {
+
+    }
+
     void Update()
     {
         if (isActive) {
             if(!subscribed)
             {
+                Enemy.EnemyDestroy += EnemyKillCount;
                 subscribed = true;
-                pc.OnJumped += () => {
-                    jumpTestCleared = true;
-                    mList.MissionClear(3);
-                };
+                text = mList.getMissionItemText(8);
+                text = text.Substring(text.IndexOf('['));
 
-                pc.OnAirAxeled += () => {
-                    airAxelTestCleared = true;
-                    mList.MissionClear(4);
-                };
-
-                pc.OnEvasionMoved += () => {
-                    evasionMoveTestCleared = true;
-                    mList.MissionClear(5);
-                };
             }
 
-            //全ミッション完了監視
-            if(jumpTestCleared && airAxelTestCleared && evasionMoveTestCleared) {
-                Debug.Log("Test2 comp");
-                OnFlagUp();
-                isActive = false;
-            }
         }
     }
 }
