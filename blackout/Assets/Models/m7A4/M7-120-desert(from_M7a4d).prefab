@@ -166,6 +166,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
       propertyPath: MovePhaseFunctionsRange.Array.data[1]
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
+      propertyPath: MovePhaseFunctionsRange.Array.data[2]
       value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4696372676052141109, guid: ca03aceb6fe91a8459ffde8e33da914f, type: 3}
