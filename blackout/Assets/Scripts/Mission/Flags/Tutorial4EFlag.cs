@@ -7,8 +7,6 @@ public class Tutorial4EFlag : MissionEventFlag
     // Start is called before the first frame update
     private int targetKillCount = 0;
 
-    [SerializeField] private PlayerController pc;
-
     private bool subscribed = false;
     private HUDMissionList mList;
     string text;
@@ -19,15 +17,14 @@ public class Tutorial4EFlag : MissionEventFlag
     }
     private void EnemyKillCount(Enemy e) {
         targetKillCount++;
-        
+        mList.UpdateMissionItemTextNonCal(8, $"{text}[{targetKillCount}/3]");
         if(targetKillCount >= 3) {
             Enemy.EnemyDestroy -= EnemyKillCount;
+            mList.MissionClear(8);
         }
     }
 
-    private void ChangeMissionItem() {
-
-    }
+    
 
     void Update()
     {
@@ -37,7 +34,7 @@ public class Tutorial4EFlag : MissionEventFlag
                 Enemy.EnemyDestroy += EnemyKillCount;
                 subscribed = true;
                 text = mList.getMissionItemText(8);
-                text = text.Substring(text.IndexOf('['));
+                text = text.Substring(0,text.IndexOf('['));
 
             }
 

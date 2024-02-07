@@ -24,6 +24,7 @@ public class M01_t3 : MissionEventNode
 
 
     public override void EventFire() {
+        
         missionItems = new string[] {
             $"–Í‹[–Ú•W‚ð‚·‚×‚Ä\nŒ‚”j‚·‚é[0/3]"
         };
@@ -40,6 +41,7 @@ public class M01_t3 : MissionEventNode
         yield return new WaitForSeconds(1.8f);
         message.function(messageText[1], 2f);
         mList.RemoveMissionItems();
+        yield return new WaitForSeconds(2.3f);
         foreach (GameObject o in target) {
             if(o) o.SetActive(true);
         }
@@ -51,7 +53,8 @@ public class M01_t3 : MissionEventNode
             icon.canvas = canvas.GetComponent<RectTransform>();
             icon.player = player.gameObject;
         }
-        yield return new WaitForSeconds(2.3f);
+        mList.AddMissionItem(missionItems[0], 8);
+        message.function(messageText[2], 2.8f);
         ParmitNext();
         yield break;
 
