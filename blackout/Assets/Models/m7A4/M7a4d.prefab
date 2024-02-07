@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  modelName: M7a4f
+  modelName: M7a4d
   maxArmorPoint: 200
   armorPoint: 200
   onRadarDist: 300

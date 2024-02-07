@@ -21375,8 +21375,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251577138033040}
-  m_LocalRotation: {x: 0.03564296, y: 0.010897528, z: -0.00038869027, w: 0.9993051}
-  m_LocalPosition: {x: -0.05729676, y: 1.2578775, z: 0.86125195}
+  m_LocalRotation: {x: -0.2963888, y: 0.6797483, z: -0.5703771, w: -0.35322213}
+  m_LocalPosition: {x: -151.74907, y: -12.9177685, z: -378.42722}
   m_LocalScale: {x: 1.2987013, y: 1.2987013, z: 1.2987013}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28463,7 +28463,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578407882382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28649,8 +28649,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578450885769}
-  m_LocalRotation: {x: -0.013276019, y: -0.6187854, z: -0.010459933, w: 0.78537834}
-  m_LocalPosition: {x: 11.651521, y: -58.75386, z: -80.63034}
+  m_LocalRotation: {x: 0.0742672, y: 0.7537378, z: -0.08649102, w: 0.6472118}
+  m_LocalPosition: {x: -170.17036, y: -9.495416, z: -376.34335}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30473,9 +30473,9 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_XDamping: 0.2
+  m_XDamping: 2.1
   m_YDamping: 0.2
-  m_ZDamping: 0.2
+  m_ZDamping: 2.4
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.82
@@ -49199,8 +49199,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5898084427105977137}
-  m_LocalRotation: {x: -0.016897274, y: -0.021513246, z: -0.0003636513, w: 0.99962574}
-  m_LocalPosition: {x: 2.2236788, y: 2.0361483, z: -18.430986}
+  m_LocalRotation: {x: -0.007734851, y: -0.009802296, z: -0.00007582519, w: 0.99992204}
+  m_LocalPosition: {x: 1.9867861, y: 2.2205698, z: -18.396257}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49226,7 +49226,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 65
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 3793706790668177928}
+  m_LookAt: {fileID: 3688251578407882385}
   m_Follow: {fileID: 3793706790668177928}
   m_Lens:
     FieldOfView: 43.38
