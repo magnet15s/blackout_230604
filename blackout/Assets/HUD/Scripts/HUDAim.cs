@@ -77,6 +77,7 @@ public class HUDAim : MonoBehaviour
             //enemiesInTrackingArea‚Ìenemy‚É‘Î‚µ‚Äray‚ð”­ŽË¨Å‰‚É‚»‚Ìenemy‚É“–‚½‚ê‚ÎtrackingEnemies‚É“o˜^
             foreach(Enemy enemy in enemiesInTrackingArea)
             {
+                
                 if (!trackingEnemies.Exists(x => x.Equals(enemy)))
                 {
                     Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5,enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
@@ -93,14 +94,22 @@ public class HUDAim : MonoBehaviour
                 }
                 else
                 {
-                    Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5, enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
-
-                    if (result.transform == null || !result.transform.Equals(enemy.transform))
-                    {
+                    if (enemy.transform) {
                         int teidx = icons.FindIndex(x => x.trackingTarget.Equals(enemy.gameObject));
                         Destroy(icons[teidx].gameObject);
                         icons.Remove(icons[teidx]);
                         trackingEnemies.Remove(enemy);
+
+                    } else {
+                        Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5, enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
+                        if (result.transform == null || !result.transform.Equals(enemy.transform))
+                        {
+                            int teidx = icons.FindIndex(x => x.trackingTarget.Equals(enemy.gameObject));
+                            Destroy(icons[teidx].gameObject);
+                            icons.Remove(icons[teidx]);
+                            trackingEnemies.Remove(enemy);
+                        }
+
                     }
                 }
                 
