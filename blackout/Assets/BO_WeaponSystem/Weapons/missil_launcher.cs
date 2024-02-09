@@ -124,7 +124,7 @@ public class missil_launcher : Weapon
     private void fire()
     {
         if (TrackingIcon.closestIconToCenter != null) {
-            Target = TrackingIcon.Icons[0].trackingTarget;
+            Target = TrackingIcon.closestIconToCenter.trackingTarget;
             remainAmmo--;
             //Debug.Log($"BANG!! {remainAmmo}");
             Livemissile homing;
