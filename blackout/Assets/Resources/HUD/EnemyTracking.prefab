@@ -96,3 +96,5 @@ MonoBehaviour:
   trackingUpdateInterval: 0.05
   iconColor: {r: 0.29440442, g: 0.9811321, b: 0.26379493, a: 1}
   overrideClosestIconToCenter: 1
+  selfDestroyWithTarget: 1
+  trackBounsOnScreen: {x: 0.9, y: 0.9}

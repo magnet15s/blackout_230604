@@ -23,7 +23,7 @@ public class FocusObjectStatusView : MonoBehaviour
         if (TrackingIcon.closestIconToCenter != null)
         {
             Enemy enemy;
-            if ((enemy = TrackingIcon.closestIconToCenter.trackingTarget.transform.GetComponent<Enemy>()) != null)
+            if ((enemy = TrackingIcon.closestIconToCenter.trackingTarget?.transform.GetComponent<Enemy>()) != null)
             {
                 string damageLevel;
                 if ((float)enemy.armorPoint / (float)enemy.maxArmorPoint == 1) damageLevel = "not damaged";

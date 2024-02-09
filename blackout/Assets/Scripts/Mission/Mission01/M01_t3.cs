@@ -8,7 +8,7 @@ public class M01_t3 : MissionEventNode
     [SerializeField] private string missionTitle = "火器管制テスト";
     private string[] messageText = new string[]{
         "[キース]\n火器操作異常なし。",
-        "[オスカー少佐]\nよろしい。では実際に模擬目標の撃破をしてもらう",
+        "[オスカー少佐]\nでは実際に模擬目標の撃破をしてもらおう",
         "[オスカー少佐]\nHUD上に目標の位置を表示している。すべて撃破しろ"
     };
     [SerializeField] private GameObject trackingIcon;
@@ -24,6 +24,7 @@ public class M01_t3 : MissionEventNode
 
 
     public override void EventFire() {
+        
         missionItems = new string[] {
             $"模擬目標をすべて\n撃破する[0/3]"
         };
@@ -36,15 +37,15 @@ public class M01_t3 : MissionEventNode
 
     // Update is called once per frame
     IEnumerator Event() {
-        //message.function(messageText[0], 2f);
-        yield return new WaitForSeconds(2.3f);
-        //message.function(messageText[1], 2f);
+        message.function(messageText[0], 1.5f);
+        yield return new WaitForSeconds(1.8f);
+        message.function(messageText[1], 2f);
         mList.RemoveMissionItems();
+        yield return new WaitForSeconds(2.3f);
         foreach (GameObject o in target) {
             if(o) o.SetActive(true);
         }
 
-        yield return new WaitForSeconds(2.3f);
         foreach (GameObject o in target) {
             if (!o) continue;
             TrackingIcon icon = Instantiate(trackingIcon, canvas).GetComponent<TrackingIcon>();
@@ -52,6 +53,8 @@ public class M01_t3 : MissionEventNode
             icon.canvas = canvas.GetComponent<RectTransform>();
             icon.player = player.gameObject;
         }
+        mList.AddMissionItem(missionItems[0], 8);
+        message.function(messageText[2], 2.8f);
         ParmitNext();
         yield break;
 

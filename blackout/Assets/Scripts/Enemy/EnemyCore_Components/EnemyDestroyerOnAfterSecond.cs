@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class EnemyDestroyerOnAfterSecond : MonoBehaviour
 {
@@ -11,7 +13,15 @@ public class EnemyDestroyerOnAfterSecond : MonoBehaviour
     {
         EnemyCore ec;
         transform.TryGetComponent<EnemyCore> (out ec);
-        ec.DefaultDestroy();
+        if (ec.alive) {
+            NavMeshAgent navAgent = GetComponent<NavMeshAgent> ();
+            if (navAgent != null) {
+                navAgent.destination = transform.position;
+                navAgent.stoppingDistance = 100;
+            }
+            ec.alive = false;
+
+        }
         StartCoroutine("Cor");
     }
 
