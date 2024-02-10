@@ -48,6 +48,25 @@ public class HUDAim : MonoBehaviour
         {
             TUICnt = trackingUpdateInterval;
 
+            //enemiesInTrackingArea“à‚ÌAenemiesList‚©‚çœŠOÏ‚İ‚Ìenemy‚ğ‚Á‚Ä‚¢‚é—v‘f‚ğ
+            //enemiesInTrackingArea‚ÆtrackingEnemies‚©‚çremove
+            List<Enemy> missingEnemiesList = new();
+            foreach (Enemy e in enemiesInTrackingArea) {
+                if (!Enemy.EnemiesList.Find(item => item.Equals(e))) missingEnemiesList.Add(e);
+            }
+            foreach (Enemy e in missingEnemiesList) {
+                enemiesInTrackingArea.Remove(e);
+                if (trackingEnemies.Find(item => item.Equals(e))) trackingEnemies.Remove(e);
+            }
+
+            //icons“à‚Ìmissing‚È—v‘f‚ğremove
+            if(icons != null && icons.Count() > 0) {
+                foreach (TrackingIcon icon in icons) {
+                    if (!icon) icons.Remove(icon);
+                }
+            }
+            
+
 
             //ƒgƒ‰ƒbƒLƒ“ƒOƒGƒŠƒAã‚É‚¢‚é“G‚ğ’T‚µ‚ÄenemiesInTrackingArea‚É“o˜^‚·‚é
             foreach (Enemy enemy in Enemy.EnemiesList)
@@ -74,10 +93,10 @@ public class HUDAim : MonoBehaviour
                 }
             }
 
+
             //enemiesInTrackingArea‚Ìenemy‚É‘Î‚µ‚Äray‚ğ”­Ë¨Å‰‚É‚»‚Ìenemy‚É“–‚½‚ê‚ÎtrackingEnemies‚É“o˜^
             foreach(Enemy enemy in enemiesInTrackingArea)
             {
-                
                 if (!trackingEnemies.Exists(x => x.Equals(enemy)))
                 {
                     Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5,enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
@@ -94,23 +113,17 @@ public class HUDAim : MonoBehaviour
                 }
                 else
                 {
-                    if (enemy.transform) {
+                    
+                    Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5, enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
+                    if (result.transform == null || !result.transform.Equals(enemy.transform))
+                    {
                         int teidx = icons.FindIndex(x => x.trackingTarget.Equals(enemy.gameObject));
                         Destroy(icons[teidx].gameObject);
                         icons.Remove(icons[teidx]);
                         trackingEnemies.Remove(enemy);
-
-                    } else {
-                        Physics.Raycast(player.position + (enemy.transform.position - player.position).normalized * 5, enemy.transform.position - player.position + (enemy.transform.position - player.position).normalized * 5, out RaycastHit result);
-                        if (result.transform == null || !result.transform.Equals(enemy.transform))
-                        {
-                            int teidx = icons.FindIndex(x => x.trackingTarget.Equals(enemy.gameObject));
-                            Destroy(icons[teidx].gameObject);
-                            icons.Remove(icons[teidx]);
-                            trackingEnemies.Remove(enemy);
-                        }
-
                     }
+
+                    
                 }
                 
             }
@@ -125,7 +138,7 @@ public class HUDAim : MonoBehaviour
                         enemiesInTrackingArea.Remove(enemy);
                         if (trackingEnemies.Find(x => x.Equals(enemy)))
                         {
-                            int teidx = icons.FindIndex(x => x.trackingTarget.Equals(enemy.gameObject));
+                            int teidx = icons.FindIndex(x => !x || !x.trackingTarget);
                             Debug.Log(teidx);
                             Destroy(icons[teidx].gameObject);
                             icons.Remove(icons[teidx]);

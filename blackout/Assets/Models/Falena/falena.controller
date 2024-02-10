@@ -10,7 +10,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 6f2854a00ad9da84dbcc3201be66f236, type: 2}
-    m_Threshold: 0.2
+    m_Threshold: -0.6
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -34,7 +34,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: verticalAiming
   m_BlendParameterY: moveDirX
-  m_MinThreshold: 0.2
+  m_MinThreshold: -0.6
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
@@ -107,7 +107,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: b575c13067144ee43b3c5cbb72468242, type: 2}
-    m_Threshold: 0.2
+    m_Threshold: -0.6
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -131,7 +131,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: verticalAiming
   m_BlendParameterY: moveDirX
-  m_MinThreshold: 0.2
+  m_MinThreshold: -0.6
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
@@ -1296,7 +1296,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 3d0e4f85b88e53249b1d4c314b473d26, type: 2}
-    m_Threshold: 0.2
+    m_Threshold: -0.6
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -1320,7 +1320,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: verticalAiming
   m_BlendParameterY: moveDirX
-  m_MinThreshold: 0.2
+  m_MinThreshold: -0.6
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
@@ -1476,7 +1476,7 @@ BlendTree:
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 22d6e65b753d8c54da036431709ad7e5, type: 2}
-    m_Threshold: 0.2
+    m_Threshold: -0.6
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -1500,7 +1500,7 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: verticalAiming
   m_BlendParameterY: moveDirX
-  m_MinThreshold: 0.2
+  m_MinThreshold: -0.6
   m_MaxThreshold: 1
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
