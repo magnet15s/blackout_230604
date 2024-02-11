@@ -15,16 +15,21 @@ public class M04_first : MissionEventNode
     private HUDMissionList mList;
     // Start is called before the first frame update
     public override void EventFire() {
+
+        //基地ゲートにガイドを設定
         tIcon = Instantiate(objectTracker, canvas).GetComponent<TrackingIcon>();
         tIcon.trackingTarget = gateGuide.gameObject;
         tIcon.canvas = canvas;
         tIcon.player = player;
 
+
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
         message = MessageWindow.instance;
+        StartCoroutine("Event");
     }
     IEnumerator Event() {
+        ParmitNext();
         yield return null;
     }
 }
