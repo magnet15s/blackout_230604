@@ -121,7 +121,7 @@ public class Livemissile : MonoBehaviour
     {
         thisTransform = transform;
         position = thisTransform.position;
-        velocity = new Vector3(UnityEngine.Random.Range(minInitVelocity.x, maxInitVelocity.x), UnityEngine.Random.Range(minInitVelocity.y, maxInitVelocity.y), UnityEngine.Random.Range(minInitVelocity.z, maxInitVelocity.z));
+        velocity = transform.TransformDirection(new Vector3(UnityEngine.Random.Range(minInitVelocity.x, maxInitVelocity.x), UnityEngine.Random.Range(minInitVelocity.y, maxInitVelocity.y), UnityEngine.Random.Range(minInitVelocity.z, maxInitVelocity.z)));
         StartCoroutine(nameof(Timer));
     }
 

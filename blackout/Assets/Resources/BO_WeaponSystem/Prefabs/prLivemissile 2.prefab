@@ -14316,11 +14316,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   time: 2
-  lifeTime: 3
+  lifeTime: 4
   limitAcceleration: 1
-  maxAcceleration: 60
-  minInitVelocity: {x: -5, y: 0, z: 0}
-  maxInitVelocity: {x: 5, y: 0, z: 0}
+  maxAcceleration: 80
+  minInitVelocity: {x: 0, y: 0, z: 150}
+  maxInitVelocity: {x: 0, y: 0, z: 150}
   weapon_name: 
   shooter: {fileID: 0}
   damage: 20

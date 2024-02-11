@@ -29727,10 +29727,10 @@ MonoBehaviour:
   dashInteractTime: 0.1
   dashCoolTime: 0.6
   touchDownTime: 0.8
-  jumpTime: 2
+  jumpTime: 2.1
   jumpChargeTime: 0.6
   fallSpeedFactor: 2
-  airAxelFallSpeed: 0.6
+  airAxelFallSpeed: 0.5
   airAcceleration: 0.5
   maxAirAxelSpeed: 30
   evasionMoveAllTime: 0.5
