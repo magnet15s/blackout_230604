@@ -49,7 +49,7 @@ public class EnemyCore : Enemy
     private Vector3 _lastFoundPosition;
     public float targetDist;            //外部参照用
     private float _targetDist;          
-    [SerializeField] private float findRange = 200;
+    public float findRange = 200;
     public bool targetShare = false;
     [SerializeField, Tooltip("ターゲットが目視出来ているかを判断する処理　設定しない場合EnemyCore.DefaultTargetFind()が呼ばれる")] 
     private UnityEvent TargetFindPhaseFunction;

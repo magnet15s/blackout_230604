@@ -6,6 +6,7 @@ public class M04_t1 : MissionEventNode
 {
 
     [SerializeField] Transform gateGuide;
+    [SerializeField] Focus3rdCam f3c;
 
     private MessageWindow message;
     private HUDMissionDisplay mDisp;
@@ -13,6 +14,7 @@ public class M04_t1 : MissionEventNode
     public override void EventFire()
     {
         //基地ゲートのガイドを削除
+        f3c.SetForcusTarget(null);
         Destroy(gateGuide.gameObject);
 
         mDisp = HUDMissionDisplay.mainDisplay;

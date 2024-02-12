@@ -271,6 +271,7 @@ MonoBehaviour:
   fireInterval: 7
   lookAndFireDeley: 1
   initialVelocity: 300
+  useCoreFindRange: 0
   fireRange: 200
   damage: 30
 --- !u!114 &355040449
@@ -295,6 +296,7 @@ MonoBehaviour:
   fireInterval: 1.5
   lookAndFireDeley: 1
   initialVelocity: 150
+  useCoreFindRange: 0
   fireRange: 150
   damage: 10
 --- !u!4 &8835431951801613327 stripped

@@ -14319,8 +14319,8 @@ MonoBehaviour:
   lifeTime: 3
   limitAcceleration: 1
   maxAcceleration: 60
-  minInitVelocity: {x: -20, y: 0, z: 0}
-  maxInitVelocity: {x: 20, y: 30, z: 0}
+  minInitVelocity: {x: -20, y: 0, z: 30}
+  maxInitVelocity: {x: 20, y: 30, z: 30}
   weapon_name: 
   shooter: {fileID: 0}
   damage: 20
