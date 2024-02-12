@@ -25,11 +25,11 @@ public class text_load : MonoBehaviour {
         }
         else if(mission_select.mission_number == 3) {
             file = Resources.Load("missions/mission03") as TextAsset;
-            sprite = Resources.Load<Sprite>("missions/image_006_0000");
+            sprite = Resources.Load<Sprite>("missions/image_001_0000");
         }
         else if(mission_select.mission_number == 4) {
             file = Resources.Load("missions/mission04") as TextAsset;
-            sprite = Resources.Load<Sprite>("missions/image_007_0000");
+            sprite = Resources.Load<Sprite>("missions/image_006_0000");
         }
         else if (mission_select.mission_number == 5) {
             file = Resources.Load("missions/mission05") as TextAsset;

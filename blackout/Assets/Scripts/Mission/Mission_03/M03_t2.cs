@@ -33,7 +33,11 @@ public class M03_t2 : MissionEventNode
         message.function(messageText[1], 4.7f);
         yield return new WaitForSeconds(5);
         message.function(messageText[2], 2.7f);
-        ParmitNext();
+        yield return new WaitForSeconds(3);
+        message.function("\nMission Complete!", 3);
+        yield return new WaitForSeconds(2);
+        Initiate.Fade("menu_02", Color.black, 1.0f);
+        yield break;
 
     }
 }
