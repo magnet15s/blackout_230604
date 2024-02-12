@@ -20074,7 +20074,7 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   bulletInitialVelocity: 0
   bulletDamage: 0
-  HUDImage: {fileID: 0}
+  HUDImage: {fileID: 2100000, guid: 1c491e17d037ab647a331cd33f69fdba, type: 2}
 --- !u!1 &3688251576440662646
 GameObject:
   m_ObjectHideFlags: 0
@@ -21974,6 +21974,7 @@ MonoBehaviour:
   Canvas: {fileID: 3688251577753858761}
   player: {fileID: 3793706790668177928}
   trackingIcon: {fileID: 1632454674018645748, guid: ef38f239d2dbd394a89dce2126d927f4, type: 3}
+  findRange: 400
   trackingUpdateInterval: 0.3
 --- !u!198 &957908375202039193
 ParticleSystem:
@@ -28649,7 +28650,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578450885769}
-  m_LocalRotation: {x: -0.0024364556, y: -0.0030842887, z: -0.0000075147886, w: 0.9999923}
+  m_LocalRotation: {x: -0.0024364742, y: -0.0030842887, z: -0.0000075148478, w: 0.9999923}
   m_LocalPosition: {x: 1.8517609, y: 2.3268166, z: -18.3721}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
@@ -49200,7 +49201,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5898084427105977137}
-  m_LocalRotation: {x: -0.0024364544, y: -0.0030843231, z: -0.0000075148696, w: 0.9999923}
+  m_LocalRotation: {x: -0.0024364742, y: -0.0030842887, z: -0.0000075148478, w: 0.9999923}
   m_LocalPosition: {x: 1.8517609, y: 2.3268166, z: -18.3721}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
