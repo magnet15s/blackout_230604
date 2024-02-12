@@ -17,6 +17,7 @@ public class HUDAim : MonoBehaviour
     private List<Enemy> trackingEnemies = new();
     private List<TrackingIcon> icons = new();
 
+    [SerializeField] float findRange = 400;
     [SerializeField] float trackingUpdateInterval = 0.3f;
     private float TUICnt = 0;
 
@@ -71,14 +72,16 @@ public class HUDAim : MonoBehaviour
             //トラッキングエリア上にいる敵を探してenemiesInTrackingAreaに登録する
             foreach (Enemy enemy in Enemy.EnemiesList)
             {
+                float dist = (player.position - enemy.transform.position).magnitude;
+
                 if (!enemiesInTrackingArea.Exists(x => x.Equals(enemy)))//すでに登録済みか
                 {
-                    if (InTheTrackingArea(Camera.main.WorldToScreenPoint(enemy.transform.position))) //enemyがトラッキングエリア上に存在するか
+                    if (dist <= findRange && InTheTrackingArea(Camera.main.WorldToScreenPoint(enemy.transform.position))) //enemyがトラッキングエリア上に存在するか
                     {
                         if(Vector3.Dot((enemy.transform.position - player.position).normalized, player.forward) >= 0)
                         enemiesInTrackingArea.Add(enemy);
                     }
-                }else if (!InTheTrackingArea(Camera.main.WorldToScreenPoint(enemy.transform.position)))
+                }else if (dist > findRange || !InTheTrackingArea(Camera.main.WorldToScreenPoint(enemy.transform.position)))
                 {
                     enemiesInTrackingArea.Remove(enemy);
                     if(trackingEnemies.Find(x => x.Equals(enemy)))

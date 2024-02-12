@@ -7,7 +7,7 @@ public class MissileCarrier : AutoGun {
     [SerializeField] GameObject missile;
     protected override void Percussion(Transform firePos) {
         Livemissile homing;
-        homing = Instantiate(missile, firePos.position, Quaternion.identity).GetComponent<Livemissile>();
+        homing = Instantiate(missile, firePos.position, firePos.rotation).GetComponent<Livemissile>();
         homing.Target = core.Target.transform;
     }
 }
