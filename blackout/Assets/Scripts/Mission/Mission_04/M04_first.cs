@@ -8,6 +8,7 @@ public class M04_first : MissionEventNode
     [SerializeField] RectTransform canvas;
     [SerializeField] GameObject player;
     [SerializeField] GameObject objectTracker;
+    [SerializeField] Focus3rdCam f3c;
     private TrackingIcon tIcon;
 
     private MessageWindow message;
@@ -22,6 +23,7 @@ public class M04_first : MissionEventNode
         tIcon.canvas = canvas;
         tIcon.player = player;
 
+        f3c.SetForcusTarget(gateGuide);
 
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();

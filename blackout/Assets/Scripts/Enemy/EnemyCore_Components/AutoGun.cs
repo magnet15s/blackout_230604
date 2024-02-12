@@ -16,6 +16,7 @@ public class AutoGun : MonoBehaviour
     [SerializeField] protected float lookAndFireDeley = 1f;
     [Space]
     [SerializeField] protected float initialVelocity = 200;
+    [SerializeField] protected bool useCoreFindRange = true;
     [SerializeField] protected float fireRange = 150;
     [SerializeField] protected int damage = 10;
     /*[SerializeField] float fireAccuracyFor100 = 1;*/
@@ -40,7 +41,7 @@ public class AutoGun : MonoBehaviour
             Debug.LogWarning("firePosition is null");
             return;
         }
-        if (core.targetFound && core.targetDist < fireRange && !bursting) {
+        if (core.targetFound && core.targetDist < (useCoreFindRange ? core.findRange : fireRange) && !bursting) {
             StartCoroutine("TriggerOne");
         }
     }

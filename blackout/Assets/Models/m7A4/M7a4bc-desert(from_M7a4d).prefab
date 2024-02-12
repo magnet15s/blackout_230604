@@ -821,6 +821,7 @@ MonoBehaviour:
   fireInterval: 1.5
   lookAndFireDeley: 1
   initialVelocity: 200
+  useCoreFindRange: 1
   fireRange: 150
   damage: 10
 --- !u!114 &7275205563068776393
@@ -859,6 +860,7 @@ MonoBehaviour:
   fireInterval: 5
   lookAndFireDeley: 1
   initialVelocity: 150
+  useCoreFindRange: 0
   fireRange: 100
   damage: 10
   missile: {fileID: 6618401040682188846, guid: 6cadd6d432ebd264cbda2c14ca352c69, type: 3}
