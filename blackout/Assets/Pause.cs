@@ -13,8 +13,10 @@ public class Pause : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneExit;
         CursorSetActive(false);
     }
+
     void OnSceneExit(Scene s, LoadSceneMode l) {
         CursorSetActive(true);
+        Time.timeScale = 1;
         SceneManager.sceneLoaded -= OnSceneExit;
     }
 

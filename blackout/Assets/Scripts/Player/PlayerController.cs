@@ -151,7 +151,9 @@ private Vector3 moveAngleContext;
     [Space]
     public GameObject pilotCamera;
     public GameObject sightOrigin;
-
+    [Space]
+    [SerializeField] private SceneCurtain curtain;
+    [SerializeField] private GameOverScreen gameOverScr;
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
@@ -193,7 +195,7 @@ private Vector3 moveAngleContext;
 
     }
 
-
+    private bool dead = false;
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         Debug.Log("Damage!! " + Time.frameCount);
@@ -206,7 +208,25 @@ private Vector3 moveAngleContext;
         statusView.gameObject.GetComponent<Animator>().SetFloat("Armor", (float)armorPoint / (float)maxArmorPoint);
         statusView.gameObject.GetComponent<Animator>().SetTrigger("Damage");
 
+        if(armorPoint <= 0 && !MissionEventNode.missionsAllCleared && !dead) {
+            dead = true;
+            StartCoroutine("Ap0Dead");
+        }
+
     }
+    IEnumerator Ap0Dead() {
+        foreach(MissionEventFlag f in MissionEventFlag.flagList) {
+            f.isActive = false;
+        }
+        Time.timeScale = 0.2f;
+        curtain.closeCurtain(3 * 0.2f);
+        yield return new WaitForSeconds(3 * 0.2f);
+
+        gameOverScr.gameObject.SetActive(true) ;
+        gameOverScr.Show("Shot down by the Enemy");
+
+    }
+    
 
 
     //------------“ü—ÍŽó‚¯Žæ‚è-----------
@@ -251,7 +271,7 @@ private Vector3 moveAngleContext;
 
 
     public void OnLook(InputAction.CallbackContext context) {
-        viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
+        if(Time.timeScale == 1)viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
         if (viewPoint.y > 80) viewPoint.y = 80;
         else if (viewPoint.y < -80) viewPoint.y = -80;
 

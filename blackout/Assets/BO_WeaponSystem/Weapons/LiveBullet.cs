@@ -115,7 +115,7 @@ public class LiveBullet : MonoBehaviour
             DamageReceiver dr;
             if ((dr = other.GetComponent<DamageReceiver>()) != null) {
                 Vector3 hitPos = results[colIdx].point;
-                dr.Damage(damage, hitPos, shooter.gameObject, "LiveBullet");
+                dr.Damage(damage, hitPos, shooter?.gameObject, "LiveBullet");
                 shooter.sender.ThrowHitResponse(this.gameObject, other.gameObject );
             }
 

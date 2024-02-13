@@ -174,7 +174,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
                 AttackEnd();
             }
             float lw;
-            if((lw = anim.GetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER))) != 0) {
+            if(anim != null && (lw = anim.GetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER))) != 0) {
                 lw -= Time.deltaTime / ATTACK_MOTION_TRANS_TIME;
                 anim.SetLayerWeight(anim.GetLayerIndex(ANIM_MOTION_LAYER), lw);
             }

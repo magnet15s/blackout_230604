@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 
 public abstract class MissionEventNode : MonoBehaviour
 {
+    public static bool missionsAllCleared = false;
 
     [Tooltip("このイベントノードが起動するためのイベントフラグ"), SerializeField]
     private List<MissionEventFlag> triggerFlags;
@@ -16,6 +17,7 @@ public abstract class MissionEventNode : MonoBehaviour
     [Tooltip("次に起動させるイベントフラグ"), SerializeField]
     private List<MissionEventFlag> nextFlags;
 
+    
 
     public static List<MissionEventNode> nodeList = new();
 
@@ -24,6 +26,7 @@ public abstract class MissionEventNode : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
+        if(missionsAllCleared)missionsAllCleared = false;
         nodeList.Add(this);
 
         foreach(MissionEventFlag ef in triggerFlags)
