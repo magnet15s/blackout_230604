@@ -14,7 +14,7 @@ public class text_load : MonoBehaviour {
     [SerializeField] private Slider _slider;
 
     void Start() {
-        // ƒeƒLƒXƒgƒtƒ@ƒCƒ‹‚Ì‘S•¶‚ğæ“¾
+        // ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®å…¨æ–‡ã‚’å–å¾—
         if (mission_select.mission_number == 1) {
             file = Resources.Load("missions/mission01") as TextAsset;
             sprite= Resources.Load<Sprite>("missions/image_018_0000");
@@ -25,7 +25,7 @@ public class text_load : MonoBehaviour {
         }
         else if(mission_select.mission_number == 3) {
             file = Resources.Load("missions/mission03") as TextAsset;
-            sprite = Resources.Load<Sprite>("missions/image_005_0000");
+            sprite = Resources.Load<Sprite>("missions/image_001_0000");
         }
         else if(mission_select.mission_number == 4) {
             file = Resources.Load("missions/mission04") as TextAsset;
