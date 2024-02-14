@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SceneCurtain : MonoBehaviour
 {
     private Image image;
-    private Color c;
+    public Color c;
     [SerializeField] private float openTime;
     private float openCnt = 0;
     // Start is called before the first frame update
@@ -20,8 +20,25 @@ public class SceneCurtain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        openCnt += Time.deltaTime;
-        c.a = 1 - (openCnt / openTime);
-        image.color = c;
+        if(openCnt <= openTime) {
+            openCnt += Time.deltaTime;
+            c.a = 1 - (openCnt / openTime);
+            image.color = c;
+        }
+        
     }
+
+    public void closeCurtain(float second) {
+        csec = second;
+        StartCoroutine("Cc");
+    }
+    float csec = 1;
+    IEnumerator Cc() {
+        for(float t = 0; t < csec; t += 0.02f) {
+            image.color = new Color(c.r, c.g, c.b, (t * 1.4f) / csec);
+            yield return new WaitForSeconds(0.02f);
+        }
+
+    }
+
 }

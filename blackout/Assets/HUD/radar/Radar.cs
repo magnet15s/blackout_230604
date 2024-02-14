@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class Radar : MonoBehaviour
 {
@@ -46,7 +46,6 @@ public class Radar : MonoBehaviour
 
     void RemoveEnemy(Enemy enemy)
     {
-        //Debug.Log("");
         Transform e;
         if(enemies.TryGetValue(enemy, out e))
         {
@@ -59,6 +58,7 @@ public class Radar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SceneManager.sceneLoaded += DelegateClear;
         enemyIcon = (GameObject)Resources.Load("HUD/RadarEnemyIcon");
         
         playerIconInitialSize = playerIcon.localScale.x;
@@ -116,5 +116,14 @@ public class Radar : MonoBehaviour
         RenderTexture dTex = RadarCam.targetTexture;
         mapMat.SetTexture("_MainTex", dTex, 0);
     }
-    
+
+    private void OnDestroy() {
+        DelegateClear(new Scene(), 0);
+    }
+    private void DelegateClear(Scene s, LoadSceneMode l) {
+        Enemy.EnemySpawn -= AddEnemy;
+        Enemy.EnemyDestroy -= RemoveEnemy;
+        SceneManager.sceneLoaded -= DelegateClear;
+    }
+
 }

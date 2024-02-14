@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public GameObject SmokePrefab;
     public bool EMPset = true;
     [SerializeField] private Animator anim;
+    [SerializeField] private Animator gameoverAnim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
     [Space]
@@ -151,7 +152,9 @@ private Vector3 moveAngleContext;
     [Space]
     public GameObject pilotCamera;
     public GameObject sightOrigin;
-
+    [Space]
+    [SerializeField] private SceneCurtain curtain;
+    [SerializeField] private GameOverScreen gameOverScr;
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
@@ -193,7 +196,7 @@ private Vector3 moveAngleContext;
 
     }
 
-
+    private bool dead = false;
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         Debug.Log("Damage!! " + Time.frameCount);
@@ -206,7 +209,28 @@ private Vector3 moveAngleContext;
         statusView.gameObject.GetComponent<Animator>().SetFloat("Armor", (float)armorPoint / (float)maxArmorPoint);
         statusView.gameObject.GetComponent<Animator>().SetTrigger("Damage");
 
+        if(armorPoint <= 0 && !MissionEventNode.missionsAllCleared && !dead) {
+            dead = true;
+            gameoverAnim.SetTrigger("GameOver");
+
+            StartCoroutine("Ap0Dead");
+        }
+
     }
+    IEnumerator Ap0Dead() {
+        foreach(MissionEventFlag f in MissionEventFlag.flagList) {
+            f.isActive = false;
+        }
+        Time.timeScale = 0.2f;
+        curtain.c = new Color(0, 0, 0, 1);
+        curtain.closeCurtain(3 * 0.2f);
+        yield return new WaitForSecondsRealtime(3 );
+
+        gameOverScr.gameObject.SetActive(true) ;
+        gameOverScr.Show("Shot down by the Enemy");
+
+    }
+    
 
 
     //------------“ü—ÍŽó‚¯Žæ‚è-----------
@@ -251,7 +275,7 @@ private Vector3 moveAngleContext;
 
 
     public void OnLook(InputAction.CallbackContext context) {
-        viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
+        if(Time.timeScale == 1)viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
         if (viewPoint.y > 80) viewPoint.y = 80;
         else if (viewPoint.y < -80) viewPoint.y = -80;
 

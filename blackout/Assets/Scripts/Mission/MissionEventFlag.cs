@@ -7,9 +7,16 @@ using UnityEngine.EventSystems;
 public abstract class MissionEventFlag : MonoBehaviour
 {
     public bool isActive = false;
-
+    public static List<MissionEventFlag> flagList = new();
 
     public EventHandler onFlagUp;
+
+    protected virtual void Awake() {
+        flagList.Add(this);
+    }
+    protected virtual void OnDestroy() {
+        flagList.Remove(this);
+    }
     protected virtual void OnFlagUp()
     {
         Debug.Log("onflugup");
