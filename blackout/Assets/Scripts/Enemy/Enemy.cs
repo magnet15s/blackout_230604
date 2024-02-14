@@ -51,6 +51,7 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
 
     protected virtual void OnEnemySpawn(Enemy enemy)
     {
+        
         EnemySpawn?.Invoke(enemy);
     }
 

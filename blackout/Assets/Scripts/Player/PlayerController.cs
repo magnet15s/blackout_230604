@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public GameObject SmokePrefab;
     public bool EMPset = true;
     [SerializeField] private Animator anim;
+    [SerializeField] private Animator gameoverAnim;
     [SerializeField] private CharacterController cc;
     [SerializeField] private GroundedSensor gs;
     [Space]
@@ -210,6 +211,8 @@ private Vector3 moveAngleContext;
 
         if(armorPoint <= 0 && !MissionEventNode.missionsAllCleared && !dead) {
             dead = true;
+            gameoverAnim.SetTrigger("GameOver");
+
             StartCoroutine("Ap0Dead");
         }
 
@@ -219,8 +222,9 @@ private Vector3 moveAngleContext;
             f.isActive = false;
         }
         Time.timeScale = 0.2f;
+        curtain.c = new Color(0, 0, 0, 1);
         curtain.closeCurtain(3 * 0.2f);
-        yield return new WaitForSeconds(3 * 0.2f);
+        yield return new WaitForSecondsRealtime(3 );
 
         gameOverScr.gameObject.SetActive(true) ;
         gameOverScr.Show("Shot down by the Enemy");

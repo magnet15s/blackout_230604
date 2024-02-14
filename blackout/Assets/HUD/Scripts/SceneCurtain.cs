@@ -35,8 +35,7 @@ public class SceneCurtain : MonoBehaviour
     float csec = 1;
     IEnumerator Cc() {
         for(float t = 0; t < csec; t += 0.02f) {
-
-            image.color = new Color(c.r, c.g, c.b, (t * 1.2f) / csec);
+            image.color = new Color(c.r, c.g, c.b, (t * 1.4f) / csec);
             yield return new WaitForSeconds(0.02f);
         }
 

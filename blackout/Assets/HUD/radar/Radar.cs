@@ -117,6 +117,9 @@ public class Radar : MonoBehaviour
         mapMat.SetTexture("_MainTex", dTex, 0);
     }
 
+    private void OnDestroy() {
+        DelegateClear(new Scene(), 0);
+    }
     private void DelegateClear(Scene s, LoadSceneMode l) {
         Enemy.EnemySpawn -= AddEnemy;
         Enemy.EnemyDestroy -= RemoveEnemy;
