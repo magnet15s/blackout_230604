@@ -35,7 +35,7 @@ public class HUDAim : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //自身のスクリーン座標を計算
         Vector2 w2sPos = Camera.main.WorldToScreenPoint(trackObj.position);

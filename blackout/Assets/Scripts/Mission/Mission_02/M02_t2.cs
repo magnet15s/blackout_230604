@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class M02_t2 : MissionEventNode 
     {
+    [SerializeField] M02_first m2f;
+    [SerializeField] PlayerController pc;
     // Start is called before the first frame update
     public override void EventFire() {
+        base.AllMissionClear();
         StartCoroutine("Event");
     }
     private string[] messageText = new string[]{

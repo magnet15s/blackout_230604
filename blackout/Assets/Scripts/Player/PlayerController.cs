@@ -15,6 +15,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
+    public static PlayerController instance;
+
     public enum PlayerActionState {
         idle = 0,
         move = 1,
@@ -123,8 +125,8 @@ private Vector3 moveAngleContext;
 
     private Vector3 moveDirForAnim;
     [Space]
-    [SerializeField] private int maxArmorPoint = 500;
-    [SerializeField] private int armorPoint = 500;
+    [SerializeField] public int maxArmorPoint = 500;
+    [SerializeField] public int armorPoint = 500;
     [Space]
     [SerializeField] private float speed = 10;
     [SerializeField] private float brake = 2;
@@ -199,8 +201,8 @@ private Vector3 moveAngleContext;
     private bool dead = false;
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
-        Debug.Log("Damage!! " + Time.frameCount);
-        armorPoint -= damage;
+        //Debug.Log("Damage!! " + Time.frameCount);
+        if(!MissionEventNode.missionsAllCleared)armorPoint -= damage;
         GameObject dfx;
         (dfx = Instantiate(damageFX, hitPosition, Quaternion.identity)).transform.LookAt(hitPosition + (hitPosition - transform.position));
         dfx.transform.localScale = new Vector3(3, 3, 3);
@@ -332,7 +334,8 @@ private Vector3 moveAngleContext;
     //----------------Updateなど----------------
 
     void Awake() {
-        
+        instance = this;
+
         //ハードポイント初期化
 
 

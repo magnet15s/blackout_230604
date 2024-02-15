@@ -5,6 +5,7 @@ using static Unity.Burst.Intrinsics.Arm;
 
 public class M02_first : MissionEventNode {
     // Start is called before the first frame update
+    public float starttime;
     private string[] missionItems;
     private string[] messageText = new string[]{
         "[オペレーター:ライン]\n目標座標に接近、ターゲット誘導開始。\n観測レベル3。連結、オールグリーン。",
@@ -17,6 +18,7 @@ public class M02_first : MissionEventNode {
     [SerializeField] MessageWindow message;
     private HUDMissionDisplay mDisp;
     public override void EventFire() {
+        starttime = Time.time;
         missionItems = new string[] {
             $"敵データサーバー棟に\n接近する"
         };
