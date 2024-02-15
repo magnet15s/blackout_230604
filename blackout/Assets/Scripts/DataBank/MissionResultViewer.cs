@@ -48,7 +48,7 @@ public class MissionResultViewer : MonoBehaviour
             if (MissionScoreData.ClearData.Exists(d => d.missionName == lcd.missionName)) {
                 bcd = MissionScoreData.ClearData.Find(d => d.missionName .Equals( lcd.missionName));
                 bestapView.text = ((bcd.bestArmorPoint * 100) / bcd.maxArmorPoint) + "%";
-                besttimeView.text =(bcd.bestClearTime / 60).ToString("F0") +":"+ (bcd.bestClearTime % 60).ToString("F2");
+                besttimeView.text =(bcd.bestClearTime / 60).ToString("F0") +":"+ (bcd.bestClearTime % 60 < 10 ? "0":"") + (bcd.bestClearTime % 60).ToString("F2");
                 MissionScoreData.ClearDatum newDatum = bcd;
 
                 if (lcd.bestArmorPoint / lcd.maxArmorPoint > bcd.bestArmorPoint / lcd.maxArmorPoint) {
