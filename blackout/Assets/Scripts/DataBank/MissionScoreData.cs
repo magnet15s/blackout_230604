@@ -84,11 +84,11 @@ public class MissionScoreData
         using (StreamReader sr = new StreamReader(path, System.Text.Encoding.GetEncoding("UTF-8"))) {
             clearData = new(); 
             clearData.Clear();
-            //scoreDataText = sr.ReadToEnd();
-                //Debug.Log(scoreDataText);
+            scoreDataText = "";
             while(sr.Peek() > -1) {
 
                 string md = sr.ReadLine();
+                scoreDataText += md; 
                 Debug.Log(md);
                 string[] dParts = md.Split(' ');
                 if (dParts.Length < 4) {

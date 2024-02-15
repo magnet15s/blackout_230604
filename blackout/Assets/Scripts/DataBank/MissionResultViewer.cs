@@ -42,13 +42,13 @@ public class MissionResultViewer : MonoBehaviour
             missionTitle.text = text_load.MISSION_SUBTITLES[lcd.missionName];
 
             apView.text = ((lcd.bestArmorPoint * 100) / lcd.maxArmorPoint) + "%";
-            timeView.text = lcd.bestClearTime.ToString();
+            timeView.text = (lcd.bestClearTime / 60).ToString("F0") + ":" + (lcd.bestClearTime % 60).ToString("F2");
 
             MissionScoreData.ClearDatum bcd = null;
             if (MissionScoreData.ClearData.Exists(d => d.missionName == lcd.missionName)) {
                 bcd = MissionScoreData.ClearData.Find(d => d.missionName .Equals( lcd.missionName));
                 bestapView.text = ((bcd.bestArmorPoint * 100) / bcd.maxArmorPoint) + "%";
-                besttimeView.text = bcd.bestClearTime.ToString();
+                besttimeView.text =(bcd.bestClearTime / 60).ToString("F0") +":"+ (bcd.bestClearTime % 60).ToString("F2");
                 MissionScoreData.ClearDatum newDatum = bcd;
 
                 if (lcd.bestArmorPoint / lcd.maxArmorPoint > bcd.bestArmorPoint / lcd.maxArmorPoint) {
@@ -83,9 +83,10 @@ public class MissionResultViewer : MonoBehaviour
 
     IEnumerator CurtainOpen() {
         for(float t = 0; t < 1; t+=0.02f) {
-            curtain.color = new Color(0, 0, 0, t / 0.9f);
+            curtain.color = new Color(0, 0, 0,1-( t / 0.9f));
             yield return new WaitForSeconds(0.02f);
         }
+        curtain.gameObject.SetActive(false);
     }
 
     public void Close() {
