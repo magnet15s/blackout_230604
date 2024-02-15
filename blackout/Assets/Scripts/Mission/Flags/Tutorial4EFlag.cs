@@ -21,6 +21,7 @@ public class Tutorial4EFlag : MissionEventFlag
         if(targetKillCount >= 3) {
             Enemy.EnemyDestroy -= EnemyKillCount;
             mList.MissionClear(8);
+            OnFlagUp();
         }
     }
 

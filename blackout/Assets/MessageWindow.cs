@@ -60,7 +60,7 @@ public class MessageWindow : MonoBehaviour {
     // メッセージウィンドウを表示する
     private void EnableTextWindow() {
         Image img = textWindow.GetComponent<Image>();
-        img.color = new Color(img.color.r, img.color.g, img.color.b, 1);
+        img.color = new Color(img.color.r, img.color.g, img.color.b, 0.8f);
         text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
     }
 
