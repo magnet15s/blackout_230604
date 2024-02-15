@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public abstract class MissionEventNode : MonoBehaviour
 {
     public static bool missionsAllCleared = false;
+    protected static float missionStartTime;
 
     [Tooltip("このイベントノードが起動するためのイベントフラグ"), SerializeField]
     private List<MissionEventFlag> triggerFlags;
@@ -26,6 +28,7 @@ public abstract class MissionEventNode : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
+        missionStartTime = Time.time;
         if(missionsAllCleared)missionsAllCleared = false;
         nodeList.Add(this);
 
@@ -34,6 +37,17 @@ public abstract class MissionEventNode : MonoBehaviour
             ef.onFlagUp += TryEventFire;
             //Debug.Log(ef.gameObject.name);
         }
+    }
+
+    protected void AllMissionClear() {
+        missionsAllCleared = true;
+        MissionScoreData.lastMissionDatum = new MissionScoreData.ClearDatum(
+            SceneManager.GetActiveScene().name,
+            PlayerController.instance.armorPoint,
+            PlayerController.instance.maxArmorPoint,
+            Time.time - missionStartTime
+        );
+        nodeList.Clear();
     }
 
     

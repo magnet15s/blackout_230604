@@ -14,7 +14,7 @@ public class M04_t3 : MissionEventNode
     };
     public override void EventFire()
     {
-
+        AllMissionClear();
         mDisp = HUDMissionDisplay.mainDisplay;
         mList = mDisp.GetMissionList();
         StartCoroutine("Event");

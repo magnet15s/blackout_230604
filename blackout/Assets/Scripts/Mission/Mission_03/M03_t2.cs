@@ -7,6 +7,7 @@ public class M03_t2 : MissionEventNode
     // Start is called before the first frame update
     public override void EventFire()
     {
+        AllMissionClear();
         StartCoroutine("Event");
     }
     private string[] messageText = new string[]{
