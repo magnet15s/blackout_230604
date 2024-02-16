@@ -36,23 +36,26 @@ public class MissionScoreData
         }
     }
     public static void AddClearData(ClearDatum datum) {
-        if (clearData.Exists(d => d.missionName == datum.missionName)) {
+        if (ClearData.Exists(d => d.missionName == datum.missionName)) {
             Debug.LogWarning("[MissionScoreData] > 追加しようとしたdatumと同じ名前のdatumが存在するため、更新処理を行います : " + datum.missionName);
             UpdateClearData(datum);
             return; 
         }
+        Debug.Log("[MissionScoreData] > add score : " + datum);
         //ファイル上のテキストを更新
-        using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.GetEncoding("UTF-8"))) {
+        using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.GetEncoding("UTF-8"))) {
             sw.WriteLine($"{datum.missionName} {datum.bestArmorPoint} {datum.maxArmorPoint} {datum.bestClearTime}");
         }
+        scoreDataText += $"\n{datum.missionName} {datum.bestArmorPoint} {datum.maxArmorPoint} {datum.bestClearTime}";
         //リストに追加
         clearData.Add(datum);
     }
 
     public static void UpdateClearData(ClearDatum datum) {
-        
+        Debug.Log("[MissionScoreData] > update data : " + datum.ToString() + "\n->\n" + scoreDataText);
+
         //ファイル上のテキストを更新
-        using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.GetEncoding("UTF-8"))) {
+        using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.GetEncoding("UTF-8"))) {
             
             int datumIdx = scoreDataText.IndexOf(Environment.NewLine + datum.missionName) + 1;
             if(datumIdx == -1) { Debug.LogError("[MissionScoreData] > misionName is not found : " + datum.missionName); return; }
@@ -67,7 +70,7 @@ public class MissionScoreData
         }
 
         //リストを更新
-        if(clearData.Exists((d) => d.missionName == datum.missionName)) {
+        if(ClearData.Exists((d) => d.missionName == datum.missionName)) {
             ClearDatum cd = clearData.Find(d => d.missionName == datum.missionName);
             cd.bestArmorPoint = datum.bestArmorPoint;
             cd.maxArmorPoint = datum.bestArmorPoint;
@@ -86,10 +89,11 @@ public class MissionScoreData
             clearData.Clear();
             scoreDataText = "";
             while(sr.Peek() > -1) {
-
+                
                 string md = sr.ReadLine();
-                scoreDataText += md; 
-                Debug.Log(md);
+                Debug.Log("read : " + md);
+                if (md == "\n") continue;
+                scoreDataText += md + Environment.NewLine; 
                 string[] dParts = md.Split(' ');
                 if (dParts.Length < 4) {
                     Debug.LogError("[MissionScoreData] > data error : "+ md);
