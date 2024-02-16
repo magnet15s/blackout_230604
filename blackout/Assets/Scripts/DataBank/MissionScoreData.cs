@@ -41,10 +41,12 @@ public class MissionScoreData
             UpdateClearData(datum);
             return; 
         }
+        Debug.Log("[MissionScoreData] > add score : " + datum);
         //ファイル上のテキストを更新
-        using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.GetEncoding("UTF-8"))) {
+        using (StreamWriter sw = new StreamWriter(path, true, System.Text.Encoding.GetEncoding("UTF-8"))) {
             sw.WriteLine($"{datum.missionName} {datum.bestArmorPoint} {datum.maxArmorPoint} {datum.bestClearTime}");
         }
+        scoreDataText += $"\n{datum.missionName} {datum.bestArmorPoint} {datum.maxArmorPoint} {datum.bestClearTime}";
         //リストに追加
         clearData.Add(datum);
     }
