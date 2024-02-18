@@ -136,9 +136,15 @@ public class A53_31 : Weapon
     {
         remainAmmo--;
         //Debug.Log($"BANG!! {remainAmmo}");
-        LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
+        LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
+        Time.timeScale = 0.1f;
         
-        
+    }
+
+    IEnumerator soundFire()
+    {
+        yield return new WaitForSeconds(0.02f);
+
     }
 
     public override void Ready() {

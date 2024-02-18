@@ -10,6 +10,7 @@ public class TrackingIcon : MonoBehaviour
     public RectTransform canvas;
     public static TrackingIcon closestIconToCenter = null;
     public static List<TrackingIcon> Icons = new();
+
     public Image image;
     public GameObject trackingTarget;
     public GameObject player;
