@@ -8,7 +8,7 @@ public class A53_31 : Weapon
     public override WeaponUser sender { get; set; }
 
     public override string weaponName { get; set; } = "A53-31 arm machine gun";
-    public override int? remainAmmo { get; set; } = 600;
+    public override int? remainAmmo { get; set; } = 300;
     public override string remainAmmoType { get; set; } = "AMMO";
     public override float cooldownProgress { get; set; } = 1f;
     public override string cooldownMsg { get; set; } = "EMPTY AMMO";
@@ -42,10 +42,13 @@ public class A53_31 : Weapon
     [Space]
     public Material HUDImage = null;
 
+    private AudioSource sound;
+
 
     
     void Start() {
         HUDWeaponImage = HUDImage;
+        sound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -90,14 +93,6 @@ public class A53_31 : Weapon
                     fire();
                     trigger = false;
                 }
-                if (Input.GetMouseButtonDown(0)) {
-                    GetComponent<AudioSource>().Play();
-                }
-
-                if (Input.GetMouseButtonUp(0)) {
-                    GetComponent<AudioSource>().Stop();
-                }
-
             }
 
             if(fireIntCnt > 0)
@@ -136,9 +131,20 @@ public class A53_31 : Weapon
     {
         remainAmmo--;
         //Debug.Log($"BANG!! {remainAmmo}");
-        LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform.position, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
+        LiveBullet LB = LiveBullet.BulletInstantiate(this, (firePoint ?? gameObject).transform, AimingObj.transform.forward * bulletInitialVelocity,  bulletDamage);
+        StartCoroutine("soundFire");
         
-        
+    }
+    private int soundPlayId4cor = 0;
+    IEnumerator soundFire()
+    {
+        int myId = ++soundPlayId4cor; 
+        yield return new WaitForSeconds(0.02f);
+        if (!sound.isPlaying) sound.Play();
+        yield return new WaitForSecondsRealtime(0.1f);
+        if(myId == soundPlayId4cor) sound.Stop();
+        yield return null;
+
     }
 
     public override void Ready() {

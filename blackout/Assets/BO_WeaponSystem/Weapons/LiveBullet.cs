@@ -70,6 +70,22 @@ public class LiveBullet : MonoBehaviour
 
         return bulletLB;
     }
+
+    public static LiveBullet BulletInstantiate(
+        Weapon sender,
+        Transform initialPosition,
+        Vector3 initialVelocity,
+        int damage
+    )
+    {
+        Debug.Log(initialPosition);
+        LiveBullet lb = LiveBullet.BulletInstantiate(sender, initialPosition.position, initialVelocity,damage);
+        lb.ps1.GetComponent<Transform>().SetParent(initialPosition);
+        lb.ps2.GetComponent<Transform>().SetParent(initialPosition);
+        lb.ps3.GetComponent<Transform>().SetParent(initialPosition);
+        return lb;
+
+    }
     
 
     public static Vector3 BullisticCalc(Vector3 velocity, float time) { //Œã‰ñ‚µ
@@ -129,7 +145,6 @@ public class LiveBullet : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -138,12 +153,15 @@ public class LiveBullet : MonoBehaviour
         transform.position = np == Vector3.zero ? transform.position : np;
         
         if (age < 1) {
-            ps1.gameObject.transform.position = initialPosition;
-            ps2.gameObject.transform.position = initialPosition;
+            //ps1.gameObject.transform.position = initialPosition;
+            //ps2.gameObject.transform.position = initialPosition;
+            ps1.transform.localScale = Vector3.one;
+            ps2.transform.localScale=Vector3.one;
         }
 
         if(age < 2) {
-            ps3.gameObject.transform.position = initialPosition;
+            //ps3.gameObject.transform.position = initialPosition;
+            ps3.transform.localScale = Vector3.one;
         }
 
         if (destroyReady) {
@@ -186,5 +204,12 @@ public class LiveBullet : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (ps1.gameObject) Destroy(ps1.gameObject);
+        if (ps2.gameObject) Destroy(ps2.gameObject);
+        if (ps2.gameObject) Destroy(ps3.gameObject);
     }
 }
