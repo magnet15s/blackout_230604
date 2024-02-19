@@ -46,10 +46,11 @@ public class M04_first : MissionEventNode
         message.function(messageText[0], 4.7f);
         yield return new WaitForSeconds(5);
         message.function(messageText[1], 4.7f);
-        foreach (string s in missionItems) mDisp.GetMissionList().AddMissionItem(s);
+        
         yield return new WaitForSeconds(5);
         message.function(messageText[2], 4.7f);
         mDisp.SetMissionTitle(missionTitle);
+        foreach (string s in missionItems) mDisp.GetMissionList().AddMissionItem(s);
         yield return new WaitForSeconds(5);
         message.function(messageText[3], 4.7f);
         yield return new WaitForSeconds(5);
