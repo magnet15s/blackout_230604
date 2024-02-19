@@ -8,7 +8,9 @@ using System.Collections.Generic;
 
 public class text_load : MonoBehaviour {
     public TextAsset file;
+    public TextAsset file2;
     public TextMeshProUGUI text;
+    public TextMeshProUGUI text2;
     public Image image;
     public Sprite sprite;
     [SerializeField] private GameObject _loadingUI;
@@ -25,21 +27,25 @@ public class text_load : MonoBehaviour {
         if (mission_select.mission_number == 1) {
             _title.text = MISSION_SUBTITLES["Mission_01"];
             file = Resources.Load("missions/mission01") as TextAsset;
-            sprite= Resources.Load<Sprite>("missions/image_018_0000");
+            file2 = Resources.Load("missions/mission01_e") as TextAsset;
+            sprite = Resources.Load<Sprite>("missions/image_018_0000");
         }
         else if(mission_select.mission_number == 2) {
             _title.text = MISSION_SUBTITLES["Mission_02"];
             file = Resources.Load("missions/mission02") as TextAsset;
+            file2 = Resources.Load("missions/mission02_e") as TextAsset;
             sprite = Resources.Load<Sprite>("missions/image_026_0003");
         }
         else if(mission_select.mission_number == 3) {
             _title.text = MISSION_SUBTITLES["Mission_03"];
             file = Resources.Load("missions/mission03") as TextAsset;
+            file2 = Resources.Load("missions/mission03_e") as TextAsset;
             sprite = Resources.Load<Sprite>("missions/image_001_0000");
         }
         else if(mission_select.mission_number == 4) {
             _title.text = MISSION_SUBTITLES["Mission_04"];
             file = Resources.Load("missions/mission04") as TextAsset;
+            file2 = Resources.Load("missions/mission04_e") as TextAsset;
             sprite = Resources.Load<Sprite>("missions/image_006_0000");
         }
         else if (mission_select.mission_number == 5) {
@@ -51,8 +57,10 @@ public class text_load : MonoBehaviour {
         
         Sprite obj = sprite;
         string loadText = file.text;
+        string loadText2 = file2.text;
         image.sprite = obj;
         text.text = loadText;
+        text2.text = loadText2;
     }
 
     public void OnButtonClickSyuutugeki() {
