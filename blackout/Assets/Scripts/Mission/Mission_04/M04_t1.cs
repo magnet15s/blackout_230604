@@ -34,7 +34,7 @@ public class M04_t1 : MissionEventNode
     {
         yield return new WaitForSeconds(1);
         mList.RemoveMissionItems();
-        foreach (string s in missionItems) mList.AddMissionItem(s);
+        foreach (string s in missionItems) mList.AddMissionItem(s, 5);
         message.function(messageText[0], 3.7f);
         yield return new WaitForSeconds(5);
         message.function(messageText[1], 4.7f);
