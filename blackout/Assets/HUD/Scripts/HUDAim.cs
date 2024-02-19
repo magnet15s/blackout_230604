@@ -20,6 +20,7 @@ public class HUDAim : MonoBehaviour
     [SerializeField] float findRange = 400;
     [SerializeField] float trackingUpdateInterval = 0.3f;
     private float TUICnt = 0;
+    [SerializeField] bool screenModeisOverray = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,10 +40,17 @@ public class HUDAim : MonoBehaviour
     {
         //自身のスクリーン座標を計算
         Vector2 w2sPos = Camera.main.WorldToScreenPoint(trackObj.position);
-        rectTransform.localPosition = new Vector2(
-            w2sPos.x - Screen.width / 2,
-            w2sPos.y - Screen.height / 2);
-
+        if(/*Canvas.GetComponent<Canvas>().renderMode == RenderMode.ScreenSpaceOverlay*/false)
+        {
+            rectTransform.localPosition = new Vector2(
+                w2sPos.x, w2sPos.y );
+        }
+        else
+        {
+            rectTransform.localPosition = new Vector2(
+                w2sPos.x - Screen.width / 2,
+                w2sPos.y - Screen.height / 2);
+        }
         //トラッキング更新
         TUICnt -= Time.deltaTime;
         if(TUICnt < 0)
