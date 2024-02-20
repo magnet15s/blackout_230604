@@ -42,13 +42,13 @@ public class MissionResultViewer : MonoBehaviour
             missionTitle.text = text_load.MISSION_SUBTITLES[lcd.missionName];
 
             apView.text = ((lcd.bestArmorPoint * 100) / lcd.maxArmorPoint) + "%";
-            timeView.text = Mathf.Floor(lcd.bestClearTime / 60).ToString("F0") + ":" + (lcd.bestClearTime % 60).ToString("F2");
+            timeView.text = string.Format("{0:00}:{1:00}.{2}", Mathf.FloorToInt(lcd.bestClearTime / 60), Mathf.FloorToInt(lcd.bestClearTime % 60), Mathf.FloorToInt(lcd.bestClearTime * 100) % 10000);
 
             MissionScoreData.ClearDatum bcd = null;
             if (MissionScoreData.ClearData.Exists(d => d.missionName == lcd.missionName)) {
                 bcd = MissionScoreData.ClearData.Find(d => d.missionName .Equals( lcd.missionName));
                 bestapView.text = ((bcd.bestArmorPoint * 100) / bcd.maxArmorPoint) + "%";
-                besttimeView.text =Mathf.Floor(bcd.bestClearTime / 60).ToString("F0") +":"+ (bcd.bestClearTime % 60 < 10 ? "0":"") + (bcd.bestClearTime % 60).ToString("F2");
+                besttimeView.text = string.Format("{0:00}:{1:00}.{2}", Mathf.FloorToInt(bcd.bestClearTime / 60), Mathf.FloorToInt(bcd.bestClearTime % 60), Mathf.FloorToInt(bcd.bestClearTime * 100)%100);
                 MissionScoreData.ClearDatum newDatum = bcd;
 
                 if (lcd.bestArmorPoint / lcd.maxArmorPoint > bcd.bestArmorPoint / lcd.maxArmorPoint) {

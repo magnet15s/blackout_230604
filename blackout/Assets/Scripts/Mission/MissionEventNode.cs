@@ -30,6 +30,8 @@ public abstract class MissionEventNode : MonoBehaviour
     {
         missionStartTime = Time.time;
         if(missionsAllCleared)missionsAllCleared = false;
+        //if (Enemy.sharedTarget != null) Enemy.sharedTarget = null;
+        if (Enemy.sharedTargetPosition != null) Enemy.sharedTargetPosition = null;
         nodeList.Add(this);
 
         foreach(MissionEventFlag ef in triggerFlags)

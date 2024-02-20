@@ -16,7 +16,7 @@ public abstract class Enemy : MonoBehaviour, DamageReceiver
 
     
     public static GameObject sharedTarget { get; set; } = null;
-    public static Vector3? sharedTargetPosition { get; protected set; } = null;
+    public static Vector3? sharedTargetPosition { get; set; } = null;
     public static Enemy targetReporter { get; protected set; } = null;
     public static List<Enemy> EnemiesList { get; protected set; } = new();
 

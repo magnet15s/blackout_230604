@@ -301,7 +301,7 @@ public class LL2_combat_shield : Weapon, ShieldRoot
             //Debug.Log(ret);
             ret.y = movement.y;
 
-            if (assaultTimeCnt > ATTACK_DELAY) sender.removeWepMove(AssaultMove);
+            if (assaultTimeCnt > ATTACK_HIT_CHK_TIMING-0.1f) sender.removeWepMove(AssaultMove);
             return ret;
 
         }else return movement;

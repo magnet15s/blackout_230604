@@ -708,7 +708,7 @@ private Vector3 moveAngleContext;
                     if (overMagn > 0) targetMovement += targetMovement.normalized * (overMagn * Mathf.Max(0, Vector3.Dot(lastMovement.normalized, targetMovement.normalized)));
 
                     //Debug.LogWarning($"{targetMovement}  {lastMovement}  {(targetMovement - lastMovement).normalized}");
-                    lastMovement += (targetMovement - lastMovement).normalized * airAcceleration * moveAngleContext.magnitude; //‹l‚ß‚é‚Æ‚±‚ë
+                    lastMovement += (targetMovement - lastMovement).normalized * airAcceleration * Time.deltaTime * moveAngleContext.magnitude; //‹l‚ß‚é‚Æ‚±‚ë
                     lastMovement = localVec2worldVec(lastMovement);
                 }
                 //—Ž‰º‘¬“xŒvŽZ
