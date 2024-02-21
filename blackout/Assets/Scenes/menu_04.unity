@@ -1167,8 +1167,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Mission04 - \u6727\u3005\u305F\u308B\u8A98\u86FE\u706F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: add94cfba2c2c1745b7a5a8c133e3e82, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 799f0598af3064c48abfd56fd25a216d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 13d7d74b9b0eca441ac254034245371f, type: 2}
+  m_sharedMaterial: {fileID: -646463328572707429, guid: 13d7d74b9b0eca441ac254034245371f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
