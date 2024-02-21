@@ -1,13 +1,6 @@
-using Cinemachine;
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor;
 //using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -64,7 +57,7 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
 
     [Space]
     //移動計算用
-    [SerializeField]private float gravity = 9.8f;
+    [SerializeField] private float gravity = 9.8f;
     private bool inAir = false;
     [SerializeField] private float inAirCnt = 0;
     private float touchDownCnt = 0;
@@ -98,8 +91,8 @@ public class PlayerController : MonoBehaviour, WeaponUser, DamageReceiver {
     public WeaponConnectionToBone wepCRightULeg { get; private set; }
     public WeaponConnectionToBone wepCLeftULeg { get; private set; }
 
-//入力コンテキスト
-private Vector3 moveAngleContext;
+    //入力コンテキスト
+    private Vector3 moveAngleContext;
     private float moveMagnContext;
     private bool dashContext = false;
     private bool dashItrContext = false;
@@ -121,7 +114,7 @@ private Vector3 moveAngleContext;
     private float initCockpitVAim;
     private float initCockpitParentVAim;
 
-    
+
 
     private Vector3 moveDirForAnim;
     [Space]
@@ -146,8 +139,9 @@ private Vector3 moveAngleContext;
     [SerializeField] private float evasionMoveSpeed = 30;
     [Space]
     [SerializeField] private float turningSpeed = 200;
-    [SerializeField] private float slowTurningZoneSize = 0.1f;
+    [SerializeField] private float turnSpring = 0.7f;
     [SerializeField] private float dashTurningFactor = 0.4f;
+    [SerializeField] private float dashTurnSpring = 0.3f;
     [SerializeField] private Vector2 viewRotetionFactor = new Vector2(10, 10);
     [SerializeField] private float zoomInViewRotFactor = 0.5f;
     [SerializeField] private float maxFocusMagn = 2;
@@ -160,7 +154,7 @@ private Vector3 moveAngleContext;
     [Space]
     [SerializeField] private bool setEnemiesShareTarget = true;
 
-    
+
 
     //------------継承-------------
     public Animator getAnim() {
@@ -202,7 +196,7 @@ private Vector3 moveAngleContext;
 
     public void Damage(int damage, Vector3 hitPosition, GameObject source, string damageType) {
         //Debug.Log("Damage!! " + Time.frameCount);
-        if(!MissionEventNode.missionsAllCleared)armorPoint -= damage;
+        if (!MissionEventNode.missionsAllCleared) armorPoint -= damage;
         GameObject dfx;
         (dfx = Instantiate(damageFX, hitPosition, Quaternion.identity)).transform.LookAt(hitPosition + (hitPosition - transform.position));
         dfx.transform.localScale = new Vector3(3, 3, 3);
@@ -211,7 +205,7 @@ private Vector3 moveAngleContext;
         statusView.gameObject.GetComponent<Animator>().SetFloat("Armor", (float)armorPoint / (float)maxArmorPoint);
         statusView.gameObject.GetComponent<Animator>().SetTrigger("Damage");
 
-        if(armorPoint <= 0 && !MissionEventNode.missionsAllCleared && !dead) {
+        if (armorPoint <= 0 && !MissionEventNode.missionsAllCleared && !dead) {
             dead = true;
             gameoverAnim.SetTrigger("GameOver");
 
@@ -220,19 +214,19 @@ private Vector3 moveAngleContext;
 
     }
     IEnumerator Ap0Dead() {
-        foreach(MissionEventFlag f in MissionEventFlag.flagList) {
+        foreach (MissionEventFlag f in MissionEventFlag.flagList) {
             f.isActive = false;
         }
         Time.timeScale = 0.2f;
         curtain.c = new Color(0, 0, 0, 1);
         curtain.closeCurtain(3 * 0.2f);
-        yield return new WaitForSecondsRealtime(3 );
+        yield return new WaitForSecondsRealtime(3);
 
-        gameOverScr.gameObject.SetActive(true) ;
+        gameOverScr.gameObject.SetActive(true);
         gameOverScr.Show("Shot down by the Enemy");
 
     }
-    
+
 
 
     //------------入力受け取り-----------
@@ -277,7 +271,7 @@ private Vector3 moveAngleContext;
 
 
     public void OnLook(InputAction.CallbackContext context) {
-        if(Time.timeScale == 1)viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
+        if (Time.timeScale == 1) viewPoint += context.ReadValue<Vector2>() / 3 * viewRotetionFactor * (focusContext ? zoomInViewRotFactor : 1);
         if (viewPoint.y > 80) viewPoint.y = 80;
         else if (viewPoint.y < -80) viewPoint.y = -80;
 
@@ -419,13 +413,12 @@ private Vector3 moveAngleContext;
             if (EMPset == true) {
                 GameObject EMP = Instantiate(EMPPrefab);
                 EMP.transform.position = this.transform.position;
-                EMPset=false;
-            }
-            else {
+                EMPset = false;
+            } else {
                 audio4.PlayOneShot(audioClip);
             }
         }
-        
+
         /*if (Input.GetKey(KeyCode.Alpha2)) {
             GameObject SMOKE = Instantiate(SmokePrefab);
             SMOKE.transform.position = this.transform.position;
@@ -502,17 +495,18 @@ private Vector3 moveAngleContext;
         lastActualMovement /= lastTimeDelta;
         //Debug.Log($"{lastMovement}  {lastActualMovement}");
 
-        //視点移動計算 
-
-        float laRotVol = Mathf.Abs(viewPoint.x - levelAiming) < 0.001 ? 0f : ((viewPoint.x - levelAiming));
+        //--------------------------
+        //      視点移動計算 
+        //--------------------------
+        float laRotVol = Mathf.Abs(viewPoint.x - levelAiming) < 0.001 ? 0f : ((viewPoint.x - levelAiming)) * (dash ? dashTurnSpring : turnSpring);
         if (Mathf.Abs(laRotVol) > turningSpeed * Time.deltaTime) laRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(laRotVol);
         levelAiming += laRotVol;
 
 
-        float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming));
+        float vaRotVol = Mathf.Abs(viewPoint.y - verticalAiming) < 0.001 ? 0f : ((viewPoint.y - verticalAiming)) * (dash ? dashTurnSpring : turnSpring);
         if (Mathf.Abs(vaRotVol) > turningSpeed * Time.deltaTime) vaRotVol = turningSpeed * Time.deltaTime * Mathf.Sign(vaRotVol);
         verticalAiming += vaRotVol;
-        
+
 
         aligning = Mathf.Min(Mathf.Max(Mathf.Abs(laRotVol) / (turningSpeed * Time.deltaTime), Mathf.Abs(vaRotVol) / (turningSpeed * Time.deltaTime)), 1);
 
@@ -520,12 +514,12 @@ private Vector3 moveAngleContext;
         transform.eulerAngles = new Vector3(0, levelAiming, transform.eulerAngles.z);
         sightOrigin.transform.localEulerAngles = new Vector3(verticalAiming, 0, 0);
         cockpit.rotation = Quaternion.Euler(
-            (-verticalAiming * cockpitVerticalAlignFactor) + (initCockpitParentVAim - cockpitParent.eulerAngles.x)*cockpitVAlignFactorOnParentRot + cockpitVerticalAlignOffset, 
-            cockpitParent.rotation.eulerAngles.y, 
+            (-verticalAiming * cockpitVerticalAlignFactor) + (initCockpitParentVAim - cockpitParent.eulerAngles.x) * cockpitVAlignFactorOnParentRot + cockpitVerticalAlignOffset,
+            cockpitParent.rotation.eulerAngles.y,
             cockpitParent.rotation.eulerAngles.z
         );
 
-        
+
         //camera
         pilotCamera.transform.eulerAngles = new Vector3(viewPoint.y, viewPoint.x, pilotEyePoint.transform.eulerAngles.z);
 
@@ -548,8 +542,8 @@ private Vector3 moveAngleContext;
 
         //カウントアップ＆ダウン
         evasionMoveTime -= Time.deltaTime;
-        if (evasionMoveTime < 0)evasionMoveTime = 0;
-        
+        if (evasionMoveTime < 0) evasionMoveTime = 0;
+
 
         if (gs.isGrounded(out groundNormal) && !wallBound && !jump) //接地判定
         {
@@ -559,9 +553,9 @@ private Vector3 moveAngleContext;
                 evasionMoveContext = false;
                 OnEvasionMoved?.Invoke();
             }
-            if(evasionMoveTime > 0) {
-                movement = evasionMoveAngle * Mathf.Max(evasionMoveSpeed * (float)(evasionMoveTime / evasionMoveAllTime),evasionMoveSpeed * 0.1f);
-            }else
+            if (evasionMoveTime > 0) {
+                movement = evasionMoveAngle * Mathf.Max(evasionMoveSpeed * (float)(evasionMoveTime / evasionMoveAllTime), evasionMoveSpeed * 0.1f);
+            } else
             //ダッシュクールタイム中でなければ
             if (dashCTcnt == 0) {
 
@@ -598,7 +592,7 @@ private Vector3 moveAngleContext;
                             //ダッシュ開始フレーム以外は前フレームの方向に基づいて方向を決定
                             movement = Vector3.Normalize(dashAngle + moveAngleContext * Time.deltaTime * 2) * dashSpeed;
                             dashAngle = movement.normalized;
-                            
+
                         }
                     }
                 }
@@ -609,9 +603,9 @@ private Vector3 moveAngleContext;
                 if (dashCTcnt <= 0) {
                     dashCTcnt = 0;
                 }
-                if(evasionMoveTime <= 0)
+                if (evasionMoveTime <= 0)
                     movement = inertiaAngle * (speed * 0.7f + (dashSpeed - speed) * (dashCTcnt != 0 ? dashCTcnt : 0.01f / dashCoolTime));
-                
+
             }
 
             //着地の瞬間
@@ -654,7 +648,7 @@ private Vector3 moveAngleContext;
             //外部参照値決定 
             if (inAir || evasionMoveTime > 0) {
                 moving = 0;
-            }else moving = MathF.Min(new Vector2(movement.x, movement.z).magnitude / speed, 1);
+            } else moving = MathF.Min(new Vector2(movement.x, movement.z).magnitude / speed, 1);
 
         } else {//空中に居る場合
             if (!inAir) {
@@ -672,7 +666,7 @@ private Vector3 moveAngleContext;
             } else {
 
                 if (inAirCnt < 4) inAirCnt += Time.deltaTime * fallSpeedFactor;
-            
+
             }
             airAxeling = false;
 
@@ -692,11 +686,11 @@ private Vector3 moveAngleContext;
                 }
             } else {
                 //空中でジャンプボタンを押している間はエアアクセル（ふわふわ降下）に変化
-                if (jButtonContext ) {
+                if (jButtonContext) {
                     airAxeling = true;
                     OnAirAxeled?.Invoke();
                     //落下速度を一定に
-                    if(inAirCnt > airAxelFallSpeed ) inAirCnt = airAxelFallSpeed;
+                    if (inAirCnt > airAxelFallSpeed) inAirCnt = airAxelFallSpeed;
                     //空中移動入力の反映
                     //入力方向*空中最大速度を目標のベクトルとし、現在ベクトル(lastMovement)との差を空中加速度分詰めていく
                     lastMovement.y = 0;
@@ -831,7 +825,7 @@ private Vector3 moveAngleContext;
         anim.SetBool("touch_down", false);
     }
 
-    
+
 
     /// <summary>
     /// テストの為初期に作ったアクション取得用メソッド。非推奨。GetPlayerActSt()を使う事
@@ -849,7 +843,7 @@ private Vector3 moveAngleContext;
     public PlayerActionState GetPlayerActSt() {
 
         PlayerActionState pas =
-            inAir && wepMoving ? PlayerActionState.weaponairmove : 
+            inAir && wepMoving ? PlayerActionState.weaponairmove :
             wepMoving ? PlayerActionState.weaponmove :
 
             inAir && lastMovement.y <= 0 ? PlayerActionState.jump :
@@ -870,10 +864,10 @@ private Vector3 moveAngleContext;
     //すてーと取得
 
     public float moving { get; private set; } = 0;
-    public bool dashing { get { return dash && dashCTcnt <= 0 && evasionMoveTime <= 0 && !wepMoving; }}
+    public bool dashing { get { return dash && dashCTcnt <= 0 && evasionMoveTime <= 0 && !wepMoving; } }
     public float aligning { get; private set; } = 0;
     public bool airing { get { return inAir; } }
-    public bool jumpCharging { get { return jumpChargeCnt > 0; }}
+    public bool jumpCharging { get { return jumpChargeCnt > 0; } }
     public bool airAxeling { get; private set; } = false;
 
 

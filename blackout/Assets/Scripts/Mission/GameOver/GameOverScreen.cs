@@ -14,6 +14,7 @@ public class GameOverScreen : MonoBehaviour {
     [SerializeField] float CurtainCloseTime = 2;
     [SerializeField] Color CurtainColor = Color.black;
     [SerializeField] Image background;
+    [SerializeField] GameObject subcam;
 
     private void Awake() {
         screen = this;
@@ -53,7 +54,7 @@ public class GameOverScreen : MonoBehaviour {
         blackCurtain.gameObject.SetActive(true);
         yield return new WaitForSecondsRealtime(CurtainCloseTime);
         Initiate.Fade(SceneManager.GetActiveScene().name, Color.black, 3f);
-        Debug.Log(123);
+        if (subcam) subcam.SetActive(false);
         SceneManager.LoadScene(nextSceneName, 0);
         yield return null;
     }
@@ -65,6 +66,7 @@ public class GameOverScreen : MonoBehaviour {
             blackCurtain.color = new Color(CurtainColor.r, CurtainColor.g, CurtainColor.b, (t*1.2f) / CurtainCloseTime);
             yield return new WaitForSecondsRealtime(0.02f);
         }
+        if (subcam) subcam.SetActive(false);
         SceneManager.LoadScene(nextSceneName, 0);
         yield return null;
 

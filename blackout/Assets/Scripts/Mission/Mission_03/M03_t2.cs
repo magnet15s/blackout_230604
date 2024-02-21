@@ -5,6 +5,7 @@ using UnityEngine;
 public class M03_t2 : MissionEventNode
 {
     // Start is called before the first frame update
+    [SerializeField] private GameObject subdisp;
     public override void EventFire()
     {
         AllMissionClear();
@@ -38,6 +39,8 @@ public class M03_t2 : MissionEventNode
         message.function("\nMission Complete!", 3);
         yield return new WaitForSeconds(2);
         Initiate.Fade("menu_02", Color.black, 1.0f);
+        yield return new WaitForSeconds(0.9f);
+        if (subdisp) subdisp.SetActive(false);
         yield break;
 
     }

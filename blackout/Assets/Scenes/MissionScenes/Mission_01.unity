@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 203844588}
-  m_IndirectSpecularColor: {r: 1.0698197, g: 1.1332098, b: 0.8178291, a: 1}
+  m_IndirectSpecularColor: {r: 1.0658691, g: 1.1287193, b: 0.8170862, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -198,7 +198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &74667037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1583,7 +1583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 101.43681
+      value: 101.43683
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1595,7 +1595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0021141092
+      value: -0.002114288
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1603,7 +1603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885774, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0012108791
+      value: -0.0012109816
       objectReference: {fileID: 0}
     - target: {fileID: 3688251578450885775, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: field of view
@@ -1643,7 +1643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 101.43681
+      value: 101.43683
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1655,7 +1655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0021141092
+      value: -0.002114288
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1663,7 +1663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3809654478697775862, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0012108791
+      value: -0.0012109816
       objectReference: {fileID: 0}
     - target: {fileID: 5067434124046264858, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1673,6 +1673,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b7ea3a6639881614b9c225c655871646, type: 2}
+    - target: {fileID: 6282304848245634332, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: subcam
+      value: 
+      objectReference: {fileID: 74667036}
     - target: {fileID: 7081304503185459317, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: statusView
       value: 
@@ -1685,6 +1689,10 @@ PrefabInstance:
       propertyPath: weaponImage
       value: 
       objectReference: {fileID: 1028414637}
+    - target: {fileID: 7081304503185459317, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
+      propertyPath: turnSpringFactor
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7486243347802880119, guid: 82d3624a4b33f1f4c937bc3246b1f985, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.057294704
@@ -2994,6 +3002,7 @@ MonoBehaviour:
   - {fileID: 1161807265}
   disjunctionTrigger: 0
   nextFlags: []
+  subdisp: {fileID: 74667036}
   mw: {fileID: 797021372}
 --- !u!114 &1161807265
 MonoBehaviour:

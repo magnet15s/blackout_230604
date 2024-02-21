@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Pause : MonoBehaviour
 {
     [SerializeField] GameObject screen;
+    [SerializeField] GameObject subcam;
     // Start is called before the first frame update
     private bool stop = false;
     void Start()
@@ -56,7 +57,12 @@ public class Pause : MonoBehaviour
     }
     public void exitGame() {
         Time.timeScale = 1;
+        StartCoroutine(Exit());
         Initiate.Fade("menu_02", Color.black, 3f);
+    }
+    IEnumerator Exit() {
+        yield return new WaitForSeconds(2.9f);
+        if(subcam) subcam.SetActive(false);
     }
     public void CursorSetActive(bool b) {
         if (b) { 

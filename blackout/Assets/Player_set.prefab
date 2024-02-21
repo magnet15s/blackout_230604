@@ -60981,6 +60981,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 3688251576973555403}
     m_Modifications:
     - target: {fileID: 4150726898794953286, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: subcam
+      value: 
+      objectReference: {fileID: 4222396170195419734}
+    - target: {fileID: 4150726898794953286, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
       propertyPath: CurtainCloseTime
       value: 0.7
       objectReference: {fileID: 0}
@@ -60992,6 +60996,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 25.8
       objectReference: {fileID: 0}
+    - target: {fileID: 6090480988924684880, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
+      propertyPath: subcam
+      value: 
+      objectReference: {fileID: 4222396170195419734}
     - target: {fileID: 6090480988924684886, guid: ff2ddea24d691cf4fa3bf5c4e3334f03, type: 3}
       propertyPath: m_Name
       value: Posemenu

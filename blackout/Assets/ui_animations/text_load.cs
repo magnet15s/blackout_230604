@@ -12,6 +12,7 @@ public class text_load : MonoBehaviour {
     public TextMeshProUGUI text;
     public TextMeshProUGUI text2;
     public Image image;
+    public Image backImage;
     public Sprite sprite;
     [SerializeField] private GameObject _loadingUI;
     [SerializeField] private Slider _slider;
@@ -59,6 +60,7 @@ public class text_load : MonoBehaviour {
         string loadText = file.text;
         string loadText2 = file2.text;
         image.sprite = obj;
+        backImage.sprite = obj;
         text.text = loadText;
         text2.text = loadText2;
     }
