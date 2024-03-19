@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Radar : MonoBehaviour
 {
-
+    public static Radar Instance { get; private set; }
     [Tooltip("GroundMeshPlane‚Ì1•Ó‚Ì‘å‚«‚³‚Ì‹t”")]
     [SerializeField] private float groundMeshPlaneSizeFct = 0.5f;
     private float world2radarSize;
@@ -53,6 +53,10 @@ public class Radar : MonoBehaviour
             if(e)Destroy(e.gameObject);
         }
         
+    }
+
+    private void Awake() {
+        Instance = this;
     }
 
     // Start is called before the first frame update
@@ -119,6 +123,8 @@ public class Radar : MonoBehaviour
 
     private void OnDestroy() {
         DelegateClear(new Scene(), 0);
+        enemies = new();
+
     }
     private void DelegateClear(Scene s, LoadSceneMode l) {
         Enemy.EnemySpawn -= AddEnemy;

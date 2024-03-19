@@ -13,6 +13,9 @@ public class TitleDemo : MonoBehaviour
     [SerializeField] long videoFadeFrame = 30;
     [SerializeField] float titleFadeTime = 1;
     [SerializeField] float replayDuration = 15;
+    [SerializeField] GameObject top;
+    [SerializeField] GameObject bottom;  
+
 
     int videoIdx = -1;
     void Start()
@@ -42,6 +45,8 @@ public class TitleDemo : MonoBehaviour
     }
 
     IEnumerator Sleep() {
+        top.SetActive(false);
+        bottom.SetActive(false);
         vp.Stop();
         vp.frame = (long)vp.frameCount - 1;
         for(float t = 0; t < titleFadeTime; t += 0.02f) {
@@ -62,6 +67,9 @@ public class TitleDemo : MonoBehaviour
         vp.clip = demoList[videoIdx];
         vp.frame = 0;
         vp.Play();
+
+        top.SetActive(true);
+        bottom.SetActive(true);
         yield return null;
     }
 }
