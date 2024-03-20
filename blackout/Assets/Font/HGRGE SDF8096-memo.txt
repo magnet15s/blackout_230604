@@ -1,0 +1,8 @@
+HGRGE8096.assetsは100MBを超えるため
+GitHubにアップロードできない
+↓
+originにpushする時には削除 or Assets/Resources/DevPrivateSetting/SettingMaterialsに移動
+
+他端末では各々zipを解凍したものを
+HGRGE8096を使っている所にそれぞれ適用していく
+（使用箇所：ミッション選択画面のミッションタイトル、ミッションクリア画面のミッションタイトル）

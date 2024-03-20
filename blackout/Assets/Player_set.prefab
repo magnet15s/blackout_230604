@@ -21476,8 +21476,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251577138033040}
-  m_LocalRotation: {x: 0.035005238, y: 0.1885226, z: -0.006724202, w: 0.9814218}
-  m_LocalPosition: {x: -761.61633, y: -33.76212, z: -554.0757}
+  m_LocalRotation: {x: -0.031175623, y: 0.48451504, z: -0.017281558, w: -0.87405646}
+  m_LocalPosition: {x: 1.6767733, y: 100.36789, z: -582.32947}
   m_LocalScale: {x: 1.2987013, y: 1.2987013, z: 1.2987013}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23972,8 +23972,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688251578450885769}
-  m_LocalRotation: {x: -0.00239893, y: 0.17488618, z: 0.00042610787, w: 0.98458564}
-  m_LocalPosition: {x: -766.56305, y: -32.693184, z: -572.75977}
+  m_LocalRotation: {x: -0.0021140932, y: -0.49700874, z: -0.0012108698, w: 0.8677421}
+  m_LocalPosition: {x: 19.18233, y: 101.43683, z: -590.5223}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25145,8 +25145,9 @@ MonoBehaviour:
   evasionMoveAllTime: 0.5
   evasionMoveSpeed: 90
   turningSpeed: 170
-  slowTurningZoneSize: 0.1
+  turnSpring: 0.7
   dashTurningFactor: 0.3
+  dashTurnSpring: 0.3
   viewRotetionFactor: {x: 0.5, y: -0.5}
   zoomInViewRotFactor: 0.5
   maxFocusMagn: 2
@@ -44612,7 +44613,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5898084427105977137}
   m_LocalRotation: {x: -0.0024364742, y: -0.0030842887, z: -0.0000075148478, w: 0.9999923}
-  m_LocalPosition: {x: 1.8517609, y: 2.3268166, z: -18.3721}
+  m_LocalPosition: {x: 1.8517611, y: 2.3268168, z: -18.372103}
   m_LocalScale: {x: 1.2987013, y: 1.2987012, z: 1.2987015}
   m_ConstrainProportionsScale: 0
   m_Children:
